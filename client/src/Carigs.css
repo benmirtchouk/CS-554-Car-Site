@@ -1,0 +1,144 @@
+body,
+html {
+  background: white;
+  font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+  margin-left: 0px;
+  padding-left: 0px; }
+
+a {
+  color: #0000ff; 
+}
+
+div.mainbody {
+float:left;
+margin-left:125px; 
+margin-top:50px;
+margin-right:20px;
+}
+
+div.mainbody h1{
+ margin-top:20px;
+ margin-left:0px;
+ float:left;
+}
+
+div.mainbody h1{
+ margin-top:20px;
+ margin-left:0px;
+ float:left;
+}
+
+div.mainbody p{
+ float:left;
+}
+
+div.sidenav a {
+   color: white;
+}
+
+div.sidenav {
+  height: 100%; /* Full-height: remove this if you want "auto" height */
+  width: 100px; /* Set the width of the sidebar */
+  position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+  z-index: 1; /* Stay on top */
+  top: 0; /* Stay at the top */
+  left: 0;
+  background-color: black;
+  color: white;
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 75px;
+  padding-left: 0px;
+  margin-left:50px;
+  margin-left:0px;
+}
+
+.sidenav a {
+  padding: 2px 3px 5px 10px;
+  text-align:left;
+  font-size: 90%;
+  color: white;
+  display: block;
+}
+
+div.searchbox input{
+ border-radius:15px;
+ max-width:95px;
+ margin:25px 0px 0px 2px;
+ font-size:90%;
+ }
+
+div.searchbox ::placeholder{
+ padding:5px 5px 5px 5px;
+ font-size:90%;
+ }
+
+div {
+   margin-left:0px;
+}
+
+.navbar-brand {
+  color: white;
+  font-size:150%;
+  padding-right:40px;
+}
+
+nav#top-navbar {
+  background-color: black;
+}
+
+nav#top-navbar a {
+  color:white;
+  padding-left:15px;
+  padding-right:20px;
+}
+
+nav#top-navbar a:hover {
+  color: #ffff00;
+}
+
+nav#top-navbar button {
+  background-color:white;
+  color:black;
+}
+
+
+h2.sum-header {
+  margin-top:0px;
+  display:inline;
+  float: left;
+  margin-left:0px;
+  text-align:left;
+}
+
+p.error {
+  margin-top: 20px;
+  color: #ee0000; 
+  font-weight: bold;
+  font-size: 150%
+}
+
+
+.no-img {
+  border: solid #0000ff 2px;
+  color: #333333;
+  background-color: #fff;
+  padding: 5px;
+  margin: 5px 2px 5px 2px;
+  text-align: center;
+  font-size: 180%;
+  width: 80%; 
+}
+
+.dropdown-menu {
+  padding: 5px 0px 5px 15px;
+  margin: 0px;
+}
+  
+nav#top-navbar .dropdown-menu .nav-link1 {
+  color: black;
+}
+
+
+.sidenav a:hover {
+  color: #ffff00;
+}
