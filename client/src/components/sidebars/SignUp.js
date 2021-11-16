@@ -4,15 +4,14 @@ import '../../App.css';
 import '../../Carigs.css';
 import Search from './Search';
 
-const Account = () => {
+const SignUp = () => {
   return ( 
     <div className="sidenav">
        <nav>
           <Link to="/">Home</Link>
-          <Link to="/login">Login</Link>
 	  <Search />
        </nav>
     </div>
   )
 }
-export default Account;
+export default SignUp;

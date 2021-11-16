@@ -1,19 +1,86 @@
-import React from 'react';
-import {Link} from 'react-router-dom';
+import React, {useContext} from 'react';
+import {AuthContext} from './firebase/Auth';
+import {logInEmailPassword, logInSocialMedia} from './firebase/Firebase';
 import '../App.css';
 import '../Carigs.css';
 import SideBar from './sidebars/Login.js';
 
 const Login = () => {
+  const {currentUser} = useContext(AuthContext);
+
+  const handleFormSubmit = async (e) => {
+   e.preventDefault();
+   let {email, password} = e.target.elements;
+   try {
+    await logInEmailPassword(email.value, password.value);
+   }
+   catch(e) {
+    console.log(`${e}`);
+    alert(e.message);
+   }
+  };
+
+  const handleButtonClick = async (provider) => {
+   try {
+      await logInSocialMedia(provider);
+   }
+   catch(e) {
+    console.log(`${e}`);
+    alert(e.message);
+   }
+  };
+
+  if (currentUser) {
+    return (
+	<div className="main_layout">
+	   <SideBar />
+	   <div className="mainbody">
+   	     <h1>LogIn</h1>
+	     <br /><br />
+  	     <p>User is logged in</p>
+	   </div>
+	</div>
+    );
+  }
+
   return (
-    <div class="main_layout">
+    <div className="main_layout">
       <SideBar />
         <div className="mainbody">
 	   <h1>Login</h1>
            <br /><br />
-           <p>
-              This is the login page.
-           </p>
+
+      <form onSubmit={handleFormSubmit}>
+        <div className="form-group">
+          <label>
+            Email:
+            <input
+              className="form-control"
+              name="email"
+              id="email"
+              type="email"
+              placeholder="Email"
+              required
+            />
+          </label>
+        </div>
+        <div className="form-group">
+          <label>
+            Password:
+            <input
+              className="form-control"
+              name="password"
+              type="password"
+              placeholder="Password"
+              required
+            />
+          </label>
+        </div>
+        <button type="submit">Log in</button>
+      </form>
+      <br />
+       <button type="button" onClick={()=>handleButtonClick('google')}>Google</button>
+       <button type="button" onClick={()=>handleButtonClick('facebook')}>Facebook</button>
         </div>
     </div>
   );

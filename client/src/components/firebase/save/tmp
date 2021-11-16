@@ -1,0 +1,46 @@
+import firebase from 'firebase';
+import firebaseApp from './FirebaseApp';
+
+const auth = firebaseApp.auth();
+const firebirdDb = firebaseApp.firestore();
+const googleProvider = new firebase.auth.GoogleAuthProvider();
+
+const createUserWithEmailAndPassword = async (email, password, displayName) => {
+  try {
+     await auth.createUserWithEmailAndPassword(email, password)
+     firebaseApp.auth().currentUser.updateProfile({ displayName: displayName });
+  } 
+  catch(e) {
+    console.log(`${e}`);
+    throw `${e}`;
+  }
+}
+
+const signInWithEmailAndPassword = async (email, password) => {
+  try {
+     await auth.signInWithEmailAndPassword(email, password);
+  } 
+  catch(e) {
+    console.log(`${e}`);
+    throw `${e}`;
+  }
+}
+
+const signOut = async () =>  {
+  try {
+    await auth().signOut();
+  } 
+  catch(e) {
+    console.log(`${e}`);
+    throw `${e}`;
+  }
+}
+
+export {
+  auth,
+  firebirdDb,
+  googleProvider,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut
+};

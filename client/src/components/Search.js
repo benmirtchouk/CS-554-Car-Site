@@ -1,12 +1,11 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
 import '../App.css';
 import '../Carigs.css';
 import SideBar from './sidebars/Search.js';
 
 const Search= () => {
   return (
-    <div class="main_layout">
+    <div className="main_layout">
       <SideBar />
         <div className="mainbody">
            <br /><br />

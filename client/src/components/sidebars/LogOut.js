@@ -4,7 +4,7 @@ import '../../App.css';
 import '../../Carigs.css';
 import Search from './Search'
 
-const Login = () => {
+const LogOut = () => {
   return ( 
     <div className="sidenav">
        <nav>
@@ -14,4 +14,4 @@ const Login = () => {
     </div>
   )
 }
-export default Login;
+export default LogOut;

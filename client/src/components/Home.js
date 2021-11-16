@@ -1,12 +1,11 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
 import '../App.css';
 import '../Carigs.css';
 import SideBar from './sidebars/Home.js';
 
 const Home = () => {
   return (
-	  <div class="main_layout">
+	  <div className="main_layout">
 	  <SideBar />
 	  <div className="mainbody">
             <br /><br />
