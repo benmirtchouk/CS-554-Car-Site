@@ -1,14 +1,21 @@
 import React, {useContext, useState} from 'react';
 import {Redirect} from 'react-router-dom';
 import {signUpUserWithEmailPassword} from './firebase/Firebase';
-import SideBar from './sidebars/SignUp.js';
 import { AuthContext } from './firebase/Auth';
 import '../App.css';
 import '../Carigs.css';
+import SideBar from './sidebars/SideBar.js';
 
 const SignUp = () => {
   const {currentUser} = useContext(AuthContext);
   const [pwMatch, setPwMatch] = useState('');
+
+  const slinks = [{
+    name: "Home", link: "/",
+  }];
+
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const {displayName, email, firstPwd, secondPwd } = e.target.elements;
@@ -34,7 +41,7 @@ const SignUp = () => {
 
   return (
     <div className="main_layout">
-      <SideBar />
+      <SideBar side_links={slinks}/>
         <div className="mainbody">
 	   <h1>SignUp</h1>
            <br /><br />

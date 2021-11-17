@@ -3,23 +3,25 @@ import '../App.css';
 import '../Carigs.css';
 import SideBar from './sidebars/SideBar.js';
 
-const MessageBoard = () => {
+const Sellers = () => {
   const slinks = [
-    { name: "Sellers", link: "/sellers" },
-    { name: "Recent Sales", link: "/recent_sales" },
+    {name:"List A Car", link:"/sell_car"},
+    {name:"My Listings", link:"/my_listings"},
+    {name:"Recent Sales", link:"/recent_sales"},
+    {name:"Messaging", link:"/message_board"},
   ];
   return (
     <div className="main_layout">
       <SideBar side_links={slinks} />
         <div className="mainbody">
-	   <h1>MessageBoard</h1>
+	   <h1>Sellers</h1>
            <br /><br />
            <p>
-              This is the MessageBoard page.
+              This is the Sellers page.
            </p>
         </div>
     </div>
   );
 };
 
-export default MessageBoard;
+export default Sellers;

@@ -1,12 +1,17 @@
 import React from 'react';
 import '../App.css';
 import '../Carigs.css';
-import SideBar from './sidebars/DOT.js';
+import SideBar from './sidebars/SideBar.js';
 
-const DOT = () => {
+  const DOT = () => {
+  const slinks = [ 
+    { name: "Kelly", link: "/kelly" },
+    { name: "Safety", link: "/safety" },
+  ];
+
   return (
     <div className="main_layout">
-      <SideBar />
+      <SideBar side_links={slinks} />
         <div className="mainbody">
 	   <h1>Department Of Transportation (DOT)</h1>
            <br /><br />
