@@ -1,12 +1,12 @@
 import React, {useContext} from 'react';
+import {useHistory} from 'react-router-dom';
 import {AuthContext} from './firebase/Auth';
 import {logInEmailPassword, logInSocialMedia} from './firebase/Firebase';
 import '../App.css';
 import '../Carigs.css';
-import SideBar from './sidebars/Login.js';
 
 const Login = () => {
-  const {currentUser} = useContext(AuthContext);
+  const history = useHistory();
 
   const handleFormSubmit = async (e) => {
    e.preventDefault();
@@ -18,6 +18,9 @@ const Login = () => {
     console.log(`${e}`);
     alert(e.message);
    }
+   alert(`login submitted`);
+   //history.push("/");
+   history.goBack()
   };
 
   const handleButtonClick = async (provider) => {
@@ -30,25 +33,11 @@ const Login = () => {
    }
   };
 
-  if (currentUser) {
-    return (
-	<div className="main_layout">
-	   <SideBar />
-	   <div className="mainbody">
-   	     <h1>LogIn</h1>
-	     <br /><br />
-  	     <p>User is logged in</p>
-	   </div>
-	</div>
-    );
-  }
-
   return (
     <div className="main_layout">
-      <SideBar />
-        <div className="mainbody">
-	   <h1>Login</h1>
-           <br /><br />
+      <div className="mainbody">
+	<h1>Login</h1>
+          <br /><br />
 
       <form onSubmit={handleFormSubmit}>
         <div className="form-group">

@@ -4,16 +4,15 @@ import '../../App.css';
 import '../../Carigs.css';
 import Search from './Search';
 
-const Kelly = () => {
+const SideBar = (props) => {
   return ( 
     <div className="sidenav">
        <nav>
-          <Link to="/">Home</Link>
-          <Link to="/safety">Safety</Link>
-          <Link to="/dot">DOT</Link>
+	  { props.side_links.map(item => 
+              <Link to={item.link}>{item.name}</Link>) }
 	  <Search />
        </nav>
     </div>
   )
 }
-export default Kelly;
+export default SideBar;
