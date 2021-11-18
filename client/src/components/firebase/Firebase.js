@@ -1,4 +1,5 @@
 import firebase from 'firebase/app';
+import { signInWithPopUp } from "firebase/auth";
 import 'firebase/auth';
 
 const fbConfigs = {
@@ -14,16 +15,21 @@ const fbApp = firebase.initializeApp(fbConfigs);
 const auth = fbApp.auth();
 
 const logInSocialMedia = async (provider) => {
+  let res;
   try {
      switch(provider) {
         case 'google':
            const googleProvider = new firebase.auth.GoogleAuthProvider();
-           await auth.signInWithPopup(googleProvider);
+           res = await auth.signInWithPopup(googleProvider);
+           console.log(`got back from logInSocialMedia, uuid: ${res.user.uid}`);
+	   console.log(res.user);
 	   break;
 
         case 'facebook':
            const fbProvider = new firebase.auth.FacebookAuthProvider();
-           await auth.signInWithPopup(fbProvider);
+           res = await auth.signInWithPopup(fbProvider);
+           console.log(`got back from logInSocialMedia, uuid: ${res.user.uid}`);
+	   console.log(res.user);
 	   break;
 
         default:
@@ -33,15 +39,17 @@ const logInSocialMedia = async (provider) => {
      }
      catch(e) {
        console.log(`${e}`);
-       alert(e);
+       console.log(`${e.code}`);
+       alert(e.code);
      }
 }
 
 const signUpUserWithEmailPassword = async (email, password, displayName) => {
   try {
      console.log(`email: ${email}, password: ${password}, displayName: ${displayName}`);
-     await auth.createUserWithEmailAndPassword(email, password)
-     console.log(`got back from createUserWithEmailAndPassword`);
+     let res = await auth.createUserWithEmailAndPassword(email, password)
+     console.log(`got back from createUserWithEmailAndPassword, uuid: ${res.user.uid}`);
+     console.log(res.user);
      auth.currentUser.updateProfile({ displayName: displayName });
      console.log(`got back from adding current user`);
   } 
@@ -52,13 +60,13 @@ const signUpUserWithEmailPassword = async (email, password, displayName) => {
 }
 
 const logInEmailPassword = async (email, password) => {
-  try {
-     await auth.signInWithEmailAndPassword(email, password);
-  } 
-  catch(e) {
-    console.log(`${e}`);
-    alert(`${e.message}`);
-  }
+     await auth.signInWithEmailAndPassword(email, password).then( (res) => {
+        console.log(`got back from logInEmailPassword, uuid: ${res.user.uid}`);
+        console.log(res.user);
+     }).catch( (e) => {
+       console.log(`${e}`);
+       alert(`${e.message}`);
+     });
 }
 
 const logOut = async () =>  {
