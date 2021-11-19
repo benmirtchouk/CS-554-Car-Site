@@ -9,7 +9,7 @@ const SideBar = (props) => {
     <div className="sidenav">
        <nav>
 	  { props.side_links.map(item => 
-              <Link to={item.link}>{item.name}</Link>) }
+              <Link key={item.name} to={item.link}>{item.name}</Link>) }
 	  <Search />
        </nav>
     </div>

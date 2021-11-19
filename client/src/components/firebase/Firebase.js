@@ -1,5 +1,4 @@
 import firebase from 'firebase/app';
-import { signInWithPopUp } from "firebase/auth";
 import 'firebase/auth';
 
 const fbConfigs = {
@@ -50,11 +49,14 @@ const signUpUserWithEmailPassword = async (email, password, displayName) => {
      let res = await auth.createUserWithEmailAndPassword(email, password)
      console.log(`got back from createUserWithEmailAndPassword, uuid: ${res.user.uid}`);
      console.log(res.user);
+     console.log(res.code);
      auth.currentUser.updateProfile({ displayName: displayName });
      console.log(`got back from adding current user`);
   } 
   catch(e) {
-    console.log(`${e}`);
+    console.log(`${e.message}`);
+    console.log(`${e.code}`);
+    alert(`${e.message}`);
     alert(`${e.message}`);
   }
 }
@@ -65,7 +67,9 @@ const logInEmailPassword = async (email, password) => {
         console.log(res.user);
      }).catch( (e) => {
        console.log(`${e}`);
+       console.log(`${e.code}`);
        alert(`${e.message}`);
+       throw new Error(e);
      });
 }
 

@@ -43,69 +43,39 @@ const SignUp = () => {
     <div className="main_layout">
       <SideBar side_links={slinks}/>
         <div className="mainbody">
-	   <h1>SignUp</h1>
-           <br /><br />
-           <p>
-              This is the SignUp page.
-           </p>
-
+	   <h1>Register New User</h1>
       {pwMatch && <h4 className="error">{pwMatch}</h4>}
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label>
-            Name:
-            <input
-              className="form-control"
-              required
-              name="displayName"
-              type="text"
-              placeholder="Name"
-            />
-          </label>
-        </div>
-        <div className="form-group">
-          <label>
-            Email:
-            <input
-              className="form-control"
-              required
-              name="email"
-              type="email"
-              placeholder="Email"
-            />
-          </label>
-        </div>
-        <div className="form-group">
-          <label>
-            Password:
-            <input
-              className="form-control"
-              id="firstPwd"
-              name="firstPwd"
-              type="password"
-              placeholder="Password"
-              required
-            />
-          </label>
-        </div>
-        <div className="form-group">
-          <label>
-            Confirm Password:
-            <input
-              className="form-control"
-              name="secondPwd"
-              type="password"
-              placeholder="Confirm Password"
-              required
-            />
-          </label>
-        </div>
-        <button id="submitBtn" name="submitBtn" type="submit">
-          Sign Up
-        </button>
+      <form className="RegisterForm" onSubmit={handleSubmit}>
+        <div className="form-group input-group">
+         <label className="reglabel" for="displayName">Display Name:</label>
+	 <input name="displayName" className="form-control" placeholder="Display Name" type="text" />
+	</div>
+	<div className="form-group input-group">
+          <label className="reglabel" for="email">Email:</label>
+	  <input name="email" className="form-control" placeholder="Email address" type="email" />
+	</div> 
+	<div className="form-group input-group">
+          <label className="reglabel" for="firstName">First Name:</label>
+	  <input name="firstName" className="form-control" placeholder="First Name" type="text" />
+	</div> 
+	<div className="form-group input-group">
+          <label className="reglabel" for="lastName">Last Name:</label>
+	  <input name="lastName" className="form-control" placeholder="Last Name" type="text" />
+	</div> 
+	<div className="form-group input-group">
+          <label className="reglabel" for="firstPwd">Password:</label>
+	  <input name="firstPwd" className="form-control" placeholder="password" type="password" />
+	</div> 
+	<div className="form-group input-group">
+          <label className="reglabel" for="secondPwd">Confirm Password:</label>
+	  <input name="secondPwd" className="form-control" placeholder="confirm password" type="password" />
+	</div> 
+
+
+	<div className="form-group">
+	   <button id="submitBtn" type="submit" name="submitBtn" className="login-btn btn-block"> Register </button>
+	</div> 
       </form>
-      <br />
-      <p> Put Social Sign In Here </p>
      </div>
     </div>
   );

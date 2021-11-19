@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, {useContext} from 'react';
 import {useHistory} from 'react-router-dom';
 import {AuthContext} from './components/firebase/Auth';
 import {logOut} from './components/firebase/Firebase.js';
@@ -13,13 +13,14 @@ const NavBar = () => {
       try {
 	  switch (action) {
 	    case "LogIn": 
-	       alert(`login is clicked`);
 	       history.push("/login");
                break;
 	    case "LogOut": 
-               alert (`handle logout`);
 	       logOut();
 	       history.push("/");
+               break;
+	    default: 
+               alert (`unexpected action: ${action}`);
                break;
 	  }
       }
