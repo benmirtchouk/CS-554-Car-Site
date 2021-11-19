@@ -40,6 +40,12 @@ div.sidenav a {
    color: white;
 }
 
+div.account_info span {
+   color: white;
+   margin-left:3px;
+   margin-right:10px;
+}
+
 div.sidenav {
   height: 100%; /* Full-height: remove this if you want "auto" height */
   width: 100px; /* Set the width of the sidebar */

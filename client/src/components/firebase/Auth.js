@@ -12,8 +12,8 @@ export const AuthProvider = ({ children }) => {
     auth.onAuthStateChanged((user) => {
       setCurrentUser(user);
       setLoadingUser(false);
-      console.log(`current user is populated`)
-      console.log(user)
+      //console.log(`current user is populated`)
+      //console.log(user)
     });
   }, []);
 
