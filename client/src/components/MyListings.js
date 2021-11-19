@@ -7,7 +7,7 @@ const MyListings = () => {
   const slinks = [
     { name:"Sell A Car", link:"/sell_car" },
     { name:"Recent Sales", link:"/recent_sales" },
-    { name:"Sellers", link:"/sellers" },,
+    { name:"Sellers", link:"/sellers" },
   ];
 
   return (

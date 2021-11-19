@@ -9,6 +9,10 @@ a {
   color: #0000ff; 
 }
 
+hr {
+  border: 2px solid black;
+}
+
 div.mainbody {
 float:left;
 margin-left:125px; 
@@ -141,4 +145,50 @@ nav#top-navbar .dropdown-menu .nav-link1 {
 
 .sidenav a:hover {
   color: #ffff00;
+}
+
+div.mainbody form{
+  margin-top:100px;
+  margin-bottom:10px;
+}
+
+button.login-btn{
+  background-color: black;
+  color: white;
+}
+
+label.reglabel {
+  font-weight:bold;
+  font-size:110%;
+  vertical-align:center;
+  color: black;
+  padding-right:5px;
+  }
+
+label.loginlabel {
+  font-weight:bold;
+  font-size:110%;
+  vertical-align:center;
+  color: black;
+  padding-right:5px;
+}
+
+div.input-group ::placeholder {
+   color: black;
+   font-style: italic;
+   text-align: center;
+   margin-bottom:15px;
+}
+
+form.RegisterForm {
+  padding-top:10px;
+  margin-bottom:10px;
+}
+
+p.LoginError {
+  text-align: center;
+  margin-top: 5px;
+  color: #ee0000; 
+  font-weight: bold;
+  font-size: 75%
 }
