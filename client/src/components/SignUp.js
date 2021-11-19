@@ -17,6 +17,7 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setPwMatch('');
     const {displayName, email, phoneNumber, firstPwd, secondPwd } = e.target.elements;
     console.log(`displayName: ${displayName.value}, email: ${email.value}`);
     if (firstPwd.value !== secondPwd.value) {

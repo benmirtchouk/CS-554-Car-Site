@@ -53,6 +53,7 @@ const signUpUserWithEmailPassword = async (email, password, displayName, phoneNu
       let user=auth.currentUser;
       user.updateProfile({ displayName:displayName, phoneNumber:phoneNumber });
       // sign out of the register and force them to login
+      alert(`${displayName} has successfully registered.  Please proceed to login`);
       auth.signOut();
    }).catch( (e) => {
       console.log(`${e}`);
