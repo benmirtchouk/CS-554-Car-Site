@@ -14,73 +14,68 @@ const fbApp = firebase.initializeApp(fbConfigs);
 const auth = fbApp.auth();
 
 const logInSocialMedia = async (provider) => {
-  let res;
-  try {
-     switch(provider) {
-        case 'google':
-           const googleProvider = new firebase.auth.GoogleAuthProvider();
-           res = await auth.signInWithPopup(googleProvider);
-           console.log(`got back from logInSocialMedia, uuid: ${res.user.uid}`);
-	   console.log(res.user);
-	   break;
+  let user;
+  switch(provider) {
+     case 'google':
+        const googleProvider = new firebase.auth.GoogleAuthProvider();
+        await auth.signInWithPopup(googleProvider).then( (res) => {
+           user=res.user;
+           //let provToken = res.accessToken;
+     	   console.log(`Logged In User (logInSocialMedia): uid: ${user.uid}, displayName: ${user.displayName}, email: ${user.email}, phoneNumber: ${user.phoneNumber}, photoURL: ${user.photoURL}`);
+        }).catch( (e) => {
+           throw new Error(e);
+        });
+	break;
 
-        case 'facebook':
-           const fbProvider = new firebase.auth.FacebookAuthProvider();
-           res = await auth.signInWithPopup(fbProvider);
-           console.log(`got back from logInSocialMedia, uuid: ${res.user.uid}`);
-	   console.log(res.user);
-	   break;
+     case 'facebook':
+        const fbProvider = new firebase.auth.FacebookAuthProvider();
+        await auth.signInWithPopup(fbProvider).then( (res) => {
+           user=res.user;
+           //let provToken = res.accessToken;
+     	   console.log(`Logged In User (logInSocialMedia): uid: ${user.uid}, displayName: ${user.displayName}, email: ${user.email}, phoneNumber: ${user.phoneNumber}, photoURL: ${user.photoURL}`);
+        }).catch( (e) => {
+             console.log(`${e}`);
+             console.log(`${e.code}`);
+             alert(`${e.message}`);
+             throw new Error(e);
+        });
+     	break;
 
-        default:
-          alert(`${provider} is not currently supported`);
-	   break;
-	}
-     }
-     catch(e) {
-       console.log(`${e}`);
-       console.log(`${e.code}`);
-       alert(e.code);
-     }
+     default:
+        alert(`${provider} is not currently supported`);
+	break;
+  }
 }
 
-const signUpUserWithEmailPassword = async (email, password, displayName) => {
-  try {
-     console.log(`email: ${email}, password: ${password}, displayName: ${displayName}`);
-     let res = await auth.createUserWithEmailAndPassword(email, password)
-     console.log(`got back from createUserWithEmailAndPassword, uuid: ${res.user.uid}`);
-     console.log(res.user);
-     console.log(res.code);
-     auth.currentUser.updateProfile({ displayName: displayName });
-     console.log(`got back from adding current user`);
-  } 
-  catch(e) {
-    console.log(`${e.message}`);
-    console.log(`${e.code}`);
-    alert(`${e.message}`);
-    alert(`${e.message}`);
-  }
+const signUpUserWithEmailPassword = async (email, password, displayName, phoneNumber) => {
+   console.log(`FORM INPUTS: email: ${email}, displayName: ${displayName}, phoneNumber: ${phoneNumber}`);
+   await auth.createUserWithEmailAndPassword(email, password).then( (res) => {
+      let user=auth.currentUser;
+      user.updateProfile({ displayName:displayName, phoneNumber:phoneNumber });
+      // sign out of the register and force them to login
+      auth.signOut();
+   }).catch( (e) => {
+      console.log(`${e}`);
+      console.log(`${e.code}`);
+      alert(`${e.message}`);
+      throw new Error(e);
+   });
 }
 
 const logInEmailPassword = async (email, password) => {
      await auth.signInWithEmailAndPassword(email, password).then( (res) => {
-        console.log(`got back from logInEmailPassword, uuid: ${res.user.uid}`);
-        console.log(res.user);
+        let user=res.user;
+	console.log(`Logged In User (logInEmailPassword): uid: ${user.uid}, displayName: ${user.displayName}, email: ${user.email}, phoneNumber: ${user.phoneNumber}, photoURL: ${user.photoURL}`);
      }).catch( (e) => {
-       console.log(`${e}`);
-       console.log(`${e.code}`);
-       alert(`${e.message}`);
        throw new Error(e);
      });
 }
 
 const logOut = async () =>  {
-  try {
-    await auth.signOut();
-  } 
-  catch(e) {
+  await auth.signOut().catch( (e) => {
     console.log(`${e}`);
     throw new Error(e);
-  }
+  });
 }
 
 export {fbApp, auth, logInSocialMedia, logOut, signUpUserWithEmailPassword, logInEmailPassword};

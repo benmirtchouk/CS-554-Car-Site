@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {useHistory} from 'react-router-dom';
 import {AuthContext} from './components/firebase/Auth';
 import {logOut} from './components/firebase/Firebase.js';
@@ -7,7 +7,21 @@ import './Carigs.css';
 
 const NavBar = () => {
   const {currentUser} = useContext(AuthContext);
+  const [displayName, setDisplayName] = useState('');
   const history=useHistory();
+
+  useEffect (()=> {
+    if (currentUser && !currentUser.displayName)
+       setDisplayName(currentUser.displayName);
+  }, [currentUser]);
+
+  if (currentUser)
+  {
+     if (currentUser.displayName)
+        console.log(`NavBar: displayName: ${currentUser.displayName}`);
+     else
+        console.log(`NavBar: displayName: NULL`);
+  }
 
   const handleLoginButtonClick = async (action) => {
       try {
@@ -64,6 +78,7 @@ const NavBar = () => {
        </ul>
        </div>
        <div className="account_info">
+	  {currentUser && <span className="userName">{currentUser.displayName}</span>}
 	  {currentUser && <button type="button" onClick={()=>handleLoginButtonClick('LogOut')}>Logout</button>}
 	  {!currentUser && <button type="button" onClick={()=>handleLoginButtonClick('LogIn')}>LogIn</button>}
 
