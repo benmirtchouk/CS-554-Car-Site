@@ -2,7 +2,7 @@ const {gql} = require('apollo-server')
 
 const typeDefs = gql`
 type Query {
-    getPlaceholders: [Placeholder]
+    vehicleBy(vin: String!): Vehicle
 }
 
 type Mutation {
@@ -12,6 +12,14 @@ type Mutation {
 
 type Placeholder {
     placeholder: String!
+}
+
+type Vehicle {
+    vin: String!
+    make: String!
+    manufacturer: String!
+    model: String!
+    year: Int!
 }
 `;
 
