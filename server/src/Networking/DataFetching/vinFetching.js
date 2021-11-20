@@ -1,5 +1,5 @@
-const fetching = require('../AxiosRequesting');
 const { UserInputError} = require('apollo-server')
+const { RESTDataSource } = require('apollo-datasource-rest');
 
 class MalformedVinException extends UserInputError {
     constructor(vin, message) {
@@ -22,9 +22,6 @@ const variableIdToGraphQLName = {
 const variableIdsOfInterest = new Set(Object.keys(variableIdToGraphQLName ).map(e => e - 0));
 
 
-const nhtsaBaseURL = "https://vpic.nhtsa.dot.gov/api/"
-
-
 /// Perform trivial validation if the vin is valid before sending off to the upstream
 /// Any vin before 1981 (which may be as short as 11 digits), or not for the North American market may return false
 /// This function does not attempt to do any decoding or checking for illegal characters. 
@@ -34,24 +31,38 @@ const isPotentiallyValidVin = (vin) => {
 }
 
 
-const vinQueryURL = async (vin) => {
-    if(!isPotentiallyValidVin(vin)) { throw new MalformedVinException(vin, "Vin value is malformed.") }
+class NHSTADataSource extends RESTDataSource {
+    constructor() {
+        super()
+        this.baseURL = "https://vpic.nhtsa.dot.gov/api/"
+    }
 
-    const url = `${nhtsaBaseURL}/vehicles/decodevin/${vin}?format=json`
-    const data = await fetching.fetchFromURL(url)
-    if (!data) { return null; }
-    const results  = data.Results; 
+    willSendRequest(request) {
+        request.params.set('format', "json")
+    }
 
-    const vehicleDetails = results
-                            .filter(e => variableIdsOfInterest.has(e.VariableId))
-                            .map( e =>  { return { [variableIdToGraphQLName [e.VariableId]]: e.Value}})
-                            .reduce((acc, e) => { return {...acc, ...e}}, {})
-    vehicleDetails.vin = vin;
-    return vehicleDetails;
+    async vinQueryURL(vin) {
+        if(!isPotentiallyValidVin(vin)) { throw new MalformedVinException(vin, "Vin value is malformed.") }
+
+        const url = `${this.baseURL}/vehicles/decodevin/${encodeURIComponent(vin)}`
+        const data = await this.get(url)
+        if (!data) { return null; }
+        const results  = data.Results; 
+    
+        const vehicleDetails = results
+                                .filter(e => variableIdsOfInterest.has(e.VariableId))
+                                .map( e =>  { return { [variableIdToGraphQLName [e.VariableId]]: e.Value}})
+                                .reduce((acc, e) => { return {...acc, ...e}}, {})
+        vehicleDetails.vin = vin;
+        return vehicleDetails;
+    }
 }
 
 
+
+
+
 module.exports = {
-    vinQueryURL,
+    NHSTADataSource,
     MalformedVinException
 }
