@@ -30,7 +30,7 @@ const isPotentiallyValidVin = (vin) => {
     return typeof vin === "string" && vin.length === 17 && vin.match(/^[a-z0-9]+$/i)
 }
 
-
+/// Class for interacting with the National Highway Safety and Traffic Administration's endpoints
 class NHSTADataSource extends RESTDataSource {
     constructor() {
         super()

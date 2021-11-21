@@ -1,7 +1,7 @@
-const { NHSTADataSource } = require('../Networking/DataFetching/vinFetching')
+const { NHSTADataSource } = require('./DataSources')
 
 const dataSources = () => ({
-    nhsta: new NHSTADataSource(),
+    nhsta: new NHSTADataSource.NHSTADataSource(),
   })
 
 
