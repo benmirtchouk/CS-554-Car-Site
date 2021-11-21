@@ -1,7 +1,3 @@
-const { UserInputError} = require('apollo-server')
-const { ApolloError} = require('apollo-server-errors');
-
-const { vinQueryURL} = require('../Networking/DataFetching/vinFetching');
 
 const resolvers = {
     Query: {

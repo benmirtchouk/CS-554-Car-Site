@@ -44,8 +44,9 @@ class NHSTADataSource extends RESTDataSource {
     async vinQueryURL(vin) {
         if(!isPotentiallyValidVin(vin)) { throw new MalformedVinException(vin, "Vin value is malformed.") }
 
-        const url = `${this.baseURL}/vehicles/decodevin/${encodeURIComponent(vin)}`
-        const data = await this.get(url)
+        const url = `${this.baseURL}vehicles/decodevin/${encodeURIComponent(vin)}`
+        /// As the endpoint sets cache-control: none, the ttl must be manually specified
+        const data = await this.get(url, null, {cacheOptions: {ttl: 120} })
         if (!data) { return null; }
         const results  = data.Results; 
     

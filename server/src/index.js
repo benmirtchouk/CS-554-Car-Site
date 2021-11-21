@@ -1,17 +1,18 @@
 require('dotenv').config()
 const {ApolloServer} = require('apollo-server')
-// const typeDefs = require('./GraphQL/typeDefs');
-// const resolvers = require('./GraphQL/resolvers');
-// const dataSources = require('./GraphQL/dataSources')
-const { typeDefs, resolvers, dataSources} = require('./GraphQL')
+const { typeDefs, resolvers, dataSources, redisCaching} = require('./GraphQL')
+const responseCachePlugin = require('apollo-server-plugin-response-cache')
 
 
 const server = new ApolloServer({ 
     typeDefs,
     resolvers,
-    dataSources
+    dataSources,
+    cache: redisCaching
 });
 
+
+//(new Redis()).set("foo", "bar");
 server.listen().then(({ url }) => {
   console.log(`🚀  Server ready at ${url} 🚀`);
 });
