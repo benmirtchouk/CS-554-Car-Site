@@ -1,7 +1,6 @@
 require('dotenv').config()
 const {ApolloServer} = require('apollo-server')
 const { typeDefs, resolvers, dataSources, redisCaching} = require('./GraphQL')
-const responseCachePlugin = require('apollo-server-plugin-response-cache')
 
 
 const server = new ApolloServer({ 
