@@ -1,9 +1,9 @@
 import React, {useContext, useState} from 'react';
 import {Link, useHistory} from 'react-router-dom';
-import { AuthContext } from './firebase/Auth';
-import {logInEmailPassword, logInSocialMedia} from './firebase/Firebase';
-import '../App.css';
-import '../Carigs.css';
+import { AuthContext } from '../firebase/Auth';
+import {logInEmailPassword, logInSocialMedia} from '../firebase/Firebase';
+import '../../App.css';
+import '../../Carigs.css';
 
 const Login = () => {
   const [error, setError] = useState(false);

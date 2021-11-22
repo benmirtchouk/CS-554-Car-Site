@@ -1,7 +1,7 @@
 import React from 'react';
-import '../App.css';
-import '../Carigs.css';
-import SideBar from './sidebars/SideBar.js';
+import '../../App.css';
+import '../../Carigs.css';
+import SideBar from '../sidebars/SideBar.js';
 
   const DOT = () => {
   const slinks = [ 
