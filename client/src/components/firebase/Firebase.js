@@ -48,7 +48,7 @@ const logInSocialMedia = async (provider) => {
 }
 
 const signUpUserWithEmailPassword = async (email, password, displayName, phoneNumber) => {
-   console.log(`FORM INPUTS: email: ${email}, displayName: ${displayName}, phoneNumber: ${phoneNumber}`);
+   //console.log(`FORM INPUTS: email: ${email}, displayName: ${displayName}, phoneNumber: ${phoneNumber}`);
    await auth.createUserWithEmailAndPassword(email, password).then( (res) => {
       let user=auth.currentUser;
       user.updateProfile({ displayName:displayName, phoneNumber:phoneNumber });
