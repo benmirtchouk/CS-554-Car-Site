@@ -1,10 +1,10 @@
 import React, {useContext, useState} from 'react';
 import {Redirect, useHistory} from 'react-router-dom';
-import {signUpUserWithEmailPassword} from './firebase/Firebase';
-import { AuthContext } from './firebase/Auth';
-import '../App.css';
-import '../Carigs.css';
-import SideBar from './sidebars/SideBar.js';
+import {signUpUserWithEmailPassword} from '../firebase/Firebase';
+import { AuthContext } from '../firebase/Auth';
+import '../../App.css';
+import '../../Carigs.css';
+import SideBar from '../sidebars/SideBar.js';
 
 const SignUp = () => {
   const {currentUser} = useContext(AuthContext);

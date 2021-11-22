@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react';
-import {useHistory} from 'react-router-dom';
+import {useHistory, Link} from 'react-router-dom';
 import {AuthContext} from './components/firebase/Auth';
 import {logOut} from './components/firebase/Firebase.js';
 import './App.css';
@@ -47,32 +47,28 @@ const NavBar = () => {
   return (
 	   <nav id="top-navbar" className="navbar navbar-expand-sm fixed-top">
 	     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarItems" aria-controls="navbarItems" aria-expanded="false" aria-label="Toggle navigation">More</button>
-             <a className="navbar-brand" href="/">Carigslist</a>
+             <Link className="navbar-brand" to="/">Carigslist</Link>
 	     <div className="collapse navbar-collapse" id="navbarItems">
 	     <ul className="navbar-nav">
-        	<li className="nav-item">
-        	  <a className="nav-link" href="/sellers">Sellers</a>
-        	</li>
+        	  <Link className="nav-link" to="/sellers">Sellers</Link>
 	        <li className="nav-item dropdown">
 	           <a className="nav-link dropdown-toggle" href="#search_cars" data-toggle="dropdown">Search Cars</a>
 	         <div className="dropdown-menu dropdown-menu-right">
-        	  <a className="nav-link1" href="/find_by_vin">Find By Vin</a>
-	          <br />
-        	  <a className="nav-link1" href="/find_by_make">Find By Make</a>
-	          <br />
-        	  <a className="nav-link1" href="/find_by_model">Find By Model</a>
-	          <br />
-        	  <a className="nav-link1" href="/find_by_year">Find By Year</a>
+        	  <Link className="nav-link1" to="/find_by_vin">Find By Vin</Link>
+	           <br />
+        	  <Link className="nav-link1" to="/find_by_make">Find By Make</Link>
+	           <br />
+        	  <Link className="nav-link1" to="/find_by_year">Find By Year</Link>
 	         </div>
 	        </li>
 	        <li className="nav-item dropdown">
 	           <a className="nav-link dropdown-toggle" href="#analytics_dd" data-toggle="dropdown">Analytics</a>
 	         <div className="dropdown-menu dropdown-menu-right">
-        	  <a className="nav-link1" href="/kelly">Kelly</a>
+        	  <Link className="nav-link1" to="/kelly">Kelly</Link>
 	          <br />
-        	  <a className="nav-link1" href="/safety">Safety</a>
+        	  <Link className="nav-link1" to="/safety">Safety</Link>
 	          <br />
-        	  <a className="nav-link1" href="/dot">DOT</a>
+        	  <Link className="nav-link1" to="/dot">DOT</Link>
 	         </div>
 	        </li>
        </ul>
