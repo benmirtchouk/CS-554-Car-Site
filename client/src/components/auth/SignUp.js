@@ -19,7 +19,7 @@ const SignUp = () => {
     e.preventDefault();
     setPwMatch('');
     const {displayName, email, phoneNumber, firstPwd, secondPwd } = e.target.elements;
-    console.log(`displayName: ${displayName.value}, email: ${email.value}`);
+    //console.log(`displayName: ${displayName.value}, email: ${email.value}`);
     if (firstPwd.value !== secondPwd.value) {
       setPwMatch('Passwords do not match');
       return false;
