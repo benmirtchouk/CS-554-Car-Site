@@ -16,7 +16,6 @@ hr {
 div.mainbody {
 float:left;
 margin-left:125px; 
-margin-top:50px;
 margin-right:20px;
 }
 
@@ -48,18 +47,14 @@ div.account_info span {
 
 div.sidenav {
   height: 100%; /* Full-height: remove this if you want "auto" height */
-  width: 100px; /* Set the width of the sidebar */
   position: fixed; /* Fixed Sidebar (stay in place on scroll) */
-  z-index: 1; /* Stay on top */
-  top: 0; /* Stay at the top */
   left: 0;
   background-color: black;
   color: white;
   overflow-x: hidden; /* Disable horizontal scroll */
-  padding-top: 75px;
-  padding-left: 0px;
-  margin-left:50px;
-  margin-left:0px;
+  padding-top: 15px;
+  padding-left: 5px;
+  padding-right: 5px;
 }
 
 .sidenav a {
@@ -89,7 +84,21 @@ div {
 .navbar-brand {
   color: white;
   font-size:150%;
+  margin-right:30px;
+  margin-left:5px;
   padding-right:40px;
+}
+
+nav.navbar {
+  width: inherit;
+  top: 0%;
+  background-color: black;
+}
+
+div.row {
+  margin-left:0px;
+  padding:0px;
+  max-width:100%;
 }
 
 nav#top-navbar {
@@ -148,13 +157,24 @@ nav#top-navbar .dropdown-menu .nav-link1 {
   color: black;
 }
 
+nav.navbar a.nav-link {
+  text-align:left;
+  padding-bottom:0px;
+  padding-right:10px;
+  padding-top:0px;
+  margin-bottom:0px;
+  margin-top:0px;
+  margin-right:10px;
+  margin-left:5px;
+  color:white;
+}
 
 .sidenav a:hover {
   color: #ffff00;
 }
 
 div.mainbody form{
-  margin-top:100px;
+/*  margin-top:100px;*/
   margin-bottom:10px;
 }
 
