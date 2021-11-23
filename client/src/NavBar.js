@@ -31,8 +31,8 @@ const NavBar = () => {
   };
 
   return (
-	   <nav id="top-navbar" className="navbar navbar-expand-sm fixed-top">
-	     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarItems" aria-controls="navbarItems" aria-expanded="false" aria-label="Toggle navigation">More</button>
+	   <nav id="top-navbar" className="navbar navbar-expand-sm">
+	     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarItems" aria-controls="navbarItems" aria-expanded="false" aria-label="Toggle navigation">Menu</button>
              <Link className="navbar-brand" to="/">Carigslist</Link>
 	     <div className="collapse navbar-collapse" id="navbarItems">
 	     <ul className="navbar-nav">
