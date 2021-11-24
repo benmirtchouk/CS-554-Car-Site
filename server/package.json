@@ -1,0 +1,29 @@
+{
+  "name": "carigslist-server",
+  "version": "1.0.0",
+  "description": "Backend logic for carigslist",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/benmirtchouk/CS-554-Car-Site.git"
+  },
+  "author": "https://github.com/benmirtchouk/CS-554-Car-Site/graphs/contributors",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/benmirtchouk/CS-554-Car-Site/issues"
+  },
+  "homepage": "https://github.com/benmirtchouk/CS-554-Car-Site#readme",
+  "dependencies": {
+    "apollo-datasource-rest": "^3.4.0",
+    "apollo-server": "^3.5.0",
+    "apollo-server-cache-redis": "^3.3.0",
+    "apollo-server-plugin-response-cache": "^3.4.0",
+    "dotenv": "^10.0.0",
+    "graphql": "^15.7.2",
+    "ioredis": "^4.28.0"
+  }
+}
