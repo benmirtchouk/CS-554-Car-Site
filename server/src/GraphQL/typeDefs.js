@@ -15,10 +15,13 @@ directive @cacheControl(
 
 type Query {
     vehicleBy(vin: String!): Vehicle @cacheControl(maxAge: 240, scope: PUBLIC)
+    getPointsBy(point: GeocodedPointInput!, radius: Int!): [GeocodedPoint]
+
 }
 
 type Mutation {
     modifyPlaceHolder(placeholder: String!): Placeholder
+    addPoint(point: GeocodedPointInput!): GeocodedPoint!
 }
 
 
@@ -32,6 +35,16 @@ type Vehicle @cacheControl(maxAge: 240) {
     manufacturer: String!
     model: String!
     year: Int!
+}
+
+type GeocodedPoint {
+    longitude: Float!
+    latitude: Float! 
+}
+
+input GeocodedPointInput {
+    longitude: Float!
+    latitude: Float! 
 }
 `;
 

@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node src/index.js"
+    "start": "node src/index.js",
+    "seed": "node src/tasks/seed.js"
   },
   "repository": {
     "type": "git",
@@ -24,6 +25,7 @@
     "apollo-server-plugin-response-cache": "^3.4.0",
     "dotenv": "^10.0.0",
     "graphql": "^15.7.2",
-    "ioredis": "^4.28.0"
+    "ioredis": "^4.28.0",
+    "mongodb": "^4.2.0"
   }
 }
