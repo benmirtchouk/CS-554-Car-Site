@@ -36,6 +36,21 @@ class GeocodedLocationDataSource extends MongoDataSource {
                 .map(e => new GeoJsonPoint(e.location.coordinates))
     }
 
+
+    async insertPoint(point) {
+        if (! (point instanceof GeoJsonPoint) ) { throw new Error("Center point must be a GeoJson point!")}
+        
+        const value = {
+            location: {
+                type: "Point",
+                coordinates: point.coordinateArray
+            }
+        }
+
+        /// TODO Upsert?
+        await this.collection.insertOne(value);
+    }
+
 }
 
 module.exports = GeocodedLocationDataSource;

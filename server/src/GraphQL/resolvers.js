@@ -1,6 +1,4 @@
-/// TODO MOVE
 const { UserInputError, ApolloError } = require("apollo-server-errors");
-const { geocode } = require("../config/mongoCollections");
 const GeoJsonPoint = require("../DataModel/GeoJson/GeoJsonPoint");
 const { InvalidCoordinateType } = require("../DataModel/GeoJson/GeoJsonType");
 
@@ -13,18 +11,7 @@ const resolvers = {
 
         getPointsBy: async(parent, args, { dataSources }) => {
 
-            let point;
-            try {
-                point = new GeoJsonPoint(args.point);
-            } catch(e) {
-                if (e instanceof InvalidCoordinateType) {
-                    throw new UserInputError(e.message);
-                } else {
-                    console.error(e);
-                    throw new ApolloError("Failed to parse provided point")
-                }
-            }
-
+            const point = convertPointFromGraphQLToDataModel(args.point);
             const returnedPoints = await dataSources.geocoded.locationsWithinMileRadius(point, args.radius)
 
             return returnedPoints
@@ -36,16 +23,29 @@ const resolvers = {
         modifyPlaceHolder: async (parent, args) => {
             return {placeholder: "Hello World!"}
         },
-        addPoint: async (parent, args) => {
+        addPoint: async (parent, args, { dataSources } ) => {
             
-            const point = args.point;
-            const geocodeCollection = await geocode();
-            /// TODO Upsert?
-            await geocodeCollection.insertOne(point);
+            const point = convertPointFromGraphQLToDataModel(args.point)
+            await dataSources.geocoded.insertPoint(point);
 
-            return point;
+            return point.coordinateJson;
         }
     }
 };
+
+
+
+const convertPointFromGraphQLToDataModel = (point) => {
+    try {
+        return  new GeoJsonPoint(point);
+    } catch(e) {
+        if (e instanceof InvalidCoordinateType) {
+            throw new UserInputError(e.message);
+        } else {
+            console.error(e);
+            throw new ApolloError("Failed to parse provided point")
+        }
+    }
+}
 
 module.exports = resolvers;

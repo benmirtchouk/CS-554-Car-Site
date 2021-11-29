@@ -32,11 +32,7 @@ async function seedDB() {
                 points.push({ location: createGeocodedPoint(i, j)})
             }
         }
-        await geocodeCollection.insertMany(points);
-
-
-        /// TODO: MOVE TO ACTUAL CODE
-        await geocodeCollection.createIndex( { location : "2dsphere" } )
+        await geocodeCollection.insertMany(points);   
 
     } catch (err) {
         console.error(err);
