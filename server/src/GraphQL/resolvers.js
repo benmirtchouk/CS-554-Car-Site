@@ -1,5 +1,8 @@
 /// TODO MOVE
+const { UserInputError, ApolloError } = require("apollo-server-errors");
 const { geocode } = require("../config/mongoCollections");
+const GeoJsonPoint = require("../DataModel/GeoJson/GeoJsonPoint");
+const { InvalidCoordinateType } = require("../DataModel/GeoJson/GeoJsonType");
 
 
 const resolvers = {
@@ -10,13 +13,22 @@ const resolvers = {
 
         getPointsBy: async(parent, args, { dataSources }) => {
 
-            const point = args.point;
-            const pointArray = [point.longitude, point.latitude];
+            let point;
+            try {
+                point = new GeoJsonPoint(args.point);
+            } catch(e) {
+                if (e instanceof InvalidCoordinateType) {
+                    throw new UserInputError(e.message);
+                } else {
+                    console.error(e);
+                    throw new ApolloError("Failed to parse provided point")
+                }
+            }
 
-            const returnedPoints = await dataSources.geocoded.locationsWithinMileRadius(pointArray, args.radius)
-            console.log(JSON.stringify(returnedPoints));
+            const returnedPoints = await dataSources.geocoded.locationsWithinMileRadius(point, args.radius)
 
-            return returnedPoints;
+            return returnedPoints
+                    .map(e => e.coordinateJson)
         }
 
     },
@@ -27,8 +39,6 @@ const resolvers = {
         addPoint: async (parent, args) => {
             
             const point = args.point;
-            console.log(point.longitude)
-            console.log(point.latitude)
             const geocodeCollection = await geocode();
             /// TODO Upsert?
             await geocodeCollection.insertOne(point);

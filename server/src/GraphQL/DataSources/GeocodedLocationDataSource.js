@@ -1,5 +1,6 @@
 const { MongoDataSource } = require('apollo-datasource-mongodb');
 const { UserInputError } = require('apollo-server-errors');
+const GeoJsonPoint = require('../../DataModel/GeoJson/GeoJsonPoint');
 
 
 class GeocodedLocationDataSource extends MongoDataSource {
@@ -13,26 +14,26 @@ class GeocodedLocationDataSource extends MongoDataSource {
 
 
 
+    /// Convenience wrapper for a location query which converts miles to Radians 
     async locationsWithinMileRadius(centerPoint, radius) {
         return await this.locationsWithinRadianRadius(centerPoint, this.milesToRadian(radius))
     }
 
-
+    /// Find all data points within the provided radius, in radians, from the center point
     async locationsWithinRadianRadius(centerPoint, radius) {
         if (!isFinite(radius) || radius < 0) { throw new UserInputError("Radians must be non negative!"); }
+        if (! (centerPoint instanceof GeoJsonPoint) ) { throw new Error("Center point must be a GeoJson point!")}
         const results = (await this.collection.find({
             location: { 
                 $geoWithin: { 
-                    $centerSphere: [ centerPoint, radius ] 
+                    $centerSphere: [ centerPoint.coordinateArray, radius ] 
                 } 
             }
-
         })
         .toArray())
 
         return results
-                .map(e => e.location.coordinates)
-                .map(e => { return { longitude: e[0], latitude:e[1] }})
+                .map(e => new GeoJsonPoint(e.location.coordinates))
     }
 
 }
