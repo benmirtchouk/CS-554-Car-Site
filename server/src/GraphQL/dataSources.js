@@ -1,7 +1,9 @@
-const { NHSTADataSource } = require('./DataSources')
+const { NHSTADataSource, GeocodedLocationDataSource } = require('./DataSources')
+const { geocode } = require('../config/mongoCollections');
 
-const dataSources = () => ({
+const dataSources = async () => ({
     nhsta: new NHSTADataSource.NHSTADataSource(),
+    geocoded: new GeocodedLocationDataSource(await geocode())
   })
 
 

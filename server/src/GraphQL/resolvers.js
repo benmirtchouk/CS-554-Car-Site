@@ -4,37 +4,16 @@ const { geocode } = require("../config/mongoCollections");
 
 const resolvers = {
     Query: {
-        vehicleBy: async (parent, args, { dataSources }) => {
+        vehicleBy: async (parent, args, { dataSources })  => {
             return await dataSources.nhsta.vinQueryURL(args.vin);
         },
 
-        getPointsBy: async(parent, args) => {
-
-            const milesToRadian = function(miles){
-                const earthRadiusInMiles = 3963;
-                return miles / earthRadiusInMiles;
-            };
-            
-
+        getPointsBy: async(parent, args, { dataSources }) => {
 
             const point = args.point;
             const pointArray = [point.longitude, point.latitude];
-            const radius = milesToRadian(args.radius);
-            console.log(pointArray)
-            console.log(radius);
-            const geocodeCollection = await geocode();
-            const returnedPoints = (await geocodeCollection.find({
-                location: { 
-                    $geoWithin: { 
-                        $centerSphere: [ pointArray, radius ] 
-                    } 
-                }
 
-            })
-            .toArray())
-            .map(e => e.location.coordinates)
-            .map(e => { return { longitude: e[0], latitude:e[1] }})
-
+            const returnedPoints = await dataSources.geocoded.locationsWithinMileRadius(pointArray, args.radius)
             console.log(JSON.stringify(returnedPoints));
 
             return returnedPoints;

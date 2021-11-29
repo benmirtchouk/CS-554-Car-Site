@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/benmirtchouk/CS-554-Car-Site#readme",
   "dependencies": {
+    "apollo-datasource-mongodb": "^0.5.2",
     "apollo-datasource-rest": "^3.4.0",
     "apollo-server": "^3.5.0",
     "apollo-server-cache-redis": "^3.3.0",
