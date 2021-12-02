@@ -1,9 +1,9 @@
-import React, { useContext } from "react";
-import { AuthContext } from "./firebase/Auth";
+import React from "react"; // useContext
+// import { AuthContext } from "./firebase/Auth";
 import Sidebar from "./sidebars/Sidebar";
 
 const Home = () => {
-  const { currentUser } = useContext(AuthContext);
+  // const { currentUser } = useContext(AuthContext);
   const slinks = [
     {
       name: "Recent Sales",
@@ -11,10 +11,10 @@ const Home = () => {
     },
   ];
 
-  if (currentUser) {
-    console.log(`currentUser: ${currentUser.uid}`);
-    // console.log(currentUser);
-  }
+  // if (currentUser) {
+  //   console.log(`currentUser: ${currentUser.uid}`);
+  //   // console.log(currentUser);
+  // }
 
   return (
     <div className="main_layout">

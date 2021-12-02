@@ -23,8 +23,15 @@
         "react",
         "prettier"
     ],
+    "ignorePatterns": ["**/firebase/*.js", "**/auth/*.js"],
     "rules": {
         "prettier/prettier": "warn",
+        "react/no-unstable-nested-components": [
+            "off",
+            {
+                "allowAsProps": true
+            }
+        ],
         "react/jsx-filename-extension": [
             1,
             {

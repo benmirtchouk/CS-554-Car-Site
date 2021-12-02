@@ -15,16 +15,14 @@ const auth = fbApp.auth();
 
 const logInSocialMedia = async (provider) => {
   let user;
-  const googleProvider = new firebase.auth.GoogleAuthProvider();
-  const fbProvider = new firebase.auth.FacebookAuthProvider();
-
   switch (provider) {
     case "google":
+      const googleProvider = new firebase.auth.GoogleAuthProvider();
       await auth
         .signInWithPopup(googleProvider)
         .then((res) => {
           user = res.user;
-          // let provToken = res.accessToken;
+          //let provToken = res.accessToken;
           console.log(
             `Logged In User (logInSocialMedia): uid: ${user.uid}, displayName: ${user.displayName}, email: ${user.email}, phoneNumber: ${user.phoneNumber}, photoURL: ${user.photoURL}`
           );
@@ -35,11 +33,12 @@ const logInSocialMedia = async (provider) => {
       break;
 
     case "facebook":
+      const fbProvider = new firebase.auth.FacebookAuthProvider();
       await auth
         .signInWithPopup(fbProvider)
         .then((res) => {
           user = res.user;
-          // let provToken = res.accessToken;
+          //let provToken = res.accessToken;
           console.log(
             `Logged In User (logInSocialMedia): uid: ${user.uid}, displayName: ${user.displayName}, email: ${user.email}, phoneNumber: ${user.phoneNumber}, photoURL: ${user.photoURL}`
           );
@@ -64,14 +63,14 @@ const signUpUserWithEmailPassword = async (
   displayName,
   phoneNumber
 ) => {
-  // console.log(`FORM INPUTS: email: ${email}, displayName: ${displayName}, phoneNumber: ${phoneNumber}`);
+  //console.log(`FORM INPUTS: email: ${email}, displayName: ${displayName}, phoneNumber: ${phoneNumber}`);
   await auth
     .createUserWithEmailAndPassword(email, password)
-    .then(() => {
-      const user = auth.currentUser;
+    .then((res) => {
+      let user = auth.currentUser;
       user.updateProfile({
-        displayName,
-        phoneNumber,
+        displayName: displayName,
+        phoneNumber: phoneNumber,
       });
       // sign out of the register and force them to login
       alert(
@@ -91,7 +90,7 @@ const logInEmailPassword = async (email, password) => {
   await auth
     .signInWithEmailAndPassword(email, password)
     .then((res) => {
-      const { user } = res;
+      let user = res.user;
       console.log(
         `Logged In User (logInEmailPassword): uid: ${user.uid}, displayName: ${user.displayName}, email: ${user.email}, phoneNumber: ${user.phoneNumber}, photoURL: ${user.photoURL}`
       );

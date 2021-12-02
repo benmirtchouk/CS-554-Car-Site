@@ -15,7 +15,7 @@ export { default as Login } from "./auth/Login";
 export { default as SignUp } from "./auth/SignUp";
 
 // Firebase
-export { default as AuthProvider } from "./firebase/Auth";
+export { AuthProvider, AuthContext } from "./firebase/Auth";
 
 // Messaging
 export { default as MessageBoard } from "./messaging/MessageBoard";

@@ -23,6 +23,7 @@ import {
 } from "./components";
 
 import "./App.css";
+import "./Carigs.css";
 
 const App = () => (
   <AuthProvider>
@@ -37,10 +38,22 @@ const App = () => (
           {/* only act on one route  */}
           <Switch>
             <Route exact path="/" component={Home} />
-            <ChkRoute path="/sellers" component={Sellers} />
-            <ChkRoute path="/sell_car" component={SellCar} />
-            <ChkRoute path="/my_listings" component={MyListings} />
-            <ChkRoute path="/message_board" component={MessageBoard} />
+            <ChkRoute
+              path="/sellers"
+              render={(props) => <Sellers {...props} />}
+            />
+            <ChkRoute
+              path="/sell_car"
+              render={(props) => <SellCar {...props} />}
+            />
+            <ChkRoute
+              path="/my_listings"
+              render={(props) => <MyListings {...props} />}
+            />
+            <ChkRoute
+              path="/message_board"
+              render={(props) => <MessageBoard {...props} />}
+            />
             <Route path="/recent_sales" component={RecentSales} />
             <Route path="/kelly" component={Kelly} />
             <Route path="/safety" component={Safety} />

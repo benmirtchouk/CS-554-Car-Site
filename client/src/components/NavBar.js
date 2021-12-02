@@ -1,31 +1,32 @@
-import React, { useContext } from "react";
-import { useHistory, Link } from "react-router-dom";
-import { AuthContext } from "./firebase/Auth";
-import { logOut } from "./firebase/Firebase";
+import React from "react"; // useContext
+import { Link } from "react-router-dom"; // useHistory
+// import { AuthContext } from "./firebase/Auth";
+// import { logOut } from "./firebase/Firebase";
 
 const NavBar = () => {
-  const { currentUser } = useContext(AuthContext);
-  const history = useHistory();
+  // const { currentUser } = useContext(AuthContext);
+  // const history = useHistory();
+  console.log("NavBar");
 
-  const handleLoginButtonClick = async (action) => {
-    try {
-      switch (action) {
-        case "LogIn":
-          history.push("/login");
-          break;
-        case "LogOut":
-          logOut();
-          history.push("/");
-          break;
-        default:
-          alert(`unexpected action: ${action}`);
-          break;
-      }
-    } catch (e) {
-      console.log(`${e}`);
-      alert(e.message);
-    }
-  };
+  // const handleLoginButtonClick = async (action) => {
+  //   try {
+  //     switch (action) {
+  //       case "LogIn":
+  //         history.push("/login");
+  //         break;
+  //       case "LogOut":
+  //         logOut();
+  //         history.push("/");
+  //         break;
+  //       default:
+  //         // alert(`unexpected action: ${action}`);
+  //         break;
+  //     }
+  //   } catch (e) {
+  //     // console.log(`${e}`);
+  //     // alert(e.message);
+  //   }
+  // };
 
   return (
     <nav id="top-navbar" className="navbar navbar-expand-sm">
@@ -94,7 +95,7 @@ const NavBar = () => {
           </li>
         </ul>
       </div>
-      <div className="account_info">
+      {/* <div className="account_info">
         {currentUser && (
           <span className="userName">{currentUser.displayName}</span>
         )}
@@ -111,7 +112,7 @@ const NavBar = () => {
             LogIn
           </button>
         )}
-      </div>
+      </div> */}
     </nav>
   );
 };
