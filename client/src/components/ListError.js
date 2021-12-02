@@ -1,18 +1,19 @@
 import React from "react";
-import '../App.css';
-import '../Carigs.css';
 
-const ListError = (props) => {
-
-  console.log(`${props.info.errorCode}`);
-  console.log(`${props.info.errorMessage}`);
+const ListError = ({ info }) => {
+  console.err(`${info.errorCode}`);
+  console.err(`${info.errorMessage}`);
 
   return (
-     <div>
-     <h2 className="error">{ props.info.errorCode }</h2>
-     <p className="error">{ props.info.errorMessage }</p>
-     </div>
+    <div>
+      <h2 className="error">{info.errorCode}</h2>
+      <p className="error">{info.errorMessage}</p>
+    </div>
   );
+};
+
+ListError.propTypes = {
+  info: Object.isRequired,
 };
 
 export default ListError;

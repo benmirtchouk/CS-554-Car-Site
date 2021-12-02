@@ -1,6 +1,7 @@
-import React, { useContext } from 'react';
-import { Route, Redirect } from 'react-router-dom';
-import { AuthContext } from '../firebase/Auth';
+import React, { useContext } from "react";
+import PropTypes from "prop-types";
+import { Route, Redirect } from "react-router-dom";
+import { AuthContext } from "../firebase/Auth";
 
 const ChkRoute = ({ component: RouteComponent, ...rest }) => {
   const { currentUser } = useContext(AuthContext);
@@ -9,14 +10,18 @@ const ChkRoute = ({ component: RouteComponent, ...rest }) => {
     <Route
       {...rest}
       render={(routeProps) =>
-        !!currentUser ? (
+        currentUser ? (
           <RouteComponent {...routeProps} />
         ) : (
-          <Redirect to={'login'} />
+          <Redirect to="login" />
         )
       }
     />
   );
+};
+
+ChkRoute.propTypes = {
+  component: PropTypes.element.isRequired,
 };
 
 export default ChkRoute;
