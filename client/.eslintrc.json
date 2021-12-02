@@ -23,7 +23,10 @@
         "react",
         "prettier"
     ],
-    "ignorePatterns": ["**/firebase/*.js", "**/auth/*.js"],
+    "ignorePatterns": [
+        "**/firebase/*.js",
+        "**/auth/*.js"
+    ],
     "rules": {
         "prettier/prettier": "warn",
         "react/no-unstable-nested-components": [

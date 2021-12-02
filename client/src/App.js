@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import {
   AuthProvider,
   ChkRoute,
-  NavBar,
+  Header,
   Home,
   Sellers,
   SellCar,
@@ -29,11 +29,7 @@ const App = () => (
   <AuthProvider>
     <Router>
       <div className="App">
-        <div className="body_bars ml-0 mr-0 pl-0 pr-0">
-          <div className="row col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 mx-10">
-            <NavBar />
-          </div>
-        </div>
+        <Header />
         <div className="body_bars ml-2 mr-0 pl-0 pr-0">
           {/* only act on one route  */}
           <Switch>

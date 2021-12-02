@@ -1,6 +1,8 @@
 import React, { useState } from "react"; // useContext
 import { Link, useHistory } from "react-router-dom";
 // import { AuthContext } from "../firebase/Auth";
+import { IoLogoGoogle, IoLogoFacebook } from "react-icons/io";
+import { Button, Form } from "react-bootstrap";
 import { logInEmailPassword, logInSocialMedia } from "../firebase/Firebase";
 
 const Login = () => {
@@ -39,65 +41,87 @@ const Login = () => {
   };
 
   return (
-    <div className="main_layout">
-      <div className="mainbody">
-        <h1>Login</h1>
-        <form className="LoginForm" onSubmit={handleFormSubmit}>
-          <div className="form-group input-group">
-            <label className="loginlabel" htmlFor="email">
-              Email:
-            </label>
-            <input
-              id="email"
-              name="email"
-              className="form-control"
-              placeholder="enter email address"
-              type="email"
-            />
-          </div>
-          <div className="form-group input-group">
-            <label className="loginlabel" htmlFor="password">
-              Password:
-            </label>
-            <input
-              id="password"
-              name="password"
-              className="form-control"
-              placeholder="password"
-              type="password"
-            />
-          </div>
-          {error && <p className="LoginError">{errorMsg}</p>}
-          <div className="form-group">
-            <button
-              className="login-btn btn-block"
-              type="submit"
-              name="submitBtn"
-            >
-              {" "}
-              Log In{" "}
-            </button>
-          </div>
-        </form>
-        <Link to="/signup" className="">
-          Register as a New User
-        </Link>
-        <hr />
-        <button
-          className="login-btn mt-20 ml-2"
-          type="button"
-          onClick={() => handleButtonClick("google")}
-        >
-          Login via Google
-        </button>
-        <button
-          className="login-btn ml-2"
-          type="button"
-          onClick={() => handleButtonClick("facebook")}
-        >
-          Login via Facebook
-        </button>
+    <div className="max-w-sm mx-auto text-left">
+      <h1 className="-mb-2 mt-2">Login</h1>
+      {error && <p className="LoginError">{errorMsg}</p>}
+      <div className="space-x-2 py-4">
+        <Button type="button" className="button-icon" onClick={() => handleButtonClick("google")}>
+          <IoLogoGoogle />
+          Login with Google
+        </Button>
+        <Button type="button" className="button-icon" onClick={() => handleButtonClick("facebook")}>
+          <IoLogoFacebook />
+          Login with Facebook
+        </Button>
       </div>
+      <Form onSubmit={handleFormSubmit} className="mb-2">
+        <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Label>Email address</Form.Label>
+          <Form.Control
+            placeholder="Enter email"
+            id="email"
+            name="email"
+            className="form-control"
+            type="email"
+          />
+          <Form.Text className="text-muted">
+            We'll never share your email with anyone else.
+          </Form.Text>
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Label>Password</Form.Label>
+          <Form.Control
+            type="password"
+            placeholder="Password"
+            id="password"
+            name="password"
+            className="form-control"
+          />
+        </Form.Group>
+        <Button variant="primary" type="submit">
+          Login
+        </Button>
+      </Form>
+      {/* <form className="LoginForm" onSubmit={handleFormSubmit}>
+        <div className="form-group input-group">
+          <label className="loginlabel" htmlFor="email">
+            Email:
+          </label>
+          <input
+            id="email"
+            name="email"
+            className="form-control"
+            placeholder="enter email address"
+            type="email"
+          />
+        </div>
+        <div className="form-group input-group">
+          <label className="loginlabel" htmlFor="password">
+            Password:
+          </label>
+          <input
+            id="password"
+            name="password"
+            className="form-control"
+            placeholder="password"
+            type="password"
+          />
+        </div>
+        <div className="form-group">
+          <button
+            className="login-btn btn-block"
+            type="submit"
+            name="submitBtn"
+          >
+            {" "}
+            Log In{" "}
+          </button>
+        </div>
+      </form> */}
+      <Link to="/signup" className="pt-2">
+        New here? Register!
+      </Link>
     </div>
   );
 };

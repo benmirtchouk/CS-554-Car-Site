@@ -17,7 +17,11 @@ const Sidebar = ({ sideLinks }) => (
 );
 
 Sidebar.propTypes = {
-  sideLinks: Array.isRequired,
+  sideLinks: Array,
+};
+
+Sidebar.defaultProps = {
+  sideLinks: [],
 };
 
 export default Sidebar;

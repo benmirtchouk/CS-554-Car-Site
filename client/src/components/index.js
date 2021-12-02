@@ -32,6 +32,7 @@ export { default as Sidebar } from "./sidebars/Sidebar";
 
 // Main Components
 export { default as ErrorPage } from "./ErrorPage";
+export { default as Header } from "./Header";
 export { default as Home } from "./Home";
 export { default as ListBody } from "./ListBody";
 export { default as ListError } from "./ListError";
