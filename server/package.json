@@ -1,11 +1,11 @@
 {
-  "name": "carigslist-server",
+  "name": "cs-554-car-site-server",
   "version": "1.0.0",
-  "description": "Backend logic for carigslist",
-  "main": "index.js",
+  "description": "Server for CS 554 final project",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node src/index.js"
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
@@ -18,12 +18,12 @@
   },
   "homepage": "https://github.com/benmirtchouk/CS-554-Car-Site#readme",
   "dependencies": {
-    "apollo-datasource-rest": "^3.4.0",
-    "apollo-server": "^3.5.0",
-    "apollo-server-cache-redis": "^3.3.0",
-    "apollo-server-plugin-response-cache": "^3.4.0",
+    "axios": "^0.24.0",
+    "bluebird": "^3.7.2",
+    "cors": "^2.8.5",
     "dotenv": "^10.0.0",
-    "graphql": "^15.7.2",
-    "ioredis": "^4.28.0"
+    "express": "^4.17.1",
+    "firebase-admin": "^10.0.0",
+    "redis": "^3.1.2"
   }
 }

@@ -8,10 +8,10 @@ const ListError = (props) => {
   console.log(`${props.info.errorMessage}`);
 
   return (
-     <div>
-     <h2 className="error">{ props.info.errorCode }</h2>
-     <p className="error">{ props.info.errorMessage }</p>
-     </div>
+    <div>
+      <h2 className="error">{props.info.errorCode}</h2>
+      <p className="error">{props.info.errorMessage}</p>
+    </div>
   );
 };
 

@@ -1,1 +1,0 @@
-exports.NHSTADataSource = require('./NHSTADataSource');

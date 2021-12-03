@@ -6,7 +6,7 @@ html {
   padding-left: 0px; }
 
 a {
-  color: #0000ff; 
+  color: #0000ff;
 }
 
 hr {
@@ -15,7 +15,7 @@ hr {
 
 div.mainbody {
 float:left;
-margin-left:125px; 
+margin-left:125px;
 margin-right:20px;
 }
 
@@ -131,7 +131,7 @@ h2.sum-header {
 
 p.error {
   margin-top: 20px;
-  color: #ee0000; 
+  color: #ee0000;
   font-weight: bold;
   font-size: 150%
 }
@@ -145,14 +145,14 @@ p.error {
   margin: 5px 2px 5px 2px;
   text-align: center;
   font-size: 180%;
-  width: 80%; 
+  width: 80%;
 }
 
 .dropdown-menu {
   padding: 5px 0px 5px 15px;
   margin: 0px;
 }
-  
+
 nav#top-navbar .dropdown-menu .nav-link1 {
   color: black;
 }
@@ -214,7 +214,7 @@ form.RegisterForm {
 p.LoginError {
   text-align: center;
   margin-top: 5px;
-  color: #ee0000; 
+  color: #ee0000;
   font-weight: bold;
   font-size: 75%
 }

@@ -13,12 +13,12 @@ const Safety = () => {
     <div className="main_layout">
       <SideBar side_links={slinks} />
       <div className="mainbody">
-           <h1>Safety</h1>
-           <br /><br />
-           <p>
-              This is the Safety page.
-           </p>
-        </div>
+        <h1>Safety</h1>
+        <br /><br />
+        <p>
+          This is the Safety page.
+        </p>
+      </div>
     </div>
   );
 };
