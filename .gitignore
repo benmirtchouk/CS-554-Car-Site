@@ -4,5 +4,9 @@ server/node_modules
 package.lock-json
 client/package-lock.json
 server/package-lock.json
+client/yarn.lock
+server/yarn.lock
+dump.rdb
+yarn.lock
 .env
 *.swp
