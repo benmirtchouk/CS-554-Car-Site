@@ -2,6 +2,12 @@
   color: rgba(107, 114, 128, 0.5) !important;
 }
 
+.signup-or {
+  max-width: 64px;
+  margin: 0 auto;
+  transform: translateY(-30px);
+}
+
 .button-icon svg {
   display: inline-block;
   margin-right: 3px;

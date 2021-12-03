@@ -38,7 +38,7 @@ const Header = () => (
               placeholder="Find a Car"
             />
             <DropdownButton
-              variant="outline-secondary"
+              variant="secondary"
               title="Find By"
               id="input-group-dropdown-2"
               align="end"
@@ -60,7 +60,7 @@ const Header = () => (
             </Button>
           </LinkContainer>
           <LinkContainer to="/login">
-            <Button variant="secondary" id="search">
+            <Button variant="outline-secondary" id="search">
               Login
             </Button>
           </LinkContainer>

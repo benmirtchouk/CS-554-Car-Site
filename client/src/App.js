@@ -30,7 +30,7 @@ const App = () => (
     <Router>
       <div className="App">
         <Header />
-        <div className="body_bars ml-2 mr-0 pl-0 pr-0">
+        <div className="body_bars">
           {/* only act on one route  */}
           <Switch>
             <Route exact path="/" component={Home} />

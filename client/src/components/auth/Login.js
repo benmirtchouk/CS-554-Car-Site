@@ -1,14 +1,14 @@
-import React, { useState } from "react"; // useContext
-import { Link, useHistory } from "react-router-dom";
-// import { AuthContext } from "../firebase/Auth";
+import React, { useContext, useState } from "react"; // useContext
+import { Link, Redirect, useHistory } from "react-router-dom";
 import { IoLogoGoogle, IoLogoFacebook } from "react-icons/io";
 import { Button, Form } from "react-bootstrap";
+import { AuthContext } from "../firebase/Auth";
 import { logInEmailPassword, logInSocialMedia } from "../firebase/Firebase";
 
 const Login = () => {
+  const { currentUser } = useContext(AuthContext);
   const [error, setError] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
-  // const { currentUser } = useContext(AuthContext);
   const history = useHistory();
 
   const handleFormSubmit = async (e) => {
@@ -29,6 +29,8 @@ const Login = () => {
       });
   };
 
+  if (currentUser) return <Redirect to="/" />;
+
   const handleButtonClick = async (provider) => {
     await logInSocialMedia(provider)
       .then(() => {
@@ -41,19 +43,31 @@ const Login = () => {
   };
 
   return (
-    <div className="max-w-sm mx-auto text-left">
+    <div className="max-w-md mx-auto text-left p-4">
       <h1 className="-mb-2 mt-2">Login</h1>
       {error && <p className="LoginError">{errorMsg}</p>}
-      <div className="space-x-2 py-4">
-        <Button type="button" className="button-icon" onClick={() => handleButtonClick("google")}>
+      <div className="space-x-2 pt-4 pb-2">
+        <Button
+          type="button"
+          className="button-icon"
+          onClick={() => handleButtonClick("google")}
+        >
           <IoLogoGoogle />
           Login with Google
         </Button>
-        <Button type="button" className="button-icon" onClick={() => handleButtonClick("facebook")}>
+        <Button
+          type="button"
+          className="button-icon"
+          onClick={() => handleButtonClick("facebook")}
+        >
           <IoLogoFacebook />
           Login with Facebook
         </Button>
       </div>
+      <hr />
+      <p className=" signup-or relative text-center text-gray-400 bg-white mt-2 -mb-6 italic">
+        or
+      </p>
       <Form onSubmit={handleFormSubmit} className="mb-2">
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
@@ -65,7 +79,11 @@ const Login = () => {
             type="email"
           />
           <Form.Text className="text-muted">
-            We'll never share your email with anyone else.
+            We'll{" "}
+            <span className="line-through">
+              never share your email with anyone
+            </span>{" "}
+            directly share everything you give us with Mark Zuckerberg.
           </Form.Text>
         </Form.Group>
 
