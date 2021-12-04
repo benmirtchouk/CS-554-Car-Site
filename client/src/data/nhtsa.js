@@ -14,7 +14,7 @@ async function createHeader() {
 }
 
 async function queryUrl(url, config) {
-  return await axios.get(url, { ...config, validateStatus: (status) => status < 500 });
+  return axios.get(url, { ...config, validateStatus: (status) => status < 500 });
 }
 
 export async function decodeVin(vin) {

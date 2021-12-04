@@ -1,7 +1,5 @@
-import React from 'react';
-import '../../App.css';
-import '../../Carigs.css';
-import SideBar from '../sidebars/SideBar.js';
+import React from "react";
+import Sidebar from "../sidebars/Sidebar";
 
 const Sellers = () => {
   const slinks = [
@@ -12,13 +10,12 @@ const Sellers = () => {
   ];
   return (
     <div className="main_layout">
-      <SideBar side_links={slinks} />
+      <Sidebar side_links={slinks} />
       <div className="mainbody">
         <h1>Sellers</h1>
-        <br /><br />
-        <p>
-          This is the Sellers page.
-        </p>
+        <br />
+        <br />
+        <p>This is the Sellers page.</p>
       </div>
     </div>
   );

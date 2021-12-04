@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
-import '../../App.css';
-import '../../Carigs.css';
-import SideBar from '../sidebars/SideBar.js';
-import { nhtsa } from '../../data';
+import React, { useEffect } from "react";
+import "../../App.css";
+import "../../Carigs.css";
+import Sidebar from "../sidebars/Sidebar";
+import { nhtsa } from "../../data";
 
 const FindByVin = () => {
   const slinks = [
@@ -13,8 +13,8 @@ const FindByVin = () => {
 
   useEffect(() => {
     async function test() {
-      const { data, status } = await nhtsa.decodeVin('5UXWX7C5*BA');
-      console.log('got', status, data);
+      const { data, status } = await nhtsa.decodeVin("5UXWX7C5*BA");
+      console.log("got", status, data);
     }
 
     test();
@@ -22,13 +22,12 @@ const FindByVin = () => {
 
   return (
     <div className="main_layout">
-      <SideBar side_links={slinks} />
+      <Sidebar side_links={slinks} />
       <div className="mainbody">
         <h1>Find Car by Vin</h1>
-        <br /><br />
-        <p>
-          This is the Find Car by Vin page.
-        </p>
+        <br />
+        <br />
+        <p>This is the Find Car by Vin page.</p>
       </div>
     </div>
   );

@@ -1,7 +1,5 @@
-import React from 'react';
-import '../../App.css';
-import '../../Carigs.css';
-import SideBar from '../sidebars/SideBar.js';
+import React from "react";
+import Sidebar from "../sidebars/Sidebar";
 
 const FindByMake = () => {
   const slinks = [
@@ -11,13 +9,12 @@ const FindByMake = () => {
   ];
   return (
     <div className="main_layout">
-      <SideBar side_links={slinks} />
+      <Sidebar side_links={slinks} />
       <div className="mainbody">
         <h1>Find Car by Make</h1>
-        <br /><br />
-        <p>
-          This is the Find Car by Make page.
-        </p>
+        <br />
+        <br />
+        <p>This is the Find Car by Make page.</p>
       </div>
     </div>
   );

@@ -1,7 +1,5 @@
-import React from 'react';
-import '../../App.css';
-import '../../Carigs.css';
-import SideBar from '../sidebars/SideBar.js';
+import React from "react";
+import Sidebar from "../sidebars/Sidebar";
 
 const SellCar = () => {
   const slinks = [
@@ -10,13 +8,12 @@ const SellCar = () => {
   ];
   return (
     <div className="main_layout">
-      <SideBar side_links={slinks} />
+      <Sidebar side_links={slinks} />
       <div className="mainbody">
         <h1>List A Car</h1>
-        <br /><br />
-        <p>
-          This is the List A Car page.
-        </p>
+        <br />
+        <br />
+        <p>This is the List A Car page.</p>
       </div>
     </div>
   );
