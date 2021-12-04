@@ -10,12 +10,12 @@ export { default as FindByVin } from "./find_cars/FindByVin";
 export { default as FindByYear } from "./find_cars/FindByYear";
 
 // Auth
-export { default as ChkRoute } from "./auth/ChkRoute";
+export { default as PrivateRoute } from "./auth/PrivateRoute";
 export { default as Login } from "./auth/Login";
 export { default as SignUp } from "./auth/SignUp";
 
 // Firebase
-export { AuthProvider, AuthContext } from "./firebase/Auth";
+export { AuthProvider, AuthContext } from "../firebase/Auth";
 
 // Messaging
 export { default as MessageBoard } from "./messaging/MessageBoard";

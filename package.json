@@ -7,7 +7,7 @@
     "author": "Ari, Ben, Debbie, Joseph, Mohammed",
     "license": "MIT",
     "scripts": {
-        "dev:server": "nodemon server/src/index.js",
+        "dev:server": "nodemon server/app.js",
         "dev:client": "yarn --cwd 'client' start",
         "dev": "concurrently 'yarn run dev:server' 'yarn run dev:client'"
     },

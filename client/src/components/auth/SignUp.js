@@ -1,6 +1,5 @@
 import React, { useContext, useState } from "react";
 import { Redirect, useHistory } from "react-router-dom";
-import { signUpUserWithEmailPassword } from "../firebase/Firebase";
 import { IoLogoGoogle, IoLogoFacebook } from "react-icons/io";
 import { Button, Form } from "react-bootstrap";
 import { doCreateUserWithEmailAndPassword } from '../../firebase/FirebaseFunctions';
