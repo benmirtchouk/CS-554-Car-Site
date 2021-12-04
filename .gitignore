@@ -6,3 +6,5 @@ client/package-lock.json
 server/package-lock.json
 .env
 *.swp
+*.rdb
+server/firebase/serviceAccount.json
