@@ -3,8 +3,8 @@ import { Redirect, useHistory } from "react-router-dom";
 import { signUpUserWithEmailPassword } from "../firebase/Firebase";
 import { IoLogoGoogle, IoLogoFacebook } from "react-icons/io";
 import { Button, Form } from "react-bootstrap";
-import { AuthContext } from "../firebase/Auth";
-import { logInSocialMedia } from "../firebase/Firebase";
+import { doCreateUserWithEmailAndPassword } from '../../firebase/FirebaseFunctions';
+import { AuthContext } from '../../firebase/Auth';
 import Sidebar from "../sidebars/Sidebar";
 
 const SignUp = () => {
@@ -21,27 +21,21 @@ const SignUp = () => {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    setPwMatch("");
-    const { displayName, email, phoneNumber, firstPwd, secondPwd } =
-      e.target.elements;
-    // console.log(`displayName: ${displayName.value}, email: ${email.value}`);
+    setPwMatch('');
+    const { displayName, email, phoneNumber, firstPwd, secondPwd } = e.target.elements;
+    //console.log(`displayName: ${displayName.value}, email: ${email.value}`);
     if (firstPwd.value !== secondPwd.value) {
       setPwMatch("Passwords do not match");
       return false;
     }
 
     try {
-      await signUpUserWithEmailPassword(
-        email.value,
-        firstPwd.value,
-        displayName.value,
-        phoneNumber.value
-      );
-      console.log("User was created successfully");
+      await doCreateUserWithEmailAndPassword(email.value, firstPwd.value, displayName.value, phoneNumber.value);
+      console.log(`User was created successfully`);
       history.push("/login");
-    } catch (error) {
-      console.log(`${error}`);
-      alert(error);
+    } catch (e) {
+      console.log(`${e}`);
+      alert(e);
     }
 
     return true;
@@ -148,6 +142,38 @@ const SignUp = () => {
           Login
         </Button>
       </Form>
+    {/* <div className="main_layout">
+      <SideBar side_links={slinks} />
+      <div className="mainbody">
+        <h1>Register New User</h1>
+        {pwMatch && <h4 className="error">{pwMatch}</h4>}
+        <form className="RegisterForm" onSubmit={handleSubmit}>
+          <div className="form-group input-group">
+            <label className="reglabel" htmlFor="displayName">Name:</label>
+            <input name="displayName" className="form-control" placeholder="enter name" type="text" />
+          </div>
+          <div className="form-group input-group">
+            <label className="reglabel" htmlFor="email">Email:</label>
+            <input name="email" className="form-control" placeholder="enter email address" type="email" />
+          </div>
+          <div className="form-group input-group">
+            <label className="reglabel" htmlFor="phone">Phone Number:</label>
+            <input name="phoneNumber" className="form-control" placeholder="enter phone number" type="tel" />
+          </div>
+          <div className="form-group input-group">
+            <label className="reglabel" htmlFor="firstPwd">Password:</label>
+            <input name="firstPwd" className="form-control" placeholder="password" type="password" />
+          </div>
+          <div className="form-group input-group">
+            <label className="reglabel" htmlFor="secondPwd">Confirm Password:</label>
+            <input name="secondPwd" className="form-control" placeholder="confirm password" type="password" />
+          </div>
+
+          <div className="form-group">
+            <button id="submitBtn" type="submit" name="submitBtn" className="login-btn btn-block"> Register </button>
+          </div>
+        </form>
+      </div> */}
     </div>
     // <div className="main_layout">
     //   <Sidebar side_links={slinks} />

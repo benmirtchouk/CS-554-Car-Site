@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import {
   AuthProvider,
-  ChkRoute,
+  PrivateRoute,
   Header,
   Home,
   Sellers,
@@ -34,22 +34,10 @@ const App = () => (
           {/* only act on one route  */}
           <Switch>
             <Route exact path="/" component={Home} />
-            <ChkRoute
-              path="/sellers"
-              render={(props) => <Sellers {...props} />}
-            />
-            <ChkRoute
-              path="/sell_car"
-              render={(props) => <SellCar {...props} />}
-            />
-            <ChkRoute
-              path="/my_listings"
-              render={(props) => <MyListings {...props} />}
-            />
-            <ChkRoute
-              path="/message_board"
-              render={(props) => <MessageBoard {...props} />}
-            />
+            <PrivateRoute path="/sellers" component={Sellers} />
+            <PrivateRoute path="/sell_car" component={SellCar} />
+            <PrivateRoute path="/my_listings" component={MyListings} />
+            <PrivateRoute path="/message_board" component={MessageBoard} />
             <Route path="/recent_sales" component={RecentSales} />
             <Route path="/kelly" component={Kelly} />
             <Route path="/safety" component={Safety} />

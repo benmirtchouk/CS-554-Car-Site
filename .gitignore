@@ -10,3 +10,5 @@ dump.rdb
 yarn.lock
 .env
 *.swp
+*.rdb
+server/firebase/serviceAccount.json

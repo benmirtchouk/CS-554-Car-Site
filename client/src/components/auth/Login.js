@@ -2,8 +2,8 @@ import React, { useContext, useState } from "react"; // useContext
 import { Link, Redirect, useHistory } from "react-router-dom";
 import { IoLogoGoogle, IoLogoFacebook } from "react-icons/io";
 import { Button, Form } from "react-bootstrap";
-import { AuthContext } from "../firebase/Auth";
-import { logInEmailPassword, logInSocialMedia } from "../firebase/Firebase";
+import { AuthContext } from "../../firebase/Auth";
+import { doSignInWithEmailAndPassword, doSocialSignIn } from '../../firebase/FirebaseFunctions';
 
 const Login = () => {
   const { currentUser } = useContext(AuthContext);
@@ -13,26 +13,24 @@ const Login = () => {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    const { email, password } = e.target.elements;
-    await logInEmailPassword(email.value, password.value)
-      .then(() => {
-        setError(false);
-        setErrorMsg("");
-        // history.push("/");
-        history.goBack();
-      })
-      .catch(() => {
-        setError(true);
-        // setErrorMsg(e.message);
-        console.log(`${e.message}`);
-        setErrorMsg("Email/Password Invalid");
-      });
+    let { email, password } = e.target.elements;
+    await doSignInWithEmailAndPassword(email.value, password.value).then(res => {
+      setError(false);
+      setErrorMsg('');
+      //history.push("/");
+      history.goBack();
+    }).catch(e => {
+      setError(true);
+      //setErrorMsg(e.message);
+      console.log(`${e.message}`);
+      setErrorMsg(`Email/Password Invalid`);
+    });
   };
 
   if (currentUser) return <Redirect to="/" />;
 
   const handleButtonClick = async (provider) => {
-    await logInSocialMedia(provider)
+    await doSocialSignIn(provider)
       .then(() => {
         history.goBack();
       })
