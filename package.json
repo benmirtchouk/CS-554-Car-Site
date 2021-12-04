@@ -1,0 +1,19 @@
+{
+    "name": "cs-554_car-site",
+    "version": "1.0.0",
+    "description": "Final CS-554 Project",
+    "main": "server/src/index.js",
+    "repository": "git@github.com:benmirtchouk/CS-554-Car-Site.git",
+    "author": "Ari, Ben, Debbie, Joseph, Mohammed",
+    "license": "MIT",
+    "scripts": {
+        "dev:server": "nodemon server/app.js",
+        "dev:client": "yarn --cwd 'client' start",
+        "dev": "concurrently 'yarn run dev:server' 'yarn run dev:client'"
+    },
+    "devDependencies": {
+        "concurrently": "^6.4.0",
+        "nodemon": "^2.0.15"
+    },
+    "dependencies": {}
+}
