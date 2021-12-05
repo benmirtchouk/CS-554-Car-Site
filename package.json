@@ -12,8 +12,11 @@
         "dev": "concurrently 'yarn run dev:server' 'yarn run dev:client'"
     },
     "devDependencies": {
+        "autoprefixer": "^10.4.0",
         "concurrently": "^6.4.0",
-        "nodemon": "^2.0.15"
+        "nodemon": "^2.0.15",
+        "postcss": "^8.4.4",
+        "tailwindcss": "^2.2.19"
     },
     "dependencies": {}
 }
