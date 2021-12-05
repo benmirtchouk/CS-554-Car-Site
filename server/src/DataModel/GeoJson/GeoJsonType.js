@@ -51,6 +51,8 @@ class GeoJsonType {
             throw new Error("Specified type is not a supported GeoJSONtype");
         }
         this.type = type;
+
+        this.geoJson = {type: this.type, coordinates: this.coordinateArray }
     }
 }
 

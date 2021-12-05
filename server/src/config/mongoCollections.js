@@ -24,6 +24,6 @@
  
  /* Now, you can list your collections here: */
  module.exports = {
-    geocode: getCollectionFn("geocode", { location : "2dsphere" } )
+    listings: getCollectionFn("listings", { "location" : "2dsphere" } ),
  };
  

@@ -1,0 +1,214 @@
+[
+    {
+       "vin":"1J4GX58S94C127907",
+       "sellerId":"testUUID",
+       "exteriorColor":"Blue",
+       "interiorColor":"Black",
+       "millage":92000,
+       "price": 9210.50,
+       "metadata":{
+          "make":"JEEP",
+          "model":"Grand Cherokee",
+          "manufacturer":"FCA US LLC",
+          "modelYear":2004,
+          "makeID":483,
+          "manufacturerId":994,
+          "modelID":1949,
+          "bodyClass":"Sport Utility Vehicle (SUV)/Multi-Purpose Vehicle (MPV)",
+          "driveType":"4x2",
+          "doors":"4"
+       },
+       "photos":[
+          
+       ],
+       "location":[
+        40.7468708,
+        -74.0280354
+       ]
+    },
+    {
+       "vin":"JA4MW51R52J001758",
+       "sellerId":"testUUID",
+       "exteriorColor":"Blue",
+       "interiorColor":"Black",
+       "millage":120457,
+       "price":1500,
+       "metadata":{
+          "make":"MITSUBISHI",
+          "model":"Montero",
+          "manufacturer":"MITSUBISHI MOTORS CORPORATION (MMC)",
+          "modelYear":2002,
+          "makeID":481,
+          "manufacturerId":1052,
+          "modelID":2318,
+          "bodyClass":"Sport Utility Vehicle (SUV)/Multi-Purpose Vehicle (MPV)",
+          "driveType":"4WD/4-Wheel Drive/4x4",
+          "doors":"5"
+       },
+       "photos":[
+          
+       ],
+       "location":[
+        40.7153043,
+        -74.1037503
+       ]
+    },
+    {
+       "vin":"WDBHA29G5XA724359",
+       "sellerId":"testUUID",
+       "exteriorColor":"Blue",
+       "interiorColor":"Black",
+       "millage":72340,
+       "price":6000,
+       "metadata":{
+          "make":"MERCEDES-BENZ",
+          "model":"C-Class",
+          "manufacturer":"MERCEDES-BENZ CARS",
+          "modelYear":1999,
+          "makeID":449,
+          "manufacturerId":1042,
+          "modelID":2085,
+          "bodyClass":"Sedan/Saloon",
+          "doors":"4"
+       },
+       "photos":[
+          
+       ],
+       "location":[
+        40.7667747,
+        -74.0478384
+       ]
+    },
+    {
+       "vin":"1FAHP3H25CL231295",
+       "sellerId":"testUUID",
+       "exteriorColor":"Blue",
+       "interiorColor":"Black",
+       "millage":32752,
+       "price":15800,
+       "metadata":{
+          "make":"FORD",
+          "model":"Focus",
+          "manufacturer":"FORD MOTOR COMPANY, USA",
+          "modelYear":2012,
+          "makeID":460,
+          "manufacturerId":976,
+          "modelID":1779,
+          "bodyClass":"Sedan/Saloon",
+          "doors":"4"
+       },
+       "photos":[
+          
+       ],
+       "location":[
+        41.0815892,
+        -74.1782902
+       ]
+    },
+    {
+       "vin":"3D7KS29A77G795358",
+       "sellerId":"testUUID",
+       "exteriorColor":"Blue",
+       "interiorColor":"Black",
+       "millage":200034,
+       "price":1500,
+       "metadata":{
+          "make":"DODGE",
+          "model":"Ram",
+          "manufacturer":"CHRYSLER DE MEXICO TOLUCA",
+          "modelYear":2007,
+          "makeID":476,
+          "manufacturerId":1002,
+          "modelID":1938,
+          "bodyClass":"Pickup",
+          "driveType":"4WD/4-Wheel Drive/4x4"
+       },
+       "photos":[
+          
+       ],
+       "location":[
+        41.0815892,
+        -74.1782902
+       ]
+    },
+    {
+       "vin":"1XKAD29XXWR759509",
+       "sellerId":"testUUID",
+       "exteriorColor":"Blue",
+       "interiorColor":"Black",
+       "millage":65000,
+       "price":650,
+       "metadata":{
+          "make":"KENWORTH",
+          "model":"T600",
+          "manufacturer":"KENWORTH TRUCK COMPANY",
+          "modelYear":1998,
+          "makeID":532,
+          "manufacturerId":1032,
+          "modelID":9703,
+          "bodyClass":"Truck-Tractor",
+          "driveType":"6x4"
+       },
+       "photos":[
+          
+       ],
+       "location":[
+        40.7393915,
+        -74.0302059
+       ]
+    },
+    {
+       "vin":"4S4BRBCC5B3311131",
+       "sellerId":"testUUID",
+       "exteriorColor":"Blue",
+       "interiorColor":"Black",
+       "millage":54321,
+       "price":12345,
+       "metadata":{
+          "make":"SUBARU",
+          "model":"Outback",
+          "manufacturer":"FUJI HEAVY INDUSTRIES U.S.A., INC. (C/O SUBARU OF AMERICA)",
+          "modelYear":2011,
+          "makeID":523,
+          "manufacturerId":1075,
+          "modelID":2233,
+          "bodyClass":"Sport Utility Vehicle (SUV)/Multi-Purpose Vehicle (MPV)",
+          "driveType":"AWD/All-Wheel Drive",
+          "doors":"5"
+       },
+       "photos":[
+          
+       ],
+       "location":[
+        40.7356129,
+        -74.031214
+       ]
+    },
+    {
+       "vin":"2B3KA43G18H228670",
+       "sellerId":"testUUID",
+       "exteriorColor":"Blue",
+       "interiorColor":"Black",
+       "millage":52300,
+       "price":24000,
+       "metadata":{
+          "make":"DODGE",
+          "model":"Charger",
+          "manufacturer":"FCA CANADA INC.",
+          "modelYear":2008,
+          "makeID":476,
+          "manufacturerId":995,
+          "modelID":1895,
+          "bodyClass":"Sedan/Saloon",
+          "driveType":"RWD/Rear-Wheel Drive",
+          "doors":"4"
+       },
+       "photos":[
+          
+       ],
+       "location":[
+        40.7593911,
+        -74.0258302
+       ]
+    }
+ ]

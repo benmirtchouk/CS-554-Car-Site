@@ -2,7 +2,22 @@ const { queryUrl } = require('./util');
 
 
 async function decodeVin(vin) {
-  return queryUrl(`https://vpic.nhtsa.dot.gov/api/vehicles/decodevinvaluesextended/${vin}?format=json`);
+  const { data, status }  = await queryUrl(`https://vpic.nhtsa.dot.gov/api/vehicles/decodevinvaluesextended/${vin}?format=json`);
+  if (data == null) { return createReturnObject(null, status)  } ;
+  const results  =  data.Results?.length > 0 ?  data.Results[0] : null ; 
+  if (results == null)  { return createReturnObject(null, 404) } ;
+
+  const variablesOfInterest = new Set( 
+    ["Make", "Manufacturer", "Model", "ModelYear", "MakeID", "ManufacturerId", "ModelID", "BodyClass", "DriveType", "Doors"]
+  )
+
+  const vehicleDetails =  Object.keys(results)
+                          .filter(e => variablesOfInterest.has(e))
+                          .reduce((acc, e) => { return {...acc, [lowercaseFirstLetter(e)]: results[e]} }, {})
+  /// As vin is in all caps, set the key manually 
+  vehicleDetails.vin = results.VIN || vin;
+  return {data: vehicleDetails};
+
 }
 async function decodeWmi(wmi) {
   return queryUrl(`https://vpic.nhtsa.dot.gov/api/vehicles/decodewmi/${wmi}?format=json`);
