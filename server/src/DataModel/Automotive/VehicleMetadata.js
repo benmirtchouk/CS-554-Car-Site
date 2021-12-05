@@ -1,6 +1,7 @@
 const { applyValidation, validateNonBlankString, validateNullOrNonBlankString, validateNonNegativeInteger} = require('../Validation/ObjectProperties');
 
-
+/// Representation of Vehicle Metadata from the NHSTA 
+/// These fields are expected to be immutable once created and a single object can be used between listings
 class VehicleMetadata {
     constructor(dictionary) {
 
@@ -10,7 +11,7 @@ class VehicleMetadata {
         this.nullableStringKeys = ["bodyClass", "driveType", "doors"];
         applyValidation(this.nullableStringKeys, dictionary, validateNullOrNonBlankString, this);
 
-        const intKeys = ["modelYear", "makeID", "manufacturerId", "modelID"]
+        const intKeys = ["modelYear", "makeId", "manufacturerId", "modelId"]
         applyValidation(intKeys, dictionary, validateNonNegativeInteger, this);
     }
 
@@ -20,9 +21,9 @@ class VehicleMetadata {
             model: this.model,
             manufacturer: this.manufacturer,
             modelYear: this.modelYear,
-            makeID: this.makeID,
+            makeId: this.makeId,
             manufacturerId: this.manufacturerId,
-            modelID: this.modelID
+            modelId: this.modelId
         }
 
         for(const key of this.nullableStringKeys){

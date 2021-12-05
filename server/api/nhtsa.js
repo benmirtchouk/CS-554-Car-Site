@@ -1,5 +1,15 @@
 const { queryUrl } = require('./util');
 
+/**
+ * Convert the key names of the NHSTA to a key name usable by the server
+ * @param {String} key The key the server uses
+ * @returns Forces the force character to lowercase, and  normalizes `ID` and `Id` to be `Id`
+ */
+function normalizeKey(key) {
+  key = key.replace("ID", "Id");
+  return  key.charAt(0).toLowerCase() + key.slice(1);
+}
+
 
 async function decodeVin(vin) {
   const { data, status }  = await queryUrl(`https://vpic.nhtsa.dot.gov/api/vehicles/decodevinvaluesextended/${vin}?format=json`);
@@ -13,7 +23,7 @@ async function decodeVin(vin) {
 
   const vehicleDetails =  Object.keys(results)
                           .filter(e => variablesOfInterest.has(e))
-                          .reduce((acc, e) => { return {...acc, [lowercaseFirstLetter(e)]: results[e]} }, {})
+                          .reduce((acc, e) => { return {...acc, [normalizeKey(e)]: results[e]} }, {})
   /// As vin is in all caps, set the key manually 
   vehicleDetails.vin = results.VIN || vin;
   return {data: vehicleDetails};

@@ -2,9 +2,11 @@ const { applyValidation, validateNonBlankString, validateNonNegativeInteger, val
 const GeoJsonPoint = require('../GeoJson/GeoJsonPoint')
 const VehicleMetadata = require('./VehicleMetadata');
 
+/// Data object of a listing which performs validations of constraints upon construction and converting between
+/// different representations 
 class VehicleListing {
     constructor(dictionary) {
-        
+
         const {location, photos} = dictionary;
 
         const stringKeys = ["vin", "sellerId", "exteriorColor", "interiorColor"]
