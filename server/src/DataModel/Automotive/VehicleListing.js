@@ -4,6 +4,7 @@ const VehicleMetadata = require('./VehicleMetadata');
 
 class VehicleListing {
     constructor(dictionary) {
+        
         const {location, photos} = dictionary;
 
         const stringKeys = ["vin", "sellerId", "exteriorColor", "interiorColor"]

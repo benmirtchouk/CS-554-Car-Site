@@ -3,8 +3,42 @@ const router = express.Router();
 const VehicleListing = require('../src/DataModel/Automotive/VehicleListing');
 const { ValidationError, valida, validateNonBlankString } = require('../src/DataModel/Validation/ObjectProperties');
 const { nhtsa } = require("../api");
-const { insertListing } = require('../src/MongoOperations/listing');
+const { insertListing, listingsWithinMileRadius } = require('../src/MongoOperations/listing');
 const { KeyAlreadyExists } = require('../src/MongoOperations/OperationErrors');
+const GeoJsonPoint = require('../src/DataModel/GeoJson/GeoJsonPoint');
+
+
+router.get('/withinRadius', async (req, res, next) => {
+    const { radius, units, longitude, latitude } = req.query;
+
+    const validUnits = new Set(["miles"]);
+    if(!validUnits.has(units.toLowerCase())) {
+        return res.status(400).json( {message: `${units} is not a supported unit`} );
+    }
+
+    if(!isFinite(radius) || radius < 0) {
+        return res.status(400).json( {message: `${radius} must be a non-negative number`} );
+    }
+
+    let centerPoint;
+    try {
+        centerPoint = new GeoJsonPoint([longitude, latitude]);
+    } catch (e) {
+        console.log(e);
+        return res.status(400).json( {message: `${longitude} ${latitude} is not a valid longitude & latitude position`} );
+    }
+
+    try {
+        const listings = (await listingsWithinMileRadius(centerPoint, radius))
+                         .map(e => e.asDictionary())
+        return res.json(listings);
+    
+    } catch (e) {
+        console.error(e);
+        return res.status(500).json({message: "Internal Server Error"})
+    }
+
+})
 
 router.put('/', async (req, res)=> {
 
