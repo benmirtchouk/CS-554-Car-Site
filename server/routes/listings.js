@@ -8,7 +8,7 @@ const { KeyAlreadyExists } = require('../src/MongoOperations/OperationErrors');
 const GeoJsonPoint = require('../src/DataModel/GeoJson/GeoJsonPoint');
 
 
-router.get('/withinRadius', async (req, res, next) => {
+router.get('/withinRadius', async (req, res) => {
     const { radius, units, longitude, latitude } = req.query;
 
     const validUnits = new Set(["miles"]);
