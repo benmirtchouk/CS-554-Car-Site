@@ -40,8 +40,8 @@ class GeoJsonType {
         this.latitude = latitude;
 
         /// Populate properties
-        this.coordinateArray = [longitude, latitude]
-        this.coordinateJson = { longitude: longitude, latitude: latitude}
+        this.coordinateArray = [longitude - 0, latitude - 0]
+        this.coordinateJson = { longitude: longitude - 0, latitude: latitude - 0}
 
         /// Full valid types are https://docs.mongodb.com/manual/reference/geojson/
         /// Currently set to only Point as that is the only logic implemented. If a new sub class is added,
@@ -51,6 +51,8 @@ class GeoJsonType {
             throw new Error("Specified type is not a supported GeoJSONtype");
         }
         this.type = type;
+
+        this.geoJson = {type: this.type, coordinates: this.coordinateArray }
     }
 }
 
