@@ -1,11 +1,20 @@
 import React from "react";
 import PropTypes from "prop-types";
+import Sidebar from "./sidebars/Sidebar";
 
 const ListError = ({ info }) => {
-  <div>
-    <h2 className="error">{info.errorCode}</h2>
-    <p className="error">{info.errorMessage}</p>
-  </div>;
+  const slinks = [{ name: "Home", link: "/" }];
+  return (
+    <div>
+      <Sidebar sideLinks={slinks} />
+      <div className="mainbody">
+        <br />
+        <br />
+        <h2 className="error">{info.errorCode}</h2>
+        <p className="error">{info.errorMessage}</p>
+      </div>
+    </div>
+  );
 };
 
 ListError.propTypes = {
