@@ -182,7 +182,9 @@ const Safety = () => {
               onSelect={handleYearSelect}
             >
               {years.map((yr) => (
-                <Dropdown.Item key={yr} eventKey={yr}>{yr}</Dropdown.Item>
+                <Dropdown.Item key={yr} eventKey={yr}>
+                  {yr}
+                </Dropdown.Item>
               ))}
             </DropdownButton>
             <DropdownButton
@@ -192,7 +194,9 @@ const Safety = () => {
               onSelect={handleMakeSelect}
             >
               {makes.map((val) => (
-                <Dropdown.Item key={val} eventKey={val}>{val}</Dropdown.Item>
+                <Dropdown.Item key={val} eventKey={val}>
+                  {val}
+                </Dropdown.Item>
               ))}
             </DropdownButton>
             <DropdownButton
@@ -202,7 +206,9 @@ const Safety = () => {
               onSelect={handleModelSelect}
             >
               {models.map((val1) => (
-                <Dropdown.Item key={val1} eventKey={val1}>{val1}</Dropdown.Item>
+                <Dropdown.Item key={val1} eventKey={val1}>
+                  {val1}
+                </Dropdown.Item>
               ))}
             </DropdownButton>
           </ButtonGroup>
@@ -238,7 +244,9 @@ const Safety = () => {
                   key={keyVal1}
                   className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12 align-items-start px-2"
                 >
-                  {extendedCarHeader && cardQuery && <Card key={keyVal} info={{ item }} />}
+                  {extendedCarHeader && cardQuery && (
+                    <Card key={keyVal} info={{ item }} />
+                  )}
                 </div>
               );
             })}
