@@ -8,8 +8,6 @@ import "../../Carigs.css";
 const VinCard = ({ info }) => {
   const otherImg = "/images/ImgNotAvailable.png";
   const img = info.VehiclePicture ? info.VehiclePicture : otherImg;
-  console.log(`info`);
-  console.log(info);
   const key = `c-${info.VehicleId}`;
 
   return (
@@ -24,7 +22,9 @@ const VinCard = ({ info }) => {
         }}
       />
       <div className="card-body">
-        <h2 className="card-title">{info.Make} {info.Model} {info.ModelYear}</h2>
+        <h2 className="card-title">
+          {info.Make} {info.Model} {info.ModelYear}
+        </h2>
         <div className="card-text">
           <p className="detKey">
             <span className="detKey">Manufacturer Name:</span>
