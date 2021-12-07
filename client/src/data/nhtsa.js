@@ -71,6 +71,11 @@ export async function getModelsForMakeId(makeId) {
   return { data, status };
 }
 
+export async function getShortVin(vin) {
+  const header = await createHeader();
+  const { data, status } = await queryUrl(`http://localhost:3001/cars/decodeShortVin/${vin}`, header);
+  return { data, status };
+}
 
 export async function getSafetyRecalls(make, model, year) {
   const header = await createHeader();
