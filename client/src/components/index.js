@@ -1,6 +1,5 @@
 // Analytics
-export { default as DOT } from "./analytics/DOT";
-export { default as Kelly } from "./analytics/Kelly";
+export { default as Vin } from "./analytics/Vin";
 export { default as Safety } from "./analytics/Safety";
 
 // Find

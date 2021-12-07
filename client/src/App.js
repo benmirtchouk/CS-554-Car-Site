@@ -10,9 +10,8 @@ import {
   RecentSales,
   MyListings,
   MessageBoard,
-  Kelly,
+  Vin,
   Safety,
-  DOT,
   Login,
   SignUp,
   FindByModel,
@@ -39,9 +38,8 @@ const App = () => (
             <PrivateRoute path="/my_listings" component={MyListings} />
             <PrivateRoute path="/message_board" component={MessageBoard} />
             <Route path="/recent_sales" component={RecentSales} />
-            <Route path="/kelly" component={Kelly} />
             <Route path="/safety" component={Safety} />
-            <Route path="/dot" component={DOT} />
+            <Route path="/vin" component={Vin} />
             <Route path="/login" component={Login} />
             <Route path="/signup" component={SignUp} />
             <Route path="/find_by_model" component={FindByModel} />
