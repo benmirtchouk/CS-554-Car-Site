@@ -40,10 +40,12 @@ const Safety = () => {
         if (result.status !== 200) {
           setApiError(true);
           console.log(
-            `Errors Found on return API Call: ${result.errors.message}`
+            `Errors Found on return API Call, status: ${result.status}`
           );
           setErrorCode(`*****API Problem*****`);
-          setErrorMessage(result.errors.message);
+          setErrorMessage(
+            `Errors Found on return API Call, status: ${result.status}`
+          );
         } else {
           if (result.data.length < 1) {
             setApiError(true);
@@ -62,7 +64,7 @@ const Safety = () => {
         setData(undefined);
         setApiError(true);
         setErrorCode(`********API Problem***********`);
-        setErrorMessage(`Car API Problem: ${e.message}`);
+        setErrorMessage(`Car API Problem: ${e}`);
         console.log(e);
       });
   }
@@ -77,11 +79,9 @@ const Safety = () => {
       .then((result) => {
         if (result.status !== 200) {
           setApiError(true);
-          console.log(
-            `Errors Found on return API Call: ${result.errors.message}`
-          );
+          console.log(`Errors Found on return API Call: ${result.status}`);
           setErrorCode(`*****API Problem*****`);
-          setErrorMessage(result.errors.message);
+          setErrorMessage(`Errors Found on return API Call: ${result.status}`);
         } else {
           if (result.data.length < 1) {
             setApiError(true);
@@ -101,7 +101,7 @@ const Safety = () => {
         setData(undefined);
         setApiError(true);
         setErrorCode(`********API Problem***********`);
-        setErrorMessage(`Car API Problem: ${e.message}`);
+        setErrorMessage(`Car API Problem: ${e}`);
         console.log(e);
       });
   };
@@ -115,11 +115,9 @@ const Safety = () => {
       .then((result) => {
         if (result.status !== 200) {
           setApiError(true);
-          console.log(
-            `Errors Found on return API Call: ${result.errors.message}`
-          );
+          console.log(`Errors Found on return API Call: ${result.status}`);
           setErrorCode(`*****API Problem*****`);
-          setErrorMessage(result.errors.message);
+          setErrorMessage(`Errors Found on return API Call: ${result.status}`);
         } else {
           if (result.data.length < 1) {
             setApiError(true);
@@ -129,6 +127,7 @@ const Safety = () => {
           } else {
             setApiError(false);
             const allModels = [];
+            console.log(result);
             result.data.Results.map((item) => allModels.push(item.Model));
             setModels(allModels);
           }
@@ -136,10 +135,12 @@ const Safety = () => {
         }
       })
       .catch((e) => {
+        console.log(e);
         setData(undefined);
         setApiError(true);
         setErrorCode(`********API Problem***********`);
-        setErrorMessage(`Car API Problem: ${e.message}`);
+        setErrorMessage(`Car API Problem: ${e}`);
+        console.log(`${errorCode}, ${errorMessage}`);
         console.log(e);
       });
   };
