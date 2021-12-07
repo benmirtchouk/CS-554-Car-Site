@@ -1,20 +1,249 @@
-import React from "react";
+import React, { useState } from "react";
+import { ButtonGroup, Dropdown, DropdownButton } from "react-bootstrap";
 import Sidebar from "../sidebars/Sidebar";
+import {
+  getSafetyReport,
+  getSafetyMakesForModelYear,
+  getSafetyModelsForMakeModelYear,
+} from "../../data/nhtsa";
+import "../../App.css";
+import "../../Carigs.css";
+import Loading from "../Loading";
+import ListError from "../ListError";
+import Card from "./Card";
 
 const Safety = () => {
-  const slinks = [
-    { name: "DOT", link: "/dot" },
-    { name: "Kelly", link: "/kelly" },
-  ];
+  const slinks = [{ name: "VIN", link: "/vin" }];
+
+  const [cdata, setData] = useState([]);
+  const [makes, setMakes] = useState([]);
+  const [models, setModels] = useState([]);
+  const [year, setYear] = useState(undefined);
+  const [cardQuery, setCardQuery] = useState(false);
+  const [make, setMake] = useState(undefined);
+  const [model, setModel] = useState(undefined);
+  const [apiError, setApiError] = useState(false);
+  const [errorCode, setErrorCode] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  // set the years to a set number
+  const years = [];
+  for (let yr = 2021; yr > 1989; yr -= 1) {
+    years.push(yr);
+  }
+
+  async function getData() {
+    setLoading(true);
+    await getSafetyReport(make, model, year)
+      .then((result) => {
+        if (result.status !== 200) {
+          setApiError(true);
+          console.log(
+            `Errors Found on return API Call: ${result.errors.message}`
+          );
+          setErrorCode(`*****API Problem*****`);
+          setErrorMessage(result.errors.message);
+        } else {
+          if (result.data.length < 1) {
+            setApiError(true);
+            console.log(`No Data Found`);
+            setErrorCode(`****404****`);
+            setErrorMessage(`No data found `);
+          } else {
+            setApiError(false);
+            setCardQuery(true);
+            setData(result.data);
+          }
+          setLoading(false);
+        }
+      })
+      .catch((e) => {
+        setData(undefined);
+        setApiError(true);
+        setErrorCode(`********API Problem***********`);
+        setErrorMessage(`Car API Problem: ${e.message}`);
+        console.log(e);
+      });
+  }
+
+  const handleYearSelect = async (iYear) => {
+    setYear(iYear);
+    setMake(undefined);
+    setModel(undefined);
+    setCardQuery(false);
+    setLoading(true);
+    await getSafetyMakesForModelYear(iYear)
+      .then((result) => {
+        if (result.status !== 200) {
+          setApiError(true);
+          console.log(
+            `Errors Found on return API Call: ${result.errors.message}`
+          );
+          setErrorCode(`*****API Problem*****`);
+          setErrorMessage(result.errors.message);
+        } else {
+          if (result.data.length < 1) {
+            setApiError(true);
+            console.log(`No Data Found`);
+            setErrorCode(`****404****`);
+            setErrorMessage(`No Make data found `);
+          } else {
+            setApiError(false);
+            const allMakes = [];
+            result.data.Results.map((item) => allMakes.push(item.Make));
+            setMakes(allMakes);
+          }
+          setLoading(false);
+        }
+      })
+      .catch((e) => {
+        setData(undefined);
+        setApiError(true);
+        setErrorCode(`********API Problem***********`);
+        setErrorMessage(`Car API Problem: ${e.message}`);
+        console.log(e);
+      });
+  };
+
+  const handleMakeSelect = async (iMake) => {
+    setMake(iMake);
+    setModel(undefined);
+    setCardQuery(false);
+    setLoading(true);
+    await getSafetyModelsForMakeModelYear(iMake, year)
+      .then((result) => {
+        if (result.status !== 200) {
+          setApiError(true);
+          console.log(
+            `Errors Found on return API Call: ${result.errors.message}`
+          );
+          setErrorCode(`*****API Problem*****`);
+          setErrorMessage(result.errors.message);
+        } else {
+          if (result.data.length < 1) {
+            setApiError(true);
+            console.log(`No Data Found`);
+            setErrorCode(`****404****`);
+            setErrorMessage(`No Model data found `);
+          } else {
+            setApiError(false);
+            const allModels = [];
+            result.data.Results.map((item) => allModels.push(item.Model));
+            setModels(allModels);
+          }
+          setLoading(false);
+        }
+      })
+      .catch((e) => {
+        setData(undefined);
+        setApiError(true);
+        setErrorCode(`********API Problem***********`);
+        setErrorMessage(`Car API Problem: ${e.message}`);
+        console.log(e);
+      });
+  };
+
+  const handleModelSelect = async (iModel) => {
+    setCardQuery(false);
+    setModel(iModel);
+  };
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    if (!year || year.length < 1) alert("ModelYear must be selected");
+    if (!make || make.length < 1) alert("Make must be selected");
+    if (!model || model.length < 1) alert("Model must be selected");
+
+    if (year && make && model) getData();
+  };
+
+  if (apiError) {
+    return <ListError info={{ errorCode, errorMessage }} />;
+  }
+
+  if (loading) {
+    return <Loading />;
+  }
+
+  let extendedCarHeader = false;
+  if (year && model && make) extendedCarHeader = true;
 
   return (
-    <div className="main_layout">
-      <Sidebar side_links={slinks} />
+    <div key="safety" className="main_layout">
+      <Sidebar sideLinks={slinks} />
       <div className="mainbody">
-        <h1>Safety</h1>
-        <br />
-        <br />
-        <p>This is the Safety page.</p>
+        <form onSubmit={submitHandler}>
+          <ButtonGroup>
+            <DropdownButton
+              as={ButtonGroup}
+              title="Model Year"
+              id="years-dropdown"
+              onSelect={handleYearSelect}
+            >
+              {years.map((yr) => (
+                <Dropdown.Item key={yr} eventKey={yr}>{yr}</Dropdown.Item>
+              ))}
+            </DropdownButton>
+            <DropdownButton
+              as={ButtonGroup}
+              title="Make"
+              id="make-dropdown"
+              onSelect={handleMakeSelect}
+            >
+              {makes.map((val) => (
+                <Dropdown.Item key={val} eventKey={val}>{val}</Dropdown.Item>
+              ))}
+            </DropdownButton>
+            <DropdownButton
+              as={ButtonGroup}
+              title="Models"
+              id="models-dropdown"
+              onSelect={handleModelSelect}
+            >
+              {models.map((val1) => (
+                <Dropdown.Item key={val1} eventKey={val1}>{val1}</Dropdown.Item>
+              ))}
+            </DropdownButton>
+          </ButtonGroup>
+          <button
+            className="btn-primary px-10 mx-10"
+            type="submit"
+            name="submitBtn"
+          >
+            {" "}
+            Query Stats
+          </button>
+        </form>
+
+        <div key="cars" className="container">
+          <div className="row justify-content-start">
+            <div className="content col-12 align-items-left px-1">
+              {extendedCarHeader && cardQuery && (
+                <h1 className="sum-header">
+                  Car Safety({make}, {model}, {year})
+                </h1>
+              )}
+              {(!extendedCarHeader || !cardQuery) && (
+                <h1 className="sum-header">Car Safety</h1>
+              )}
+            </div>
+          </div>
+          <div className="row justify-content-start">
+            {cdata.map((item, indx) => {
+              const keyVal = `car-${indx}-${item.Id}`;
+              const keyVal1 = `Kcar-${indx}-${item.Id}`;
+              return (
+                <div
+                  key={keyVal1}
+                  className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12 align-items-start px-2"
+                >
+                  {extendedCarHeader && cardQuery && <Card key={keyVal} info={{ item }} />}
+                </div>
+              );
+            })}
+          </div>
+        </div>
       </div>
     </div>
   );

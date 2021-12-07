@@ -26,9 +26,8 @@ const Header = () => (
             <Nav.Link>Sellers</Nav.Link>
           </LinkContainer>
           <NavDropdown title="Analytics" id="basic-nav-dropdown">
-            <NavDropdown.Item href="#action/3.1">Kelly</NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.2">DOT</NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.3">Safety</NavDropdown.Item>
+            <NavDropdown.Item href="/vin">Vin</NavDropdown.Item>
+            <NavDropdown.Item href="/safety">Safety</NavDropdown.Item>
           </NavDropdown>
         </Nav>
         <Form className="d-flex">

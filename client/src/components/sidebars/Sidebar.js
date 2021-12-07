@@ -1,5 +1,7 @@
+/* eslint react/prop-types: 0 */
 import React from "react";
 import { Link } from "react-router-dom";
+// import PropTypes from "prop-types";
 import Search from "./Search";
 
 const Sidebar = ({ sideLinks }) => (
@@ -16,12 +18,12 @@ const Sidebar = ({ sideLinks }) => (
   </div>
 );
 
-Sidebar.propTypes = {
-  sideLinks: Array,
-};
+// Sidebar.propTypes = {
+// sideLinks: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
+// };
 
-Sidebar.defaultProps = {
-  sideLinks: [],
-};
+// Sidebar.defaultProps = {
+//  sideLinks: [],
+// };
 
 export default Sidebar;

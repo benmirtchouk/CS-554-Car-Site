@@ -53,6 +53,24 @@ async function getMakeForManufacturer(manufacturerId) {
 async function getModelsForMakeId(makeId) {
   return queryUrl(`https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMakeId/${makeId}?format=json`);
 }
+async function getVehicleIds(id) {
+  return queryUrl(`https://api.nhtsa.gov/SafetyRatings/VehicleId/${id}`);
+}
+async function getSafetyVehicleIds(make, model, year) {
+  return queryUrl(`https://api.nhtsa.gov/SafetyRatings/modelyear/${year}/make/${make}/model/${model}`);
+}
+async function getSafetyData(id) {
+  return queryUrl(`https://api.nhtsa.gov/SafetyRatings/VehicleId/${id}`);
+}
+async function getSafetyMakesForModelYear(year) {
+  return queryUrl(`https://api.nhtsa.gov/SafetyRatings/modelyear/${year}`);
+}
+async function getSafetyModelsForMakeModelYear(make, year) {
+  return queryUrl(`https://api.nhtsa.gov/SafetyRatings/modelyear/${year}/make/${make}`);
+}
+async function getRecallData(make, model, year) {
+  return queryUrl(`https://api.nhtsa.gov/recalls/recallsByVehicle?make=${req.params.make}&model=${req.params.model}&modelYear=${req.params.year}`);
+}
 
 module.exports = {
   decodeVin,
@@ -64,4 +82,9 @@ module.exports = {
   getManufacturerDetails,
   getMakeForManufacturer,
   getModelsForMakeId,
+  getSafetyVehicleIds,
+  getSafetyMakesForModelYear,
+  getSafetyModelsForMakeModelYear,
+  getSafetyData,
+  getRecallData,
 };

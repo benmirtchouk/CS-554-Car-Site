@@ -148,5 +148,114 @@ router.get('/getModelsForMakeId/:makeId', async function (req, res, next) {
   }
 });
 
+router.get('/safety/recalls/:make/:model/:year', async function (req, res, next) {
+  try {
+    let make = req.params.make;
+    let model= req.params.model;
+    let year= req.params.year;
+    try {
+      if (year.length == 0 || isNaN(year)) throw 'bad year';
+    } catch (e) {
+      return res.status(400).json({ error: 'year must be an integer' });
+    }
+
+    const { data, status } = await nhtsa.getRecallData(make, model, year);
+    res.status(status).json(data);
+  } catch (e) {
+    console.log(e);
+    res.status(500).send();
+  }
+});
+
+router.get('/safety/getMakesForModelYear/:year', async function (req, res, next) {
+  try {
+    let year= req.params.year;
+    try {
+      if (year.length == 0 || isNaN(year)) throw 'bad year';
+    } catch (e) {
+      return res.status(400).json({ error: 'year must be an integer' });
+    }
+
+    const { data, status } = await nhtsa.getSafetyMakesForModelYear(year);
+    res.status(status).json(data);
+  } catch (e) {
+    console.log(e);
+    res.status(500).send();
+  }
+});
+
+router.get('/safety/getModelsForMakeModelYear/:make/:year', async function (req, res, next) {
+  try {
+    let year= req.params.year;
+    let make = req.params.make;
+    try {
+      if (year.length == 0 || isNaN(year)) throw 'bad year';
+    } catch (e) {
+      return res.status(400).json({ error: 'year must be an integer' });
+    }
+
+    const { data, status } = await nhtsa.getSafetyModelsForMakeModelYear(make, year);
+    res.status(status).json(data);
+  } catch (e) {
+    console.log(e);
+    res.status(500).send();
+  }
+});
+
+router.get('/safety/report/:make/:model/:year', async function (req, res, next) {
+  try {
+    let make = req.params.make;
+    let model= req.params.model;
+    let year= req.params.year;
+    const all_data=[];
+   
+    try {
+      if (year.length == 0 || isNaN(year)) throw 'bad year';
+    } catch (e) {
+      return res.status(400).json({ error: 'year must be an integer' });
+    }
+
+    // get the vehicle ids first from the safety api
+    const { data, status } = await nhtsa.getSafetyVehicleIds(make, model, year);
+    for (let i=0; i<data.Results.length; i++) {
+      let vehicles=await nhtsa.getSafetyData(data.Results[i].VehicleId);
+      vehicles.data.Results.map( vehicle => {
+	      vehicle.Id = data.Results[i].VehicleId;
+	      vehicle.Description=data.Results[i].VehicleDescription;
+	      all_data.push(vehicle);
+      });
+    }
+    res.status(status).json(all_data);
+  } catch (e) {
+    console.log(e);
+    res.status(500).send();
+  }
+});
+
+router.get('/picture/:make/:model/:year', async function (req, res, next) {
+  try {
+    let make = req.params.make;
+    let model= req.params.model;
+    let year= req.params.year;
+    let picture;
+   
+    try {
+      if (year.length == 0 || isNaN(year)) throw 'bad year';
+    } catch (e) {
+      return res.status(400).json({ error: 'year must be an integer' });
+    }
+
+    // get picture for a given make/model/year
+    const { data, status } = await nhtsa.getSafetyVehicleIds(make, model, year);
+    if (data.Results.length>0) {
+      let vehicles=await nhtsa.getSafetyData(data.Results[0].VehicleId);
+      picture=vehicles.data.Results[0].VehiclePicture;
+    }
+    res.status(status).json(picture);
+  } catch (e) {
+    console.log(e);
+    res.status(500).send();
+  }
+});
 
 module.exports = router;
