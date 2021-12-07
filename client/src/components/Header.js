@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext} from "react";
 import {
   Nav,
   NavDropdown,
@@ -12,9 +12,21 @@ import {
   FormControl,
 } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
+import {AuthContext} from "../firebase/Auth";
+import {doSignOut} from "../firebase/FirebaseFunctions";
 
-const Header = () => (
-  <Navbar bg="light" expand="lg">
+const Header = () => {
+  const {currentUser} = useContext(AuthContext);
+  const handleLogOut = async () => {
+    await doSignOut().catch( (e) => {throw new Error(`${e}`)});
+  };
+
+  console.log(currentUser);
+  let showLogin = true;
+  if (currentUser) showLogin=false;
+
+  return (
+   <Navbar bg="light" expand="lg">
     <Container>
       <LinkContainer to="/">
         <Navbar.Brand>Carigslist</Navbar.Brand>
@@ -53,19 +65,25 @@ const Header = () => (
           </InputGroup>
         </Form>
         <div className="space-x-2 mx-2">
-          <LinkContainer to="/signup">
-            <Button variant="primary" id="search">
+	{showLogin && <LinkContainer to="/signup">
+            <Button variant="primary" id="signup">
               Signup
             </Button>
-          </LinkContainer>
-          <LinkContainer to="/login">
-            <Button variant="outline-secondary" id="search">
+          </LinkContainer>}
+	  {showLogin && <LinkContainer to="/login">
+            <Button variant="outline-secondary" id="login">
               Login
             </Button>
-          </LinkContainer>
+          </LinkContainer>}
+	  {!showLogin && <LinkContainer to="/">
+            <Button onClick={handleLogOut} variant="outline-secondary" id="logout">
+              LogOut
+            </Button>
+          </LinkContainer>}
         </div>
       </Navbar.Collapse>
     </Container>
   </Navbar>
-);
+  );
+};
 export default Header;
