@@ -16,6 +16,20 @@ router.get('/decodeVin/:vin', async function (req, res, next) {
   }
 });
 
+router.get('/decodeShortVin/:vin', async function (req, res, next) {
+  try {
+    const vin = req.params.vin.trim();
+    if (vin.length == 0) {
+      return res.status(400).json({ error: 'vin cannot be empty' });
+    }
+    const { data, status } = await nhtsa.decodeShortVin(vin);
+    res.status(status).json(data);
+  } catch (e) {
+    console.log(e);
+    res.status(500).send();
+  }
+});
+
 router.get('/decodeWmi/:wmi', async function (req, res, next) {
   try {
     const wmi = req.params.wmi.trim();
