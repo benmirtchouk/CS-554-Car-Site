@@ -218,3 +218,62 @@ p.LoginError {
   font-weight: bold;
   font-size: 75%
 }
+
+div.card img {
+  border-radius:15px 0px 0px 0px;
+  max-height:150px;
+  max-width:200px;
+}
+
+div.card {
+  margin:10px 0px 0px 0px;
+  max-height:600px;
+  overflow-y: auto;
+  overflow-x: auto;
+}
+
+div.card-body {
+  margin-top:0px;
+  margin-bottom:10px;
+  padding: 0px 10px;
+}
+
+h2.card-title {
+  text-align: center;
+  padding-top:0px;
+  font-size: 100%;
+  font-weight: bold;
+  color: blue;
+  padding-bottom:0px;
+  margin-top:10px;
+  margin-bottom:20px;
+}
+
+div.card-text {
+  font-style: italic;
+  font-size: 14px;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+span.detKey {
+  text-align: left;
+  font-weight: bold;
+  margin:0px;
+  padding:0px;
+}
+
+p.detKey {
+  text-align: left;
+  padding:0px;
+  margin:2px;
+  font-weight: normal;
+  color: #333333;
+  font-style: italic; 
+}
+
+.dropdown-menu {
+  height: 200px;
+  overflow-y: scroll;
+}
+

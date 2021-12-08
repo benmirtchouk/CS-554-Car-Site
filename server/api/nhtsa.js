@@ -11,6 +11,38 @@ function normalizeKey(key) {
 }
 
 
+async function decodeShortVin(vin) {
+  const { data, status }  = await queryUrl(`https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVin/${vin}?format=json`);
+  if (data == null) { return createReturnObject(null, status)  } ;
+  if (data.Results.length<1)  { return createReturnObject(null, 404) } ;
+
+  // create a variable to return
+  let vehicleDetails={};
+  let info;
+  let flds = ["Make", "Model", "ModelYear", "Manufacturer", "ManufacturerName",
+  "PlantCountry", "PlantState", "PlantCity",
+  "VehicleType", "BodyClass", "Doors", "Windows", "DriveType",
+  "EngineConfiguration", "TransmissionStyle", "VehicleId"
+]
+
+  flds.forEach((field, indx) => {
+    info=data.Results.find(obj=>obj.Variable.replace(' ','') === field);
+    if (info===undefined)
+      vehicleDetails[field]="Unknown Field";
+    else {
+      let fld=info.Variable.replace(' ', '');
+      if (info.Value===null)
+        vehicleDetails[fld]="Unknown";
+      else
+        vehicleDetails[fld]=info.Value;
+    }
+  });
+
+  //return createReturnObject({data: vehicleDetails})
+  return ({"data":vehicleDetails, "status": 200});
+
+}
+
 async function decodeVin(vin) {
   const { data, status }  = await queryUrl(`https://vpic.nhtsa.dot.gov/api/vehicles/decodevinvaluesextended/${vin}?format=json`);
   if (data == null) { return createReturnObject(null, status)  } ;
@@ -29,6 +61,7 @@ async function decodeVin(vin) {
   return {data: vehicleDetails};
 
 }
+
 async function decodeWmi(wmi) {
   return queryUrl(`https://vpic.nhtsa.dot.gov/api/vehicles/decodewmi/${wmi}?format=json`);
 }
@@ -53,8 +86,27 @@ async function getMakeForManufacturer(manufacturerId) {
 async function getModelsForMakeId(makeId) {
   return queryUrl(`https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMakeId/${makeId}?format=json`);
 }
+async function getVehicleIds(id) {
+  return queryUrl(`https://api.nhtsa.gov/SafetyRatings/VehicleId/${id}`);
+}
+async function getSafetyVehicleIds(make, model, year) {
+  return queryUrl(`https://api.nhtsa.gov/SafetyRatings/modelyear/${year}/make/${make}/model/${model}`);
+}
+async function getSafetyData(id) {
+  return queryUrl(`https://api.nhtsa.gov/SafetyRatings/VehicleId/${id}`);
+}
+async function getSafetyMakesForModelYear(year) {
+  return queryUrl(`https://api.nhtsa.gov/SafetyRatings/modelyear/${year}`);
+}
+async function getSafetyModelsForMakeModelYear(make, year) {
+  return queryUrl(`https://api.nhtsa.gov/SafetyRatings/modelyear/${year}/make/${make}`);
+}
+async function getRecallData(make, model, year) {
+  return queryUrl(`https://api.nhtsa.gov/recalls/recallsByVehicle?make=${req.params.make}&model=${req.params.model}&modelYear=${req.params.year}`);
+}
 
 module.exports = {
+  decodeShortVin,
   decodeVin,
   decodeWmi,
   getWMIsForManufacturer,
@@ -64,4 +116,9 @@ module.exports = {
   getManufacturerDetails,
   getMakeForManufacturer,
   getModelsForMakeId,
+  getSafetyVehicleIds,
+  getSafetyMakesForModelYear,
+  getSafetyModelsForMakeModelYear,
+  getSafetyData,
+  getRecallData,
 };
