@@ -11,6 +11,7 @@ export { default as FindByYear } from "./find_cars/FindByYear";
 // Auth
 export { default as PrivateRoute } from "./auth/PrivateRoute";
 export { default as Login } from "./auth/Login";
+export { default as Account } from "./account/Account";
 export { default as SignUp } from "./auth/SignUp";
 
 // Firebase
