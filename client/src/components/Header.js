@@ -42,6 +42,11 @@ const Header = () => {
               <NavDropdown.Item href="/vin">Vin</NavDropdown.Item>
               <NavDropdown.Item href="/safety">Safety</NavDropdown.Item>
             </NavDropdown>
+            {!showLogin && (
+              <NavDropdown title="Account" id="basic-nav-dropdown">
+                <NavDropdown.Item href="/account">My Profile</NavDropdown.Item>
+              </NavDropdown>
+            )}
           </Nav>
           <Form className="d-flex">
             <InputGroup className="d-flex">
@@ -97,4 +102,5 @@ const Header = () => {
     </Navbar>
   );
 };
+
 export default Header;

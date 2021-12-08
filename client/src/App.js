@@ -12,6 +12,7 @@ import {
   MessageBoard,
   Vin,
   Safety,
+  Account,
   Login,
   SignUp,
   FindByModel,
@@ -41,6 +42,7 @@ const App = () => (
             <Route path="/safety" component={Safety} />
             <Route path="/vin" component={Vin} />
             <Route path="/login" component={Login} />
+            <PrivateRoute path="/account" component={Account} />
             <Route path="/signup" component={SignUp} />
             <Route path="/find_by_model" component={FindByModel} />
             <Route path="/find_by_make" component={FindByMake} />
