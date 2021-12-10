@@ -33,8 +33,6 @@ router.get('/by/vin/:vin', async (req, res) => {
 
 router.get('/by/components', async (req, res) => {
 
-    /// TODO VALIDATE
-    const {make, model, modelYear} = req.query;
     const validKeys = ["make", "model", "year"]
 
     console.log(req.query);

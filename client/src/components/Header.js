@@ -12,6 +12,7 @@ import {
   FormControl,
 } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
+import { Redirect } from "react-router-dom";
 import { AuthContext } from "../firebase/Auth";
 import { doSignOut } from "../firebase/FirebaseFunctions";
 
@@ -23,22 +24,37 @@ const Header = () => {
     });
   };
 
-
   let showLogin = true;
   if (currentUser) showLogin = false;
 
   const [searchKey, setSearchKey] = useState(null);
+  const [searchQuery, setSearchQuery] = useState(null);
 
-  /// TODO MOVE AND UPPER CASE LABEL
-  const carSearchHandler= (e) => {
+  const carSearchHandler = (e) => {
     e.preventDefault();
     const form = e.target;
-    const searchQuery = form.elements[0].value;
-    if (searchQuery.length === 0 || typeof searchKey !== "string") {
+    const searchText = form.elements[0].value;
+
+    const query = {};
+    if (searchText.length === 0) {
       return;
+      // eslint-disable-next-line no-else-return
+    } else if (typeof searchKey !== "string") {
+      /// Not implemented yet, treat as empty case
+      return;
+    } else {
+      query.searchKey = searchKey;
     }
 
-    alert( `${form.elements[0].value} | ${searchKey}`);
+    query.query = searchText;
+
+    setSearchQuery(query);
+  };
+
+  if (searchQuery !== null) {
+    return (
+      <Redirect to={{ pathname: "/search_results", state: searchQuery }} />
+    );
   }
 
   return (
