@@ -12,7 +12,33 @@ const listingForVin = async (vin) => {
     return new VehicleListing(listingData);
 }
 
+const searchListings = async (query) => {
+    const collection = await listings();
 
+    const formattedQuery = []
+    const regexQueryKeys = ["make", "model"]
+    for (const key of regexQueryKeys) {
+        const value = query[key];
+        if(!value || value === "") { continue; }
+        formattedQuery.push({[`metadata.${key}`]: {$regex: value, $options: "$i"}})
+    }
+
+    if (isFinite(query.year - 0)) {
+        formattedQuery.push({['metadata.modelYear']: query.year - 0})
+    }
+
+    if (formattedQuery.length === 0) {
+        console.error("No keys!")
+        return
+    }
+
+
+    console.log(formattedQuery)
+    const listingData = await collection.find({$and: formattedQuery}).toArray()
+
+    return listingData 
+            .map (e => new VehicleListing(e))
+}
 
 const insertListing = async (listing) => { 
     if (!(listing instanceof VehicleListing)) { throw new Error("Objecting being inserted must be a vehicle listing!") }
@@ -69,6 +95,7 @@ const listingsWithinRadianRadius = async (centerPoint, radius) => {
 
 module.exports = {
     listingForVin,
+    searchListings,
     insertListing,
     listingsWithinMileRadius,
     listingsWithinRadianRadius,

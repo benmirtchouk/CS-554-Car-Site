@@ -10,6 +10,7 @@ class VehicleListing {
         const {location, photos} = dictionary;
 
         const stringKeys = ["vin", "sellerId", "exteriorColor", "interiorColor"]
+        
         applyValidation(stringKeys, dictionary, validateNonBlankString, this)
         applyValidation(["millage"], dictionary, validateNonNegativeInteger, this);
         applyValidation(["price"], dictionary, validatePositiveFloat, this);

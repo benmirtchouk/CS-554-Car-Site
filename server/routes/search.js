@@ -1,10 +1,10 @@
 const express = require('express');
 const { nhtsa } = require('../api');
 const router = express.Router();
-const { listingForVin } = require('../src/MongoOperations/listing');
+const { listingForVin, searchListings } = require('../src/MongoOperations/listing');
 
 
-router.get('/byvin/:vin', async (req, res) => {
+router.get('/by/vin/:vin', async (req, res) => {
     const vin = req.params.vin
 
     const listing = await listingForVin(vin);
@@ -13,7 +13,6 @@ router.get('/byvin/:vin', async (req, res) => {
         return res.json({metadata: listing.metadata, listing: listing.asDictionary()})
     }
 
-    
     let data;
     let status; 
     try {
@@ -32,6 +31,29 @@ router.get('/byvin/:vin', async (req, res) => {
     res.json({metadata: data, listing: null });
 })
 
+router.get('/by/components', async (req, res) => {
+
+    /// TODO VALIDATE
+    const {make, model, modelYear} = req.query;
+    const validKeys = ["make", "model", "year"]
+
+    console.log(req.query);
+    const query = {};
+    for (const key of validKeys) {
+        const value = req.query[key]
+        if(!value) { continue }
+        query[key] = value;
+    }
+
+    if (Object.keys(query).length === 0) {
+        return res.status(400).json({message: `One of ${validKeys} must be present`})
+    }
+
+
+    const data = await searchListings(query);
+    res.json(data.map(e => e.asDictionary()))
+
+})
 
 
 module.exports = router;
