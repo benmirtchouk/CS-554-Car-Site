@@ -3,17 +3,27 @@ const VehicleListing = require('../DataModel/Automotive/VehicleListing')
 const { InternalMongoError, KeyAlreadyExists } = require('./OperationErrors');
 const { ValidationError } = require('../DataModel/Validation/ObjectProperties');
 const GeoJsonPoint = require('../DataModel/GeoJson/GeoJsonPoint');
-const e = require('express');
+
+const listingForVin = async (vin) => {
+    if(typeof vin !== 'string') { throw new Error("Vin is not a string!"); }
+    const collection = await listings();
+    const listingData = await collection.findOne({ vin: vin });
+    if(!listingData) { return null; }
+    return new VehicleListing(listingData);
+}
+
+
 
 const insertListing = async (listing) => { 
     if (!(listing instanceof VehicleListing)) { throw new Error("Objecting being inserted must be a vehicle listing!") }
 
-    const collection = await listings();
 
-    const existing = await collection.findOne({ vin: listing.vin })
+    const existing = await listingForVin(vin);
+
     if (existing) {
         throw new KeyAlreadyExists("vin", "Vin number already listed for sale!")
     }
+    const collection = await listings();
 
     const id = await collection.insertOne(listing.asDictionary(false))
     if (id == null) {
@@ -58,6 +68,7 @@ const listingsWithinRadianRadius = async (centerPoint, radius) => {
 
 
 module.exports = {
+    listingForVin,
     insertListing,
     listingsWithinMileRadius,
     listingsWithinRadianRadius,

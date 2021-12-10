@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import {
   Nav,
   NavDropdown,
@@ -23,8 +23,23 @@ const Header = () => {
     });
   };
 
+
   let showLogin = true;
   if (currentUser) showLogin = false;
+
+  const [searchKey, setSearchKey] = useState(null);
+
+  /// TODO MOVE AND UPPER CASE LABEL
+  const carSearchHandler= (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const searchQuery = form.elements[0].value;
+    if (searchQuery.length === 0 || typeof searchKey !== "string") {
+      return;
+    }
+
+    alert( `${form.elements[0].value} | ${searchKey}`);
+  }
 
   return (
     <Navbar bg="light" expand="lg">
@@ -48,7 +63,7 @@ const Header = () => {
               </NavDropdown>
             )}
           </Nav>
-          <Form className="d-flex">
+          <Form className="d-flex" onSubmit={carSearchHandler}>
             <InputGroup className="d-flex">
               <FormControl
                 className="placeholder-gray-500"
@@ -56,16 +71,26 @@ const Header = () => {
               />
               <DropdownButton
                 variant="secondary"
-                title="Find By"
+                className="capitalize"
+                title={typeof searchKey === "string" ? searchKey : "Find By"}
                 id="input-group-dropdown-2"
                 align="end"
+                onSelect={(e) => setSearchKey(e)}
               >
-                <Dropdown.Item href="#">Make</Dropdown.Item>
-                <Dropdown.Item href="#">Model</Dropdown.Item>
-                <Dropdown.Item href="#">Year</Dropdown.Item>
-                <Dropdown.Item href="#">VIN</Dropdown.Item>
+                <Dropdown.Item href="#" eventKey="make">
+                  Make
+                </Dropdown.Item>
+                <Dropdown.Item href="#" eventKey="model">
+                  Model
+                </Dropdown.Item>
+                <Dropdown.Item href="#" eventKey="year">
+                  Year
+                </Dropdown.Item>
+                <Dropdown.Item href="#" eventKey="vin">
+                  VIN
+                </Dropdown.Item>
               </DropdownButton>
-              <Button variant="primary" id="search">
+              <Button type="submit" variant="primary" id="search">
                 Search
               </Button>
             </InputGroup>
