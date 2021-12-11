@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from "react";
 import { ButtonGroup, Dropdown, DropdownButton } from "react-bootstrap";
+import { BarChart, Bar, XAxis, YAxis } from 'recharts';
 import Sidebar from "../sidebars/Sidebar";
 import {
   getSafetyReport,
@@ -13,7 +14,6 @@ import Loading from "../Loading";
 import ListError from "../ListError";
 import Card from "./Card";
 
-
 const Safety = (props) => {
   const slinks = [{ name: "VIN", link: "/vin" }];
 
@@ -24,14 +24,15 @@ const Safety = (props) => {
   const [cdata, setData] = useState([]);
   const [makes, setMakes] = useState([]);
   const [models, setModels] = useState([]);
-  const [year, setYear] = useState(passedState.year);
+  const [year, setYear] = useState(passedState?.year);
   const [cardQuery, setCardQuery] = useState(false);
-  const [make, setMake] = useState(passedState.make);
-  const [model, setModel] = useState(passedState.model);
+  const [make, setMake] = useState(passedState?.make);
+  const [model, setModel] = useState(passedState?.model);
   const [apiError, setApiError] = useState(false);
   const [errorCode, setErrorCode] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const [selectedChartStat, setSelectedChartStat] = useState(undefined);
 
   // set the years to a set number
   const years = [];
@@ -76,7 +77,7 @@ const Safety = (props) => {
   }
 
   useEffect(() => {
-    if (!(passedState.searchOnLoad && year && model && make)) {
+    if (!(year && model && make)) {
       return;
     }
 
@@ -84,7 +85,7 @@ const Safety = (props) => {
 
     // Ignore the deps as this effect runs one
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [passedState.searchOnLoad]);
+  }, [year, model, make]);
 
   const handleYearSelect = async (iYear) => {
     setYear(iYear);
@@ -270,6 +271,32 @@ const Safety = (props) => {
             })}
           </div>
         </div>
+        <select onChange={(e) => setSelectedChartStat(e.target.value)}>
+          <option value="ModelYear">ModelYear</option>
+          <option value="ComplaintsCount">ComplaintsCount</option>
+          <option value="RecallsCount">RecallsCount</option>
+          <option value="InvestigationCount">InvestigationCount</option>
+          <option value="OverallRating">OverallRating</option>
+          <option value="OverallFrontCrashRating">OverallFrontCrashRating</option>
+          <option value="CrashPassengersideRating">CrashPassengersideRating</option>
+          <option value="OverallSideCrashRating">OverallSideCrashRating</option>
+          <option value="OverallSideCrashRating">OverallSideCrashRating</option>
+          <option value="SideCrashDriversideRating">SideCrashDriversideRating</option>
+          <option value="SideCrashPassengersideRating">SideCrashPassengersideRating</option>
+          <option value="SideCrashPassengersideRating">SideCrashPassengersideRating</option>
+          <option value="RolloverRating">RolloverRating</option>
+          <option value="RolloverRating2">RolloverRating2</option>
+          <option value="RolloverPossiblity">RolloverPossiblity</option>
+          <option value="RolloverPossiblity2">RolloverPossiblity2</option>
+          <option value="SidePoleCrashRating">SidePoleCrashRating</option>
+        </select>
+        { selectedChartStat !== undefined && (
+          <BarChart width={600} height={300} data={cdata.map((car => ({ name: car.Description, uv: car?.[selectedChartStat] })))}>
+            <XAxis dataKey="name" />
+            <YAxis />
+            <Bar dataKey="uv" barSize={30} fill="#8884d8"/>
+          </BarChart>
+        )}
       </div>
     </div>
   );

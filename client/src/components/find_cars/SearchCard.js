@@ -49,7 +49,6 @@ const SearchCard = (props) => {
                   make,
                   model,
                   year: modelYear,
-                  searchOnLoad: true,
                 },
               }}
             >

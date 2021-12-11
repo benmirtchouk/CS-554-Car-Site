@@ -17,12 +17,18 @@ async function cacheJSON(req, res, next) {
   const cached = await client.hgetAsync('__express__', url);
 
   if (cached !== null) {
-    res.json(JSON.parse(cached));
+    const { status, json } = JSON.parse(cached);
+    res.status(status).json(json);
   } else {
-    res._json = res.json;
-    res.json = (body) => {
-      client.hsetAsync('__express__', url, JSON.stringify(body));
-      res._json(body);
+    const _json = res.json;
+    res.json = (json) => {
+      const status = res.statusCode;
+      if (status == 200) {
+        client.hsetAsync('__express__', url, JSON.stringify({ status, json }));
+      }
+
+      res.json = _json;
+      res.json(json);
     };
     next();
   }

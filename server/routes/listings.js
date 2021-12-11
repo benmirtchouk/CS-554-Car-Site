@@ -75,22 +75,31 @@ router.put('/', async (req, res)=> {
     }
 
     const sellerId = req.currentUser?.user_id;
-    if (sellerId == null) {
+    if (!sellerId) {
         return res.status(401).json({message: "User must be authenticated to send request."} )
     }
-
-    req.body.sellerId = sellerId;
-
 
     /// Use the vin to pull the meta data to populate the properties
     const { data, status } = await nhtsa.decodeVin(vin);
     if (data == null || status > 400) {
         return res.status(status).send();
     }
-    req.body.metadata = data;
+
+    const listingData = {
+        vin: req.body.vin,
+        location: (req.body.coordinates || []).map(parseFloat),
+        price: parseFloat(req.body.price),
+        millage: parseInt(req.body.millage),
+        exteriorColor: req.body.exteriorColor,
+        interiorColor: req.body.interiorColor,
+        photos: req.body.photos,
+        sellerId: sellerId,
+        metadata: data,
+    };
+
     let listing;
     try {
-        listing = new VehicleListing(req.body);
+        listing = new VehicleListing(listingData);
     } catch(e) {
         if(e instanceof ValidationError) {
             return res.status(400).json({message: e.message} )
