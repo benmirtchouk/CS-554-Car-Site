@@ -56,7 +56,7 @@ const insertListing = async (listing) => {
     if (!(listing instanceof VehicleListing)) { throw new Error("Objecting being inserted must be a vehicle listing!") }
 
 
-    const existing = await listingForVin(vin);
+    const existing = await listingForVin(listing.vin);
 
     if (existing) {
         throw new KeyAlreadyExists("vin", "Vin number already listed for sale!")

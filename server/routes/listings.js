@@ -74,7 +74,7 @@ router.put('/', async (req, res)=> {
         return res.status(400).json({message: "Vin must be provided"} );
     }
 
-    const sellerId = req.currentUser;
+    const sellerId = req.currentUser?.user_id;
     if (sellerId == null) {
         return res.status(401).json({message: "User must be authenticated to send request."} )
     }
