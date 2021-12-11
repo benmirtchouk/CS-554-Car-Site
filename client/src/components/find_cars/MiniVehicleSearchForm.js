@@ -88,7 +88,7 @@ const MiniVehicleSearchForm = () => {
           title={typeof searchKey === "string" ? searchKey : "Find By"}
           id="input-group-dropdown-2"
           align="end"
-          onSelect={(e) => setSearchKey(e)}
+          onSelect={(e) => setSearchKey(e !== "freeform" ? e : null)}
         >
           <Dropdown.Item href="#" eventKey="make">
             Make
@@ -101,6 +101,9 @@ const MiniVehicleSearchForm = () => {
           </Dropdown.Item>
           <Dropdown.Item href="#" eventKey="vin">
             VIN
+          </Dropdown.Item>
+          <Dropdown.Item href="#" eventKey="freeform">
+            Freeform
           </Dropdown.Item>
         </DropdownButton>
         <Button type="submit" variant="primary" id="search">
