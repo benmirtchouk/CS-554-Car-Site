@@ -1,12 +1,5 @@
-/* eslint-disable */
-import React, { useContext} from "react";
-import {
-  Nav,
-  NavDropdown,
-  Navbar,
-  Button,
-  Container
-} from "react-bootstrap";
+import React, { useContext } from "react";
+import { Nav, NavDropdown, Navbar, Button, Container } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { AuthContext } from "../firebase/Auth";
 import { doSignOut } from "../firebase/FirebaseFunctions";
