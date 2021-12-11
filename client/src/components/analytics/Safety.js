@@ -17,9 +17,9 @@ import Card from "./Card";
 const Safety = (props) => {
   const slinks = [{ name: "VIN", link: "/vin" }];
 
-  const {
-    location: { state: passedState },
-  } = props;
+  /// Use nil safe coercion.
+  // eslint-disable-next-line react/destructuring-assignment
+  const passedState = props?.location?.state ?? {};
 
   const [cdata, setData] = useState([]);
   const [makes, setMakes] = useState([]);
