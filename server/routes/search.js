@@ -35,7 +35,6 @@ router.get('/by/components', async (req, res) => {
 
     const validKeys = ["make", "model", "year", "eitherMakeModel"]
 
-    console.log(req.query);
     const query = {};
     for (const key of validKeys) {
         const value = req.query[key]

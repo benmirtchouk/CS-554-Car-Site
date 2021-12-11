@@ -8,10 +8,14 @@ const SearchCard = (props) => {
   const fallbackImage = "/images/ImgNotAvailable.png";
   const img = "";
 
-  const { vin, data, listing } = props;
+  const { data, listing } = props;
+  const { vin } = listing;
   const { metadata } = data;
   const { make, model, modelYear } = metadata;
-  const key = `search-${vin}`;
+
+  const key = `search-${
+    vin !== undefined ? vin : `${modelYear}-${make}-${model}`
+  }`;
 
   const isForSale = listing != null && !!Object.keys(listing).length;
 

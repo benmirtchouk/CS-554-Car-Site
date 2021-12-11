@@ -46,8 +46,6 @@ const searchListings = async (query) => {
         return
     }
 
-
-    console.log(formattedQuery)
     const listingData = await collection.find({$and: formattedQuery}).toArray()
 
     return listingData 

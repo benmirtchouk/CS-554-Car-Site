@@ -1,5 +1,5 @@
+/* eslint-disable react/prop-types */
 import React, { useState, useEffect } from "react";
-import PropTypes from "prop-types";
 import { ButtonGroup, Dropdown, DropdownButton } from "react-bootstrap";
 import Sidebar from "../sidebars/Sidebar";
 import {
@@ -273,16 +273,6 @@ const Safety = (props) => {
       </div>
     </div>
   );
-};
-
-Safety.propTypes = {
-  location: { state: PropTypes.objectOf(PropTypes.object) },
-};
-
-Safety.defaultProps = {
-  location: {
-    state: {},
-  },
 };
 
 export default Safety;
