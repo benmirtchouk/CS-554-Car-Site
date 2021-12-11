@@ -187,8 +187,7 @@ const Safety = (props) => {
 
   let extendedCarHeader = false;
   if (year && model && make) extendedCarHeader = true;
-  
-  console.log('cdata', cdata);
+
   return (
     <div key="safety" className="main_layout">
       <Sidebar sideLinks={slinks} />

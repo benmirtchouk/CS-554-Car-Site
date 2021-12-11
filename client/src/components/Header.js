@@ -3,7 +3,7 @@ import { Nav, NavDropdown, Navbar, Button, Container } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { AuthContext } from "../firebase/Auth";
 import { doSignOut } from "../firebase/FirebaseFunctions";
-// import MiniVehicleSearchForm from "./find_cars/MiniVehicleSearchForm";
+import MiniVehicleSearchForm from "./find_cars/MiniVehicleSearchForm";
 
 const Header = () => {
   const { currentUser } = useContext(AuthContext);
