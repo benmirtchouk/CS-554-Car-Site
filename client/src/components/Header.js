@@ -37,7 +37,7 @@ const Header = () => {
               </NavDropdown>
             )}
           </Nav>
-          {/* <MiniVehicleSearchForm /> */}
+          <MiniVehicleSearchForm />
           <div className="space-x-2 mx-2">
             {showLogin && (
               <LinkContainer to="/signup">
