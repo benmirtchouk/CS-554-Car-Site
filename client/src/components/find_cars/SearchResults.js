@@ -21,9 +21,9 @@ const SearchResults = (props) => {
 
       let resultsToSet = [];
       if (searchKey === "vin") {
-        /// TODO normalize response between listing and general vin
         const { data } = await Searches.byVin(query);
-        resultsToSet = [data];
+        data.vin = query
+        resultsToSet = [{ data, listing: null }];
       } else {
         const { data } = await Searches.byComponents(query);
         resultsToSet = data.map((e) => ({
@@ -41,8 +41,7 @@ const SearchResults = (props) => {
     <div className="main_layout">
       <Sidebar />
       <div className="mainbody">
-        {searchResults.length ? JSON.stringify(searchResults) : ""};
-        {searchResults.length ? tempDivs : ""};
+        {searchResults.length ? tempDivs : `No results for search term`}
       </div>
     </div>
   );

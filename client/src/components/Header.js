@@ -1,21 +1,16 @@
 /* eslint-disable */
-import React, { useContext, useState } from "react";
+import React, { useContext} from "react";
 import {
   Nav,
   NavDropdown,
   Navbar,
   Button,
-  Container,
-  Form,
-  InputGroup,
-  Dropdown,
-  DropdownButton,
-  FormControl,
+  Container
 } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
-import { Redirect } from "react-router-dom";
 import { AuthContext } from "../firebase/Auth";
 import { doSignOut } from "../firebase/FirebaseFunctions";
+import { MiniVehicleSearchForm } from ".";
 
 const Header = () => {
   const { currentUser } = useContext(AuthContext);
@@ -27,82 +22,6 @@ const Header = () => {
 
   let showLogin = true;
   if (currentUser) showLogin = false;
-
-  const [searchKey, setSearchKey] = useState(null);
-  const [searchQuery, setSearchQuery] = useState(null);
-
-  const carSearchHandler = (e) => {
-    e.preventDefault();
-    const form = e.target;
-    const searchText = form.elements[0].value;
-
-    const query = {};
-    if (searchText.length === 0) {
-      return;
-    }
-    
-    if (typeof searchKey !== "string") {
-      const tokens = searchText.split(" ").filter(e => e !== "");
-      let buildingQuery = {};
-      switch (tokens.length) {
-        case 1:
-          if(isFinite(tokens[0])) {
-            buildingQuery = {
-              year: tokens[0]
-            }
-          } else {
-            buildingQuery = {
-              eitherMakeModel: tokens[0]
-            }
-          }
-          break;
-
-        case 2: // <Year> <Make or Model> or <Make> <Model> TODO: <Make or Model> <Year> ?
-          if(isFinite(tokens[0])) {
-            buildingQuery = {
-              year: tokens[0],
-              eitherMakeModel: tokens[1],
-            }
-          } else {
-            buildingQuery = {
-              make: tokens[0],
-              model: tokens[1]
-            }
-          }
-          break;
-        case 3: // <Year> <Make> <Model>
-          if(!isFinite(tokens[0])) { 
-            /// TODO Error
-            return
-          } 
-
-          buildingQuery = {
-            year: tokens[0],
-            make: tokens[1],
-            model: tokens[2]
-          }
-          break;
-        default: 
-      }
-
-      query.searchKey = "components";
-      query.query = buildingQuery;
-
-    } else {
-      query.searchKey = searchKey
-      query.query = {[searchKey]: searchText};
-    }
-
-
-
-    setSearchQuery(query);
-  };
-
-  if (searchQuery !== null) {
-    return (
-      <Redirect to={{ pathname: "/search_results", state: searchQuery }} />
-    );
-  }
 
   return (
     <Navbar bg="light" expand="lg">
@@ -126,38 +45,7 @@ const Header = () => {
               </NavDropdown>
             )}
           </Nav>
-          <Form className="d-flex" onSubmit={carSearchHandler}>
-            <InputGroup className="d-flex">
-              <FormControl
-                className="placeholder-gray-500"
-                placeholder="Find a Car"
-              />
-              <DropdownButton
-                variant="secondary"
-                className="capitalize"
-                title={typeof searchKey === "string" ? searchKey : "Find By"}
-                id="input-group-dropdown-2"
-                align="end"
-                onSelect={(e) => setSearchKey(e)}
-              >
-                <Dropdown.Item href="#" eventKey="make">
-                  Make
-                </Dropdown.Item>
-                <Dropdown.Item href="#" eventKey="model">
-                  Model
-                </Dropdown.Item>
-                <Dropdown.Item href="#" eventKey="year">
-                  Year
-                </Dropdown.Item>
-                <Dropdown.Item href="#" eventKey="vin">
-                  VIN
-                </Dropdown.Item>
-              </DropdownButton>
-              <Button type="submit" variant="primary" id="search">
-                Search
-              </Button>
-            </InputGroup>
-          </Form>
+          <MiniVehicleSearchForm />
           <div className="space-x-2 mx-2">
             {showLogin && (
               <LinkContainer to="/signup">
