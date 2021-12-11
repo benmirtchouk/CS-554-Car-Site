@@ -35,7 +35,7 @@ const parseSearchQuery = (searchText) => {
     case 3: // <Year> <Make> <Model>
       // eslint-disable-next-line no-restricted-globals
       if (!isFinite(tokens[0])) {
-        /// TODO Error
+        /// TODO Show Error
         return null;
       }
 
@@ -68,7 +68,8 @@ const MiniVehicleSearchForm = () => {
       query.query = parseSearchQuery(searchText);
     } else {
       query.searchKey = searchKey;
-      query.query = searchText;
+      query.query =
+        searchKey === "vin" ? searchText : { [searchKey]: searchText };
     }
 
     history.push({ pathname: "/search_results", state: query });

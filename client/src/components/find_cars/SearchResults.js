@@ -25,7 +25,9 @@ const SearchResults = (props) => {
         data.vin = query
         resultsToSet = [{ data, listing: null }];
       } else {
+          alert(`Query: ${JSON.stringify(query)}`);
         const { data } = await Searches.byComponents(query);
+        alert(JSON.stringify(data));
         resultsToSet = data.map((e) => ({
           data: { metadata: e.metadata },
           listing: e,
