@@ -54,7 +54,8 @@ const Card = ({ info }) => {
             {item.InvestigationCount}
           </p>
           <p className="detKey">
-            <span className="detKey">Overall Rating:</span> {item.OverallRating}
+            <span className="detKey">Overall Rating:</span>
+            {item.OverallRating}
           </p>
           <p className="detKey">
             <span className="detKey">Overall Front Crash Rating:</span>

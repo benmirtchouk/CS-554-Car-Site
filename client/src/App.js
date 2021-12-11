@@ -9,11 +9,14 @@ import {
   SellCar,
   RecentSales,
   MyListings,
+  AddListing,
   MessageBoard,
   Vin,
   Safety,
+  Account,
   Login,
   SignUp,
+  SearchResults,
   FindByModel,
   FindByMake,
   FindByVin,
@@ -36,12 +39,15 @@ const App = () => (
             <PrivateRoute path="/sellers" component={Sellers} />
             <PrivateRoute path="/sell_car" component={SellCar} />
             <PrivateRoute path="/my_listings" component={MyListings} />
-            <Route path="/message_board" component={MessageBoard} />
+            <PrivateRoute path="/add_listing" component={AddListing} />
+            <PrivateRoute path="/message_board" component={MessageBoard} />
             <Route path="/recent_sales" component={RecentSales} />
             <Route path="/safety" component={Safety} />
             <Route path="/vin" component={Vin} />
             <Route path="/login" component={Login} />
+            <PrivateRoute path="/account" component={Account} />
             <Route path="/signup" component={SignUp} />
+            <Route path="/search_results" component={SearchResults} />
             <Route path="/find_by_model" component={FindByModel} />
             <Route path="/find_by_make" component={FindByMake} />
             <Route path="/find_by_vin" component={FindByVin} />
