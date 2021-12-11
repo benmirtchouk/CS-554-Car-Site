@@ -3,7 +3,7 @@ import { Nav, NavDropdown, Navbar, Button, Container } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { AuthContext } from "../firebase/Auth";
 import { doSignOut } from "../firebase/FirebaseFunctions";
-import { MiniVehicleSearchForm } from ".";
+// import MiniVehicleSearchForm from "./find_cars/MiniVehicleSearchForm";
 
 const Header = () => {
   const { currentUser } = useContext(AuthContext);
@@ -13,8 +13,7 @@ const Header = () => {
     });
   };
 
-  let showLogin = true;
-  if (currentUser) showLogin = false;
+  const showLogin = !currentUser;
 
   return (
     <Navbar bg="light" expand="lg">
@@ -38,7 +37,7 @@ const Header = () => {
               </NavDropdown>
             )}
           </Nav>
-          <MiniVehicleSearchForm />
+          {/* <MiniVehicleSearchForm /> */}
           <div className="space-x-2 mx-2">
             {showLogin && (
               <LinkContainer to="/signup">
@@ -62,6 +61,15 @@ const Header = () => {
                   id="logout"
                 >
                   LogOut
+                </Button>
+              </LinkContainer>
+            )}
+            {!showLogin && (
+              <LinkContainer to="/account">
+                <Button
+                  variant="outline-primary"
+                >
+                  {currentUser.displayName}
                 </Button>
               </LinkContainer>
             )}
