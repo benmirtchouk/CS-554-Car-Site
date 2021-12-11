@@ -15,10 +15,20 @@ class GeoJsonType {
             throw new InvalidCoordinateType("Co-ordinates parameter cannot be null");
         }
         
-        /// Normalize between both potential input formats
-        const normalizedCoordinates = Array.isArray(coordinates) ? coordinates : [coordinates.longitude, coordinates.latitude].filter(e => e != null)
+        /// Normalize between all potential input formats. Either the raw array, the mongo geoJSON object, or the REST input format
+        let normalizedCoordinates;
+        if (Array.isArray(coordinates)) {
+            normalizedCoordinates = coordinates
+        } else if (coordinates.type && Array.isArray(coordinates.coordinates)) {
+            normalizedCoordinates = coordinates.coordinates
+        } else {
+            const {longitude, latitude} = coordinates;
+            normalizedCoordinates = [longitude, latitude].filter(e => e != null)
+        }
         
         if( normalizedCoordinates.length !== 2 ) {
+            console.log(coordinates)
+            console.log(normalizedCoordinates)
             throw new InvalidCoordinateType("Co-ordinates parameter is not a GeoJson coordinates object!")
         }
 

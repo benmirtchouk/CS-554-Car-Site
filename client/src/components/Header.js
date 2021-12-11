@@ -1,19 +1,9 @@
 import React, { useContext } from "react";
-import {
-  Nav,
-  NavDropdown,
-  Navbar,
-  Button,
-  Container,
-  Form,
-  InputGroup,
-  Dropdown,
-  DropdownButton,
-  FormControl,
-} from "react-bootstrap";
+import { Nav, NavDropdown, Navbar, Button, Container } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { AuthContext } from "../firebase/Auth";
 import { doSignOut } from "../firebase/FirebaseFunctions";
+import { MiniVehicleSearchForm } from ".";
 
 const Header = () => {
   const { currentUser } = useContext(AuthContext);
@@ -48,28 +38,7 @@ const Header = () => {
               </NavDropdown>
             )}
           </Nav>
-          <Form className="d-flex">
-            <InputGroup className="d-flex">
-              <FormControl
-                className="placeholder-gray-500"
-                placeholder="Find a Car"
-              />
-              <DropdownButton
-                variant="secondary"
-                title="Find By"
-                id="input-group-dropdown-2"
-                align="end"
-              >
-                <Dropdown.Item href="#">Make</Dropdown.Item>
-                <Dropdown.Item href="#">Model</Dropdown.Item>
-                <Dropdown.Item href="#">Year</Dropdown.Item>
-                <Dropdown.Item href="#">VIN</Dropdown.Item>
-              </DropdownButton>
-              <Button variant="primary" id="search">
-                Search
-              </Button>
-            </InputGroup>
-          </Form>
+          <MiniVehicleSearchForm />
           <div className="space-x-2 mx-2">
             {showLogin && (
               <LinkContainer to="/signup">

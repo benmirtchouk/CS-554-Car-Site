@@ -3,6 +3,8 @@ export { default as Vin } from "./analytics/Vin";
 export { default as Safety } from "./analytics/Safety";
 
 // Find
+export { default as SearchResults } from "./find_cars/SearchResults";
+export { default as MiniVehicleSearchForm } from "./find_cars/MiniVehicleSearchForm";
 export { default as FindByMake } from "./find_cars/FindByMake";
 export { default as FindByModel } from "./find_cars/FindByModel";
 export { default as FindByVin } from "./find_cars/FindByVin";

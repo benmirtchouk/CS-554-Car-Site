@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+/* eslint-disable react/prop-types */
+import React, { useState, useEffect } from "react";
 import { ButtonGroup, Dropdown, DropdownButton } from "react-bootstrap";
 import Sidebar from "../sidebars/Sidebar";
 import {
@@ -12,16 +13,21 @@ import Loading from "../Loading";
 import ListError from "../ListError";
 import Card from "./Card";
 
-const Safety = () => {
+
+const Safety = (props) => {
   const slinks = [{ name: "VIN", link: "/vin" }];
+
+  const {
+    location: { state: passedState },
+  } = props;
 
   const [cdata, setData] = useState([]);
   const [makes, setMakes] = useState([]);
   const [models, setModels] = useState([]);
-  const [year, setYear] = useState(undefined);
+  const [year, setYear] = useState(passedState.year);
   const [cardQuery, setCardQuery] = useState(false);
-  const [make, setMake] = useState(undefined);
-  const [model, setModel] = useState(undefined);
+  const [make, setMake] = useState(passedState.make);
+  const [model, setModel] = useState(passedState.model);
   const [apiError, setApiError] = useState(false);
   const [errorCode, setErrorCode] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -68,6 +74,17 @@ const Safety = () => {
         console.log(e);
       });
   }
+
+  useEffect(() => {
+    if (!(passedState.searchOnLoad && year && model && make)) {
+      return;
+    }
+
+    getData();
+
+    // Ignore the deps as this effect runs one
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [passedState.searchOnLoad]);
 
   const handleYearSelect = async (iYear) => {
     setYear(iYear);

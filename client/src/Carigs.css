@@ -277,3 +277,6 @@ p.detKey {
   overflow-y: scroll;
 }
 
+#input-group-dropdown-2 {
+  text-transform: capitalize;
+}
