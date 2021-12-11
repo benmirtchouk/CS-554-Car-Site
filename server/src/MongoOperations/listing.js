@@ -12,16 +12,30 @@ const listingForVin = async (vin) => {
     return new VehicleListing(listingData);
 }
 
-const searchListings = async (query) => {
-    const collection = await listings();
 
-    const formattedQuery = []
+const parseMakeModelForQuery = (query, operator="$and") => {
+    if(query.eitherMakeModel) {
+        return parseMakeModelForQuery({ make: query.eitherMakeModel,
+                                    model: query.eitherMakeModel}, "$or")
+    }
+
     const regexQueryKeys = ["make", "model"]
+    const queryArray = []
     for (const key of regexQueryKeys) {
         const value = query[key];
         if(!value || value === "") { continue; }
-        formattedQuery.push({[`metadata.${key}`]: {$regex: value, $options: "$i"}})
+        queryArray.push({[`metadata.${key}`]: {$regex: value, $options: "$i"}})
     }
+
+    return !!queryArray.length ? [{[operator]: queryArray}] : [];
+
+}
+
+
+const searchListings = async (query) => {
+    const collection = await listings();
+
+   const formattedQuery = parseMakeModelForQuery(query);
 
     if (isFinite(query.year - 0)) {
         formattedQuery.push({['metadata.modelYear']: query.year - 0})

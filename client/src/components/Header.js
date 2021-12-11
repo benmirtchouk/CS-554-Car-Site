@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useContext, useState } from "react";
 import {
   Nav,
@@ -38,15 +39,61 @@ const Header = () => {
     const query = {};
     if (searchText.length === 0) {
       return;
-      // eslint-disable-next-line no-else-return
-    } else if (typeof searchKey !== "string") {
-      /// Not implemented yet, treat as empty case
-      return;
+    }
+    
+    if (typeof searchKey !== "string") {
+      const tokens = searchText.split(" ").filter(e => e !== "");
+      let buildingQuery = {};
+      switch (tokens.length) {
+        case 1:
+          if(isFinite(tokens[0])) {
+            buildingQuery = {
+              year: tokens[0]
+            }
+          } else {
+            buildingQuery = {
+              eitherMakeModel: tokens[0]
+            }
+          }
+          break;
+
+        case 2: // <Year> <Make or Model> or <Make> <Model> TODO: <Make or Model> <Year> ?
+          if(isFinite(tokens[0])) {
+            buildingQuery = {
+              year: tokens[0],
+              eitherMakeModel: tokens[1],
+            }
+          } else {
+            buildingQuery = {
+              make: tokens[0],
+              model: tokens[1]
+            }
+          }
+          break;
+        case 3: // <Year> <Make> <Model>
+          if(!isFinite(tokens[0])) { 
+            /// TODO Error
+            return
+          } 
+
+          buildingQuery = {
+            year: tokens[0],
+            make: tokens[1],
+            model: tokens[2]
+          }
+          break;
+        default: 
+      }
+
+      query.searchKey = "components";
+      query.query = buildingQuery;
+
     } else {
-      query.searchKey = searchKey;
+      query.searchKey = searchKey
+      query.query = {[searchKey]: searchText};
     }
 
-    query.query = searchText;
+
 
     setSearchQuery(query);
   };

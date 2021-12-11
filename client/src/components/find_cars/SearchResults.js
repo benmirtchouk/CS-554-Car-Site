@@ -13,7 +13,6 @@ const SearchResults = (props) => {
 
 
   useEffect(() => {
-    // alert(`Search effect: ${JSON.stringify(location.state)}`);
     (async () => {
       if (state === undefined) {
         return;
@@ -26,19 +25,18 @@ const SearchResults = (props) => {
         const { data } = await Searches.byVin(query);
         resultsToSet = [data];
       } else {
-        const { data } = await Searches.byComponents({ [searchKey]: query });
-        resultsToSet = data;
+        const { data } = await Searches.byComponents(query);
+        resultsToSet = data.map((e) => ({
+          data: { metadata: e.metadata },
+          listing: e,
+        }));
       }
 
       setSearchResults(Array.isArray(resultsToSet) ? resultsToSet : []);
     })();
   }, [state]);
 
-  const dataToSend = searchResults.map((e) => ({
-    data: { metadata: e.metadata },
-    listing: e,
-  }));
-  const tempDivs = dataToSend.map((e) => SearchCard(e));
+  const tempDivs = searchResults.map((e) => SearchCard(e));
   return (
     <div className="main_layout">
       <Sidebar />

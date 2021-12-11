@@ -8,12 +8,12 @@ const SearchCard = (props) => {
   const fallbackImage = "/images/ImgNotAvailable.png";
   const img = "";
 
-  const { vin, data } = props;
-  const { listing, metadata } = data;
+  const { vin, data, listing } = props;
+  const { metadata } = data;
   const { make, model, modelYear } = metadata;
   const key = `search-${vin}`;
 
-  const isForSale = listing !== null;
+  const isForSale = listing != null && !!Object.keys(listing).length;
 
   return (
     <div key={key} className="card">
@@ -35,7 +35,7 @@ const SearchCard = (props) => {
           {isForSale ? (
             <ListingDetails listing={listing} />
           ) : (
-            "Not currently listed"
+            "Not currently listed for sale"
           )}
           <div>
             <Link
