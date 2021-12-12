@@ -29,11 +29,8 @@ export { default as RecentSales } from "./sellers/RecentSales";
 export { default as SellCar } from "./sellers/SellCar";
 export { default as Sellers } from "./sellers/Sellers";
 
-// Sidebars
-export { default as Search } from "./sidebars/Search";
-export { default as Sidebar } from "./sidebars/Sidebar";
-
 // Main Components
+export { default as Sidebar } from "./Sidebar";
 export { default as ErrorPage } from "./ErrorPage";
 export { default as Header } from "./Header";
 export { default as Home } from "./Home";

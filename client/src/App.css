@@ -13,3 +13,7 @@
   margin-right: 3px;
   margin-bottom: 3px;
 }
+
+.h-sidebar {
+  height: calc(100vh - 56px);
+}

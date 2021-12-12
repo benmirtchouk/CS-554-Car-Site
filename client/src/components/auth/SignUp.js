@@ -4,7 +4,6 @@ import { IoLogoGoogle, IoLogoFacebook } from "react-icons/io";
 import { Button, Form } from "react-bootstrap";
 import { doCreateUserWithEmailAndPassword } from '../../firebase/FirebaseFunctions';
 import { AuthContext } from '../../firebase/Auth';
-import Sidebar from "../sidebars/Sidebar";
 
 const SignUp = () => {
   const { currentUser } = useContext(AuthContext);
