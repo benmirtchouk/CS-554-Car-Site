@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 
 import React, { useEffect, useState } from "react";
-import Sidebar from "../sidebars/Sidebar";
 import Searches from "../../data/search";
 import SearchCard from "./SearchCard";
 
@@ -39,7 +38,6 @@ const SearchResults = (props) => {
   const tempDivs = searchResults.map((e) => SearchCard(e));
   return (
     <div className="main_layout">
-      <Sidebar />
       <div className="mainbody">
         {searchResults.length ? tempDivs : `No results for search term`}
       </div>
