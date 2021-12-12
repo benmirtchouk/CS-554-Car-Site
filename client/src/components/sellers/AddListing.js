@@ -31,6 +31,7 @@ const AddListing = () => {
     const { data, status } = await listing.addListing(newListing);
     if (status === 200) {
       setCreatedListing({ data: { metadata: data.metadata}, listing: data });
+      e.target.reset();
     } else if (status >= 400 && status < 600) {
       setErrors([data.message]);
     } else {
