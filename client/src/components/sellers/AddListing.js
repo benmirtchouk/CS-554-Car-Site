@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import Sidebar from "../sidebars/Sidebar";
 import { listing } from "../../data";
+import SearchCard from "../find_cars/SearchCard";
 
 const AddListing = () => {
   const [errors, setErrors] = useState([]);
+  const [createdListing, setCreatedListing] = useState(null);
 
   const slinks = [
     { name: "Sell A Car", link: "/sell_car" },
@@ -11,26 +13,29 @@ const AddListing = () => {
     { name: "Sellers", link: "/sellers" },
   ];
 
-  
   const submitHandler = async (e) => {
     e.preventDefault();
+    setCreatedListing(null);
     const newListing = {
       exteriorColor: e.target.elements.exteriorColor.value,
       interiorColor: e.target.elements.interiorColor.value,
-      location: [
-        e.target.elements.latitude.value,
+      coordinates: [
         e.target.elements.longitude.value,
+        e.target.elements.latitude.value,
       ],
       millage: e.target.elements.millage.value,
       price: e.target.elements.price.value,
       vin: e.target.elements.vin.value,
     };
-    console.log(e.target.elements);
-    console.log('newListing', newListing);
+
     const { data, status } = await listing.addListing(newListing);
-    console.log('data', data);
-    console.log('status', status);
-    setErrors(['yo']);
+    if (status === 200) {
+      setCreatedListing({ data: { metadata: data.metadata}, listing: data });
+    } else if (status >= 400 && status < 600) {
+      setErrors([data.message]);
+    } else {
+      setErrors(["Failed to create listing"]);
+    }
   };
 
   return (
@@ -46,8 +51,8 @@ const AddListing = () => {
           <div className="form-group flex-col">
             <input id="vin" type="text" name="vin" placeholder="Vin..." required />
             <div id="coordinates" className="form-group flex-row">
-              <input id="longitude" type="number" name="longitude" placeholder="Longitude..." step="0.0000001" required />
-              <input id="latitude" type="number" name="latitude" placeholder="Latitude..." step="0.0000001" required />
+              <input id="longitude" type="number" name="longitude" placeholder="Longitude..." step="0.0000001" min="-180" max="180" required />
+              <input id="latitude" type="number" name="latitude" placeholder="Latitude..." step="0.0000001" min="-90" max="90" required />
             </div>
             <input id="price" type="number" name="price" placeholder="Price..." required />
             <input id="millage" type="number" name="millage" placeholder="Millage..." required />
@@ -76,6 +81,14 @@ const AddListing = () => {
               <p className="error">{error}</p>
             )) }
         </div>
+        {createdListing ? (
+          <div>
+            Created <br />
+            {SearchCard(createdListing)}
+          </div>
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );
