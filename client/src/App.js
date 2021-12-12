@@ -11,6 +11,7 @@ import {
   Sidebar,
   RecentSales,
   MyListings,
+  AddListing,
   MessageBoard,
   Vin,
   Safety,

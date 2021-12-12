@@ -13,8 +13,7 @@ const Header = () => {
     });
   };
 
-  let showLogin = true;
-  if (currentUser) showLogin = false;
+  const showLogin = !currentUser;
 
   return (
     <Navbar bg="light" expand="lg">
@@ -62,6 +61,15 @@ const Header = () => {
                   id="logout"
                 >
                   LogOut
+                </Button>
+              </LinkContainer>
+            )}
+            {!showLogin && (
+              <LinkContainer to="/account">
+                <Button
+                  variant="outline-primary"
+                >
+                  {currentUser.displayName}
                 </Button>
               </LinkContainer>
             )}
