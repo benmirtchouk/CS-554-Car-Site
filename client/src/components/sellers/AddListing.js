@@ -1,15 +1,15 @@
 import React, { useState } from "react";
-import Sidebar from "../sidebars/Sidebar";
+// import Sidebar from "../sidebars/Sidebar";
 import { listing } from "../../data";
 
 const AddListing = () => {
   const [errors, setErrors] = useState([]);
 
-  const slinks = [
-    { name: "Sell A Car", link: "/sell_car" },
-    { name: "Recent Sales", link: "/recent_sales" },
-    { name: "Sellers", link: "/sellers" },
-  ];
+//   const slinks = [
+//     { name: "Sell A Car", link: "/sell_car" },
+//     { name: "Recent Sales", link: "/recent_sales" },
+//     { name: "Sellers", link: "/sellers" },
+//   ];
 
   
   const submitHandler = async (e) => {
@@ -35,7 +35,6 @@ const AddListing = () => {
 
   return (
     <div className="main_layout">
-      <Sidebar side_links={slinks} />
       <div className="mainbody">
         <h1>Add a Listing</h1>
         <br/>

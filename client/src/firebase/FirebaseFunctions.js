@@ -1,4 +1,4 @@
-import firebase from 'firebase/app';
+import firebase from "firebase/app";
 
 async function doCreateUserWithEmailAndPassword(email, password, displayName) {
   await firebase.auth().createUserWithEmailAndPassword(email, password);
@@ -38,11 +38,23 @@ async function doPasswordReset(email) {
 }
 
 async function doPasswordUpdate(password) {
-  await firebase.auth().updatePassword(password);
+  const user = firebase.auth().currentUser;
+  user.updatePassword(password);
 }
 
 async function doSignOut() {
   await firebase.auth().signOut();
+}
+
+async function doReAuthenticate(password) {
+  const user = firebase.auth().currentUser;
+  // create user credentials with the input password
+  const credentials = firebase.auth.EmailAuthProvider.credential(
+    user.email,
+    password
+  );
+  // Verify that the input password is correct
+  await user.reauthenticateWithCredential(credentials);
 }
 
 export {
@@ -54,8 +66,8 @@ export {
   doSignOut,
   doChangePassword,
   getAuthToken,
+  doReAuthenticate,
 };
-
 /*
 const signUpUserWithEmailPassword = async (email, password, displayName, phoneNumber) => {
    //console.log(`FORM INPUTS: email: ${email}, displayName: ${displayName}, phoneNumber: ${phoneNumber}`);

@@ -3,7 +3,10 @@ import { Link, Redirect, useHistory } from "react-router-dom";
 import { IoLogoGoogle, IoLogoFacebook } from "react-icons/io";
 import { Button, Form } from "react-bootstrap";
 import { AuthContext } from "../../firebase/Auth";
-import { doSignInWithEmailAndPassword, doSocialSignIn } from '../../firebase/FirebaseFunctions';
+import {
+  doSignInWithEmailAndPassword,
+  doSocialSignIn,
+} from "../../firebase/FirebaseFunctions";
 
 const Login = () => {
   const { currentUser } = useContext(AuthContext);
@@ -11,27 +14,32 @@ const Login = () => {
   const [errorMsg, setErrorMsg] = useState("");
   const history = useHistory();
 
+  const handleResetPwd = async (e) => {
+    history.push("/reset_pwd");
+  };
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     let { email, password } = e.target.elements;
-    await doSignInWithEmailAndPassword(email.value, password.value).then(res => {
-      setError(false);
-      setErrorMsg('');
-      //history.push("/");
-      history.goBack();
-    }).catch(e => {
-      setError(true);
-      //setErrorMsg(e.message);
-      console.log(`${e.message}`);
-      setErrorMsg(`Email/Password Invalid`);
-    });
+    await doSignInWithEmailAndPassword(email.value, password.value)
+      .then(async (res) => {
+        setError(false);
+        setErrorMsg("");
+        //history.push("/");
+        history.goBack();
+      })
+      .catch((e) => {
+        setError(true);
+        //setErrorMsg(e.message);
+        console.log(`${e.message}`);
+        setErrorMsg(`Email/Password Invalid`);
+      });
   };
 
   if (currentUser) return <Redirect to="/" />;
 
   const handleButtonClick = async (provider) => {
     await doSocialSignIn(provider)
-      .then(() => {
+      .then(async () => {
         history.goBack();
       })
       .catch((e) => {
@@ -67,7 +75,7 @@ const Login = () => {
         or
       </p>
       <Form onSubmit={handleFormSubmit} className="mb-2">
-        <Form.Group className="mb-3" controlId="formBasicEmail">
+        <Form.Group className="mb-3">
           <Form.Label>Email address</Form.Label>
           <Form.Control
             placeholder="Enter email"
@@ -85,7 +93,7 @@ const Login = () => {
           </Form.Text>
         </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formBasicPassword">
+        <Form.Group className="mb-3">
           <Form.Label>Password</Form.Label>
           <Form.Control
             type="password"
@@ -97,6 +105,14 @@ const Login = () => {
         </Form.Group>
         <Button variant="primary" type="submit">
           Login
+        </Button>
+        <Button
+          className="ml-2"
+          onClick={handleResetPwd}
+          variant="danger"
+          type="btn"
+        >
+          Reset My Password
         </Button>
       </Form>
       {/* <form className="LoginForm" onSubmit={handleFormSubmit}>

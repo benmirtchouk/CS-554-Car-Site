@@ -11,11 +11,12 @@ import {
   Sidebar,
   RecentSales,
   MyListings,
-  AddListing,
+//  AddListing,
   MessageBoard,
   Vin,
   Safety,
   Account,
+  PasswordReset,
   Login,
   SignUp,
   SearchResults,
@@ -69,6 +70,7 @@ const App = () => {
                   <Route path="/vin" component={Vin} />
                   <Route path="/login" component={Login} />
                   <PrivateRoute path="/account" component={Account} />
+                  <Route path="/reset_pwd" component={PasswordReset} />
                   <Route path="/signup" component={SignUp} />
                   <Route path="/search_results" component={SearchResults} />
                   <Route path="/find_by_model" component={FindByModel} />
