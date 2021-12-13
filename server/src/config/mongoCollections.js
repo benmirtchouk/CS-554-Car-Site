@@ -25,5 +25,5 @@
  /* Now, you can list your collections here: */
  module.exports = {
     listings: getCollectionFn("listings", { "location" : "2dsphere" } ),
+    accounts: getCollectionFn("accounts", false ),
  };
- 
