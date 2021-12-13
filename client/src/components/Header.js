@@ -27,7 +27,7 @@ const Header = () => {
             <LinkContainer to="/sellers">
               <Nav.Link>Sellers</Nav.Link>
             </LinkContainer>
-            <NavDropdown title="Analytics" id="basic-nav-dropdown">
+            <NavDropdown title="Analytics">
               <LinkContainer to="/vin">
                 <NavDropdown.Item> Vin </NavDropdown.Item>
               </LinkContainer>
@@ -36,10 +36,10 @@ const Header = () => {
               </LinkContainer>
             </NavDropdown>
             {!showLogin && (
-              <NavDropdown title="Account" id="basic-nav-dropdown">
+              <NavDropdown title="Account">
                 <LinkContainer to="/account">
-                <NavDropdown.Item> My Profile</NavDropdown.Item>
-              </LinkContainer>
+                  <NavDropdown.Item> My Profile</NavDropdown.Item>
+                </LinkContainer>
               </NavDropdown>
             )}
           </Nav>
