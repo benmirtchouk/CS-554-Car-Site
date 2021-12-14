@@ -11,7 +11,7 @@ import {
   Sidebar,
   RecentSales,
   MyListings,
-//  AddListing,
+  //  AddListing,
   MessageBoard,
   Vin,
   Safety,
@@ -62,7 +62,7 @@ const App = () => {
                   <PrivateRoute path="/sell_car" component={SellCar} />
                   <PrivateRoute path="/my_listings" component={MyListings} />
                   <PrivateRoute
-                    path="/message_board"
+                    path="/message_board/:sellerId"
                     component={MessageBoard}
                   />
                   <Route path="/recent_sales" component={RecentSales} />

@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from 'react-router-dom';
 
 import getAllSellersData from '../../data/sellers';
 import useData from "../../utils/useData";
@@ -17,8 +18,17 @@ const Sellers = () => {
   console.log(data);
 
   const sellers = data.map((seller) => (
-    /* eslint no-underscore-dangle: 0 */
-    <Seller key={seller._id} name={seller.name} sellerId={seller.sellerId} />
+
+    <div>
+      {/* eslint no-underscore-dangle: 0 */}
+      <Seller key={seller._id} name={seller.name} sellerId={seller.sellerId} />
+      <p><Link to={{
+        pathname: `/message_board/${seller.sellerId}`,
+        state: {
+          sellerName: seller.name
+        }
+      }}>{`Chat with ${seller.name}`}</Link></p>
+    </div >
   )
   );
 
