@@ -133,7 +133,15 @@ p.error {
   margin-top: 20px;
   color: #ee0000;
   font-weight: bold;
-  font-size: 150%
+  font-size: 90%;
+  margin-bottom:20px
+}
+
+span.error {
+  margin-top: 20px;
+  color: #ee0000;
+  font-weight: bold;
+  font-size: 90%
 }
 
 
@@ -261,6 +269,12 @@ span.detKey {
   font-weight: bold;
   margin:0px;
   padding:0px;
+}
+
+span.detSum {
+  text-align: left;
+  font-weight: bold;
+  padding-right: 10px;
 }
 
 p.detKey {

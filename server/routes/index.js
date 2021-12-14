@@ -8,6 +8,7 @@ const { decodeIDToken } = require("../firebase/firebase")
 const carsRoutes = require("./cars")
 const listingRoutes = require('./listings');
 const searchRoutes = require('./search');
+const accountRoutes = require('./accounts');
 
 bluebird.promisifyAll(redis.RedisClient.prototype);
 bluebird.promisifyAll(redis.Multi.prototype);
@@ -42,6 +43,7 @@ const constructorMethod = (app) => {
   app.use('/cars', cacheJSON, carsRoutes);
   app.use('/listing', listingRoutes);
   app.use('/search', searchRoutes);
+  app.use('/account', accountRoutes);
   
   // default (404)
   app.use('*', (req, res) => {

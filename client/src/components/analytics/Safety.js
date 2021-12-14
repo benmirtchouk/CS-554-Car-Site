@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from "react";
 import { ButtonGroup, Dropdown, DropdownButton } from "react-bootstrap";
 import { BarChart, Bar, XAxis, YAxis } from 'recharts';
-import Sidebar from "../sidebars/Sidebar";
 import {
   getSafetyReport,
   getSafetyMakesForModelYear,
@@ -15,7 +14,6 @@ import ListError from "../ListError";
 import Card from "./Card";
 
 const Safety = (props) => {
-  const slinks = [{ name: "VIN", link: "/vin" }];
 
   /// Use nil safe coercion.
   // eslint-disable-next-line react/destructuring-assignment
@@ -190,7 +188,6 @@ const Safety = (props) => {
 
   return (
     <div key="safety" className="main_layout">
-      <Sidebar sideLinks={slinks} />
       <div className="mainbody">
         <form onSubmit={submitHandler}>
           <ButtonGroup>
