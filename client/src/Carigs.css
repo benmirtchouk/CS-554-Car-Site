@@ -133,7 +133,15 @@ p.error {
   margin-top: 20px;
   color: #ee0000;
   font-weight: bold;
-  font-size: 150%
+  font-size: 90%;
+  margin-bottom:20px
+}
+
+span.error {
+  margin-top: 20px;
+  color: #ee0000;
+  font-weight: bold;
+  font-size: 90%
 }
 
 
@@ -263,6 +271,12 @@ span.detKey {
   padding:0px;
 }
 
+span.detSum {
+  text-align: left;
+  font-weight: bold;
+  padding-right: 10px;
+}
+
 p.detKey {
   text-align: left;
   padding:0px;
@@ -277,6 +291,3 @@ p.detKey {
   overflow-y: scroll;
 }
 
-#input-group-dropdown-2 {
-  text-transform: capitalize;
-}

@@ -13,7 +13,8 @@ export { default as FindByYear } from "./find_cars/FindByYear";
 // Auth
 export { default as PrivateRoute } from "./auth/PrivateRoute";
 export { default as Login } from "./auth/Login";
-export { default as Account } from "./account/Account";
+export { default as Account } from "./auth/Account";
+export { default as PasswordReset} from "./auth/PasswordReset";
 export { default as SignUp } from "./auth/SignUp";
 
 // Firebase
@@ -29,11 +30,8 @@ export { default as RecentSales } from "./sellers/RecentSales";
 export { default as SellCar } from "./sellers/SellCar";
 export { default as Sellers } from "./sellers/Sellers";
 
-// Sidebars
-export { default as Search } from "./sidebars/Search";
-export { default as Sidebar } from "./sidebars/Sidebar";
-
 // Main Components
+export { default as Sidebar } from "./Sidebar";
 export { default as ErrorPage } from "./ErrorPage";
 export { default as Header } from "./Header";
 export { default as Home } from "./Home";

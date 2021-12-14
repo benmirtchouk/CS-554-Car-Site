@@ -2,9 +2,8 @@ import React, { useContext, useState } from "react";
 import { Redirect, useHistory } from "react-router-dom";
 import { IoLogoGoogle, IoLogoFacebook } from "react-icons/io";
 import { Button, Form } from "react-bootstrap";
-import { doCreateUserWithEmailAndPassword } from '../../firebase/FirebaseFunctions';
-import { AuthContext } from '../../firebase/Auth';
-import Sidebar from "../sidebars/Sidebar";
+import { doCreateUserWithEmailAndPassword } from "../../firebase/FirebaseFunctions";
+import { AuthContext } from "../../firebase/Auth";
 
 const SignUp = () => {
   const { currentUser } = useContext(AuthContext);
@@ -20,17 +19,15 @@ const SignUp = () => {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    setPwMatch('');
-    const { displayName, email, phoneNumber, firstPwd, secondPwd } = e.target.elements;
-    //console.log(`displayName: ${displayName.value}, email: ${email.value}`);
+    setPwMatch("");
+    const { email, firstPwd, secondPwd } = e.target.elements;
     if (firstPwd.value !== secondPwd.value) {
       setPwMatch("Passwords do not match");
       return false;
     }
 
     try {
-      await doCreateUserWithEmailAndPassword(email.value, firstPwd.value, displayName.value, phoneNumber.value);
-      console.log(`User was created successfully`);
+      await doCreateUserWithEmailAndPassword(email.value, firstPwd.value);
       history.push("/login");
     } catch (e) {
       console.log(`${e}`);
@@ -44,7 +41,7 @@ const SignUp = () => {
 
   const handleButtonClick = async (provider) => {
     await logInSocialMedia(provider)
-      .then(() => {
+      .then(async () => {
         history.goBack();
       })
       .catch((e) => {
@@ -80,17 +77,7 @@ const SignUp = () => {
         or
       </p>
       <Form onSubmit={handleFormSubmit} className="mb-2">
-        <Form.Group className="mb-3" controlId="formBasicPhoneNumber">
-          <Form.Label>Display Name</Form.Label>
-          <Form.Control
-            placeholder="Enter name"
-            id="displayName"
-            name="displayName"
-            className="form-control"
-            type="text"
-          />
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
+        <Form.Group className="mb-3">
           <Form.Label>Email address</Form.Label>
           <Form.Control
             placeholder="Enter email"
@@ -107,17 +94,7 @@ const SignUp = () => {
             directly share everything you give us with Mark Zuckerberg.
           </Form.Text>
         </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicPhoneNumber">
-          <Form.Label>Phone number</Form.Label>
-          <Form.Control
-            placeholder="Enter phone number"
-            id="phoneNumber"
-            name="phoneNumber"
-            className="form-control"
-            type="tel"
-          />
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicPassword">
+        <Form.Group className="mb-3">
           <Form.Label>Password</Form.Label>
           <Form.Control
             type="password"
@@ -127,7 +104,7 @@ const SignUp = () => {
             className="form-control"
           />
         </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicPassword">
+        <Form.Group className="mb-3">
           <Form.Label>Confirm Password</Form.Label>
           <Form.Control
             type="password"
@@ -141,7 +118,7 @@ const SignUp = () => {
           Login
         </Button>
       </Form>
-    {/* <div className="main_layout">
+      {/* <div className="main_layout">
       <SideBar side_links={slinks} />
       <div className="mainbody">
         <h1>Register New User</h1>

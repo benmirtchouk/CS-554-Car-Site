@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Sidebar from "../sidebars/Sidebar";
 import { getShortVin, getPicture } from "../../data/nhtsa";
 import "../../App.css";
 import "../../Carigs.css";
@@ -8,8 +7,6 @@ import ListError from "../ListError";
 import Card from "./VinCard";
 
 const Vin = () => {
-  const slinks = [{ name: "Safety", link: "/safety" }];
-
   const [vin, setVin] = useState(undefined);
   const [vinData, setVinData] = useState([]);
   const [showCard, setShowCard] = useState(false);
@@ -96,7 +93,6 @@ const Vin = () => {
 
   return (
     <div key="safety" className="main_layout">
-      <Sidebar sideLinks={slinks} />
       <div className="mainbody">
         <div className="form-group input-group">
           <form onSubmit={submitHandler} className="addVin">
