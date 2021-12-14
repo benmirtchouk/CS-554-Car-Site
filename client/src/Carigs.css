@@ -280,3 +280,9 @@ p.detKey {
 #input-group-dropdown-2 {
   text-transform: capitalize;
 }
+
+.screen-reader-only-label {
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
