@@ -9,6 +9,7 @@ const carsRoutes = require("./cars")
 const listingRoutes = require('./listings');
 const searchRoutes = require('./search');
 const accountRoutes = require('./accounts');
+const sellersRoutes = require('./sellers');
 
 bluebird.promisifyAll(redis.RedisClient.prototype);
 bluebird.promisifyAll(redis.Multi.prototype);
@@ -44,7 +45,7 @@ const constructorMethod = (app) => {
   app.use('/listing', listingRoutes);
   app.use('/search', searchRoutes);
   app.use('/account', accountRoutes);
-  
+  app.use('/sellers', sellersRoutes);
   // default (404)
   app.use('*', (req, res) => {
     res.status(404).send();

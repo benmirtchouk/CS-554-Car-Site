@@ -1,0 +1,18 @@
+[
+    {
+        "name": "Tom",
+        "sellerId": 123
+    },
+    {
+        "name": "Jerry",
+        "sellerId": 256
+    },
+    {
+        "name": "Micky",
+        "sellerId": 312
+    },
+    {
+        "name": "Charlie",
+        "sellerId": 456
+    }
+]
