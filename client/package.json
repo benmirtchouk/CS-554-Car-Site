@@ -13,6 +13,7 @@
     "bootstrap": "^5.1.1",
     "dotenv": "^10.0.0",
     "firebase": "^8.10.0",
+    "leaflet": "^1.7.1",
     "nodemon": "^2.0.15",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
@@ -20,6 +21,7 @@
     "react-burger-menu": "^3.0.6",
     "react-dom": "^17.0.2",
     "react-icons": "^4.3.1",
+    "react-leaflet": "^3.2.2",
     "react-router-bootstrap": "^0.25.0",
     "react-router-dom": "^5.3.0",
     "react-scripts": "4.0.3",
@@ -41,18 +43,11 @@
       "react-app/jest"
     ]
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not op_mini all"
+  ],
   "devDependencies": {
     "eslint-config-airbnb": "^19.0.1",
     "eslint-config-prettier": "^8.3.0",

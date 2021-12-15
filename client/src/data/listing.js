@@ -13,12 +13,12 @@ async function createHeader() {
   };
 }
 
-// async function getUrl(url, config) {
-//   return axios.get(url, {
-//     ...config,
-//     validateStatus: (status) => status < 500,
-//   });
-// }
+async function getUrl(url, config) {
+  return axios.get(url, {
+    ...config,
+    validateStatus: (status) => status < 500,
+  });
+}
 async function putUrl(url, data, config) {
   return axios.put(url, data, {
     ...config,
@@ -36,6 +36,20 @@ export async function addListing(listing) {
   return { data, status };
 }
 
-export async function asd() {
-  return 7;
+export async function getAllListings() {
+  const header = await createHeader();
+  const { data, status } = await getUrl(
+    `http://localhost:3001/listing`,
+    header
+  );
+  return { data, status };
+}
+
+export async function getUserListings() {
+  const header = await createHeader();
+  const { data, status } = await getUrl(
+    `http://localhost:3001/listing?user=true`,
+    header
+  );
+  return { data, status };
 }

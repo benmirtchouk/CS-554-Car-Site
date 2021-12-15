@@ -23,9 +23,12 @@ export { AuthProvider, AuthContext } from "../firebase/Auth";
 // Messaging
 export { default as MessageBoard } from "./messaging/MessageBoard";
 
+// Listings
+export { default as AllListings } from "./listings/AllListings";
+export { default as MyListings } from "./listings/MyListings";
+export { default as AddListing } from "./listings/AddListing";
+
 // Sellers
-export { default as MyListings } from "./sellers/MyListings";
-export { default as AddListing } from "./sellers/AddListing";
 export { default as RecentSales } from "./sellers/RecentSales";
 export { default as SellCar } from "./sellers/SellCar";
 export { default as Sellers } from "./sellers/Sellers";
