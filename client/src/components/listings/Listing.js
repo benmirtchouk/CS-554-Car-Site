@@ -13,7 +13,6 @@ const Listing = (props) => {
   // price: 9210.5
   // sellerId: "NLBCVA3CMqY6pHht47tS0JKTasa2"
   // vin: "1J4
-  const position = [51.505, -0.09];
 
   return (
     <div className="listing">
@@ -51,12 +50,12 @@ const Listing = (props) => {
           <dd>{listing.vin}</dd>
         </div>
       </dl>
-      <MapContainer className="mapcontainer" center={position} zoom={13} scrollWheelZoom={false}>
+      <MapContainer className="mapcontainer" center={listing.location.coordinateArray} zoom={13} scrollWheelZoom={false}>
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <Marker position={position}>
+        <Marker position={listing.location.coordinateArray}>
           <Popup>
             A simple popup!
           </Popup>
