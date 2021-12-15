@@ -6,6 +6,18 @@ const AddListing = () => {
   const [errors, setErrors] = useState([]);
   const [createdListing, setCreatedListing] = useState(null);
 
+  const uploadListing = async (newListing, e) => {
+    const { data, status } = await listing.addListing(newListing);
+    if (status === 200) {
+      setCreatedListing({ data: { metadata: data.metadata}, listing: data });
+      e.target.reset();
+    } else if (status >= 400 && status < 600) {
+      setErrors([data.message]);
+    } else {
+      setErrors(["Failed to create listing"]);
+    }
+  };
+
   const submitHandler = async (e) => {
     e.preventDefault();
     setCreatedListing(null);
@@ -21,14 +33,21 @@ const AddListing = () => {
       vin: e.target.elements.vin.value,
     };
 
-    const { data, status } = await listing.addListing(newListing);
-    if (status === 200) {
-      setCreatedListing({ data: { metadata: data.metadata}, listing: data });
-      e.target.reset();
-    } else if (status >= 400 && status < 600) {
-      setErrors([data.message]);
-    } else {
-      setErrors(["Failed to create listing"]);
+    const file = e.target.elements.photo.files[0];
+
+    // TODO validate this does not crash
+    if (!file) {
+      await uploadListing(newListing, e);
+      return;
+    }
+
+    const reader = new FileReader();
+
+    reader.readAsDataURL(file);
+
+    reader.onloadend = () => {
+      newListing.photo = reader.result;
+      uploadListing(newListing, e);
     }
   };
 
@@ -135,6 +154,8 @@ const AddListing = () => {
                 required
               />
             </label>
+
+            <input id="photo" type="file" name="photo" />
 
             {/* <input id="photos" type="text" name="photos" placeholder="Photos..." required /> */}
           </div>

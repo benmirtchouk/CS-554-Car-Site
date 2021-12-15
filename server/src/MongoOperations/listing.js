@@ -3,6 +3,8 @@ const VehicleListing = require('../DataModel/Automotive/VehicleListing')
 const { InternalMongoError, KeyAlreadyExists } = require('./OperationErrors');
 const { ValidationError } = require('../DataModel/Validation/ObjectProperties');
 const GeoJsonPoint = require('../DataModel/GeoJson/GeoJsonPoint');
+const { listingImages }= require("../config/mongoFileStream");
+const { Duplex } = require('stream');
 
 const listingForVin = async (vin) => {
     if(typeof vin !== 'string') { throw new Error("Vin is not a string!"); }
@@ -52,6 +54,62 @@ const searchListings = async (query) => {
             .map (e => new VehicleListing(e))
 }
 
+
+const validImageTypes = new Set(["jpg", "jpeg", "mpeg"]);
+
+/// Private
+const uploadImage = async (photo, vin ) => {
+    const [header, imageData] = photo.split(",")
+    const [type, encoding] = header.split(";");
+    const fileExtension = type.split("/")[1];
+    if(!fileExtension || !validImageTypes.has(fileExtension) ) { return false; }
+    ///TODO validate (Encoding, data, nullablity,)
+    /// TODO GENERATE NAME
+    const buffer = Buffer.from(imageData, encoding);
+    const imageStream = new Duplex();
+    imageStream.push(buffer);
+    imageStream.push(null);
+
+    const fileName = `${vin}-${new Date().toISOString()}.${fileExtension}`
+    const bucket = await listingImages()
+
+    return new Promise((resolve, reject) => {
+        imageStream.
+        pipe(bucket.openUploadStream(fileName)).
+        on('error', function(error) {
+          console.log(`Error! ${error}`)
+          reject(error);
+        }).
+        on('finish', function(e) {
+          console.log(`done! ${JSON.stringify(e)}`);
+          resolve(e);
+        });
+    })
+
+}
+
+
+const uploadPhotoForVin = async (vin, photo) => {
+    if (typeof photo !== 'string' || typeof vin !== 'string') { return false; }
+
+    const listing = await listingForVin(vin);
+    if (!listing) { return false; }
+
+    
+    const collection = await listings();
+    try {
+        const {_id, filename } = await uploadImage(photo, vin);
+        collection.updateOne(
+            { vin: vin },
+            { $set: {"photo": {_id, filename}}}
+        )
+        return null;
+    } catch (e) {
+        console.error(`Failed to upload image: ${e}`);
+        return null;
+    }
+}
+
 const insertListing = async (listing) => { 
     if (!(listing instanceof VehicleListing)) { throw new Error("Objecting being inserted must be a vehicle listing!") }
 
@@ -61,6 +119,7 @@ const insertListing = async (listing) => {
     if (existing) {
         throw new KeyAlreadyExists("vin", "Vin number already listed for sale!")
     }
+
     const collection = await listings();
 
     const id = await collection.insertOne(listing.asDictionary(false))
@@ -111,5 +170,6 @@ module.exports = {
     insertListing,
     listingsWithinMileRadius,
     listingsWithinRadianRadius,
+    uploadPhotoForVin,
 
 }

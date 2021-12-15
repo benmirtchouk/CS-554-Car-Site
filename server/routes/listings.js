@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const VehicleListing = require('../src/DataModel/Automotive/VehicleListing');
-const { ValidationError, valida, validateNonBlankString } = require('../src/DataModel/Validation/ObjectProperties');
+const { ValidationError, validateNonBlankString } = require('../src/DataModel/Validation/ObjectProperties');
 const { nhtsa } = require("../api");
-const { insertListing, listingsWithinMileRadius } = require('../src/MongoOperations/listing');
+const { insertListing, listingsWithinMileRadius, uploadPhotoForVin, listingForVin } = require('../src/MongoOperations/listing');
 const { KeyAlreadyExists } = require('../src/MongoOperations/OperationErrors');
 const GeoJsonPoint = require('../src/DataModel/GeoJson/GeoJsonPoint');
+
 
 
 /**
@@ -79,6 +80,29 @@ router.put('/', async (req, res)=> {
         return res.status(401).json({message: "User must be authenticated to send request."} )
     }
 
+    //console.log(req.body.photo)
+    /// TODO ENFORCE MAX PAYLOAD SIZE OR CONFIRM WHAT IT IS
+    // if(req.body.photo) {
+    //     const [header, imageData] = req.body.photo.split(",")
+    //     const [type, encoding] = header.split(";");
+    //     const extenstion = type.split("/")[1];
+    //     ///TODO validate (Encoding, data, nullablity,)
+    //     /// TODO GENERATE NAME
+    //    const buffer = Buffer.from(imageData, encoding);
+    //     const imageStream = new Duplex();
+    //     imageStream.push(buffer);
+    //     imageStream.push(null);
+
+    //     const bucket = await listingImages()
+    //     pipe(bucket.openUploadStream('targetFile.jpg')).
+    //     on('error', function(error) {
+    //       console.log(`Error! ${error}`)
+    //     }).
+    //     on('finish', function() {
+    //       console.log('done!');
+    //     });
+    // }
+
     /// Use the vin to pull the meta data to populate the properties
     const { data, status } = await nhtsa.decodeVin(vin);
     if (data == null || status > 400) {
@@ -111,11 +135,15 @@ router.put('/', async (req, res)=> {
     }
 
 
+    const hasPhoto = typeof req.body.photo === 'string';
     /// Attempt to insert a listing, return a 422 on a conflict of the same vin to ensure there aren't similar listings
     try {
         await insertListing(listing);
         console.log(`Vin ${vin} listed for sale`)
-        return res.json(listing.asDictionary());
+        if(!hasPhoto) {
+            return res.json(listing.asDictionary());
+        }
+
     } catch(e) {
         console.log(`Vin of ${vin} is already listed for sale`)
         if (e instanceof KeyAlreadyExists) {
@@ -124,6 +152,15 @@ router.put('/', async (req, res)=> {
         console.error(e);
         return res.status(500).json({message: "Internal server error"});
     }
+
+    try {
+        await uploadPhotoForVin(vin, req.body.photo);
+        const updatedListing = await listingForVin(vin);
+        return res.json(updatedListing.asDictionary());
+    } catch (e) {
+        console.error(`Failed to upload image ${e}`);
+    }
+    return res.json(listing.asDictionary());
 })
 
 
