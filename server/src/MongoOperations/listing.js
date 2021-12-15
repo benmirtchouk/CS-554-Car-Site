@@ -3,8 +3,7 @@ const VehicleListing = require('../DataModel/Automotive/VehicleListing')
 const { InternalMongoError, KeyAlreadyExists } = require('./OperationErrors');
 const { ValidationError } = require('../DataModel/Validation/ObjectProperties');
 const GeoJsonPoint = require('../DataModel/GeoJson/GeoJsonPoint');
-const { listingImages }= require("../config/mongoFileStream");
-const { Duplex } = require('stream');
+const { uploadImage} = require('./imageUploads');
 
 const listingForVin = async (vin) => {
     if(typeof vin !== 'string') { throw new Error("Vin is not a string!"); }
@@ -54,68 +53,6 @@ const searchListings = async (query) => {
             .map (e => new VehicleListing(e))
 }
 
-
-const validImageTypes = new Set(["jpg", "jpeg", "png"]);
-// https://en.wikipedia.org/wiki/List_of_file_signatures
-const fileTypeMagicHexPrefix = {
-    "jpg": "FFD8FF",
-    "jpeg": "FFD8FF",
-    "png": "89504E47"
-}
-
-class UnsupportedFileType extends Error {
-    constructor(type, message) {
-        super(message);
-        this.type = type;
-    }
-}
-
-class InvalidFile extends Error {
-    constructor(targetPrefix, actualPrefix, message) {
-        super(message)
-        this.targetPrefix = targetPrefix;
-        this.actualPrefix = actualPrefix;
-    }
-}
-
-/// Private
-const uploadImage = async (photo, vin ) => {
-    const [header, imageData] = photo.split(",")
-    const [type, encoding] = header.split(";");
-    const fileExtension = type.split("/")[1];
-    if(!fileExtension || !validImageTypes.has(fileExtension) ) { throw new UnsupportedFileType(fileExtension || "Missing extension", "Extension is not supported")}
-   
-    const magicPrefix = fileTypeMagicHexPrefix[fileExtension];
-    const base64magicPrefix = Buffer.from(magicPrefix, 'hex').toString('base64').replace(/=/g, "");
-    const correctPrefix = imageData.startsWith(base64magicPrefix);
-    if(!correctPrefix) {
-        throw new InvalidFile(base64magicPrefix, imageData.substring(0, base64magicPrefix.length), "File had incorrect magic number prefix")
-    }
-   
-    ///TODO validate (Encoding, data, nullablity,)
-    /// TODO GENERATE NAME
-    const buffer = Buffer.from(imageData, encoding);
-    const imageStream = new Duplex();
-    imageStream.push(buffer);
-    imageStream.push(null);
-
-    const fileName = `${vin}-${new Date().toISOString()}.${fileExtension}`
-    const bucket = await listingImages()
-
-    return new Promise((resolve, reject) => {
-        imageStream.
-        pipe(bucket.openUploadStream(fileName)).
-        on('error', function(error) {
-          console.log(`Error! ${error}`)
-          reject(error);
-        }).
-        on('finish', function(e) {
-          console.log(`done! ${JSON.stringify(e)}`);
-          resolve(e);
-        });
-    })
-
-}
 
 
 const uploadPhotoForVin = async (vin, photo) => {

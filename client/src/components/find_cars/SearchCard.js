@@ -14,7 +14,15 @@ const SearchCard = (props) => {
 
   /// TODO decide how to handle getting the absolute url.
   const imgName = listing?.photo?.filename ?? null;
-  const img = imgName ? `http://localhost:3001/images/${imgName}` : null;
+  const img = imgName
+    ? `http://localhost:3001/images/${imgName}`
+    : fallbackImage;
+  const imageOnError = !imgName
+    ? null
+    : (e) => {
+        e.target.src = fallbackImage;
+        e.onerror = null;
+      };
 
   const key = `search-${
     vin !== undefined ? vin : `${modelYear}-${make}-${model}`
@@ -28,10 +36,7 @@ const SearchCard = (props) => {
         className="img-responsive mx-2 px-2"
         src={img}
         alt="Vehicle"
-        onError={(e) => {
-          e.target.src = fallbackImage;
-          e.onerror = null;
-        }}
+        onError={imageOnError}
       />
 
       <div className="card-body">
