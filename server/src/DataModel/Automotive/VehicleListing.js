@@ -7,6 +7,7 @@ const UploadedImage = require('../UploadedImage');
 /// different representations 
 class VehicleListing {
     constructor(dictionary) {
+        if(dictionary == null) { throw new Error("Listing being created with null dictionary!"); }
 
         const {location, photo} = dictionary;
 
@@ -17,7 +18,7 @@ class VehicleListing {
         applyValidation(["price"], dictionary, validatePositiveFloat, this);
         this.location = new GeoJsonPoint(location);
         this.metadata = new VehicleMetadata(dictionary.metadata);
-        this.photo = dictionary.photo != null ? new UploadedImage(dictionary.photo) : null;
+        this.photo = photo != null ? new UploadedImage(photo) : null;
 
     }
 

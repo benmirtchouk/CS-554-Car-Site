@@ -63,7 +63,7 @@ router.get('/withinRadius', async (req, res) => {
  *      millage: Required, positive float
  *      exteriorColor: Required, any non blank string
  *      interiorColor: Required, any non blank string
- *      photos: Array, currently ignored
+ *      photo: Base64, optional. Data encoding should be included. 
  */
 router.put('/', async (req, res)=> {
 
@@ -80,29 +80,6 @@ router.put('/', async (req, res)=> {
         return res.status(401).json({message: "User must be authenticated to send request."} )
     }
 
-    //console.log(req.body.photo)
-    /// TODO ENFORCE MAX PAYLOAD SIZE OR CONFIRM WHAT IT IS
-    // if(req.body.photo) {
-    //     const [header, imageData] = req.body.photo.split(",")
-    //     const [type, encoding] = header.split(";");
-    //     const extenstion = type.split("/")[1];
-    //     ///TODO validate (Encoding, data, nullablity,)
-    //     /// TODO GENERATE NAME
-    //    const buffer = Buffer.from(imageData, encoding);
-    //     const imageStream = new Duplex();
-    //     imageStream.push(buffer);
-    //     imageStream.push(null);
-
-    //     const bucket = await listingImages()
-    //     pipe(bucket.openUploadStream('targetFile.jpg')).
-    //     on('error', function(error) {
-    //       console.log(`Error! ${error}`)
-    //     }).
-    //     on('finish', function() {
-    //       console.log('done!');
-    //     });
-    // }
-
     /// Use the vin to pull the meta data to populate the properties
     const { data, status } = await nhtsa.decodeVin(vin);
     if (data == null || status > 400) {
@@ -117,7 +94,6 @@ router.put('/', async (req, res)=> {
         millage: parseInt(req.body.millage),
         exteriorColor: req.body.exteriorColor,
         interiorColor: req.body.interiorColor,
-        photos: req.body.photos,
         sellerId: sellerId,
         metadata: data,
     };
@@ -160,7 +136,9 @@ router.put('/', async (req, res)=> {
     } catch (e) {
         console.error(`Failed to upload image ${e}`);
     }
-    return res.json(listing.asDictionary());
+
+    /// TODO validate
+    return res.status(202).json(listing.asDictionary());
 })
 
 

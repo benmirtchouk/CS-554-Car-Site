@@ -11,6 +11,7 @@ const AddListing = () => {
     if (status === 200) {
       setCreatedListing({ data: { metadata: data.metadata}, listing: data });
       e.target.reset();
+      setErrors([]);
     } else if (status >= 400 && status < 600) {
       setErrors([data.message]);
     } else {
@@ -62,7 +63,7 @@ const AddListing = () => {
         <form onSubmit={submitHandler}>
           <div className="form-group flex-col">
             <label>
-              Vin:
+              Vin
               <input
                 id="vin"
                 type="text"
@@ -155,21 +156,21 @@ const AddListing = () => {
               />
             </label>
 
-            <input id="photo" type="file" name="photo" />
-
-            {/* <input id="photos" type="text" name="photos" placeholder="Photos..." required /> */}
+            <label>
+              Photo
+              <input
+                id="photo"
+                type="file"
+                name="photo"
+                accept=".png,.jpg,.jpeg, image/png, image/jpg, image/.jpeg"
+                title="Optional photo of the vehicle"
+              />
+            </label>
           </div>
 
           <button className="btn-primary px-10" type="submit" name="submitBtn">
             Add Listing
           </button>
-          {/* vin: Required, full vin number. Must not currently have a listing
-          coordinates: Required, array of form [longitude, latitude] as floats. 
-          price: Required, positive float
-          millage: Required, positive float
-          exteriorColor: Required, any non blank string
-          interiorColor: Required, any non blank string
-          photos: Array, currently ignored */}
         </form>
         <div className="errors">
           {errors.map((error) => (

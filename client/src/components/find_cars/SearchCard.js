@@ -6,12 +6,15 @@ import { Link } from "react-router-dom";
 
 const SearchCard = (props) => {
   const fallbackImage = "/images/ImgNotAvailable.png";
-  const img = "";
 
   const { data, listing } = props;
   const { vin } = listing;
   const { metadata } = data;
   const { make, model, modelYear } = metadata;
+
+  /// TODO decide how to handle getting the absolute url.
+  const imgName = listing?.photo?.filename ?? null;
+  const img = imgName ? `http://localhost:3001/images/${imgName}` : null;
 
   const key = `search-${
     vin !== undefined ? vin : `${modelYear}-${make}-${model}`

@@ -55,14 +55,43 @@ const searchListings = async (query) => {
 }
 
 
-const validImageTypes = new Set(["jpg", "jpeg", "mpeg"]);
+const validImageTypes = new Set(["jpg", "jpeg", "png"]);
+// https://en.wikipedia.org/wiki/List_of_file_signatures
+const fileTypeMagicHexPrefix = {
+    "jpg": "FFD8FF",
+    "jpeg": "FFD8FF",
+    "png": "89504E47"
+}
+
+class UnsupportedFileType extends Error {
+    constructor(type, message) {
+        super(message);
+        this.type = type;
+    }
+}
+
+class InvalidFile extends Error {
+    constructor(targetPrefix, actualPrefix, message) {
+        super(message)
+        this.targetPrefix = targetPrefix;
+        this.actualPrefix = actualPrefix;
+    }
+}
 
 /// Private
 const uploadImage = async (photo, vin ) => {
     const [header, imageData] = photo.split(",")
     const [type, encoding] = header.split(";");
     const fileExtension = type.split("/")[1];
-    if(!fileExtension || !validImageTypes.has(fileExtension) ) { return false; }
+    if(!fileExtension || !validImageTypes.has(fileExtension) ) { throw new UnsupportedFileType(fileExtension || "Missing extension", "Extension is not supported")}
+   
+    const magicPrefix = fileTypeMagicHexPrefix[fileExtension];
+    const base64magicPrefix = Buffer.from(magicPrefix, 'hex').toString('base64').replace(/=/g, "");
+    const correctPrefix = imageData.startsWith(base64magicPrefix);
+    if(!correctPrefix) {
+        throw new InvalidFile(base64magicPrefix, imageData.substring(0, base64magicPrefix.length), "File had incorrect magic number prefix")
+    }
+   
     ///TODO validate (Encoding, data, nullablity,)
     /// TODO GENERATE NAME
     const buffer = Buffer.from(imageData, encoding);
@@ -99,6 +128,9 @@ const uploadPhotoForVin = async (vin, photo) => {
     const collection = await listings();
     try {
         const {_id, filename } = await uploadImage(photo, vin);
+        if(_id == null || filename == null) {
+            throw new Error(`One required field null! ${_id} ${filename}`);
+        }
         collection.updateOne(
             { vin: vin },
             { $set: {"photo": {_id, filename}}}
