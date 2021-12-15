@@ -27,13 +27,19 @@ const Header = () => {
             <LinkContainer to="/sellers">
               <Nav.Link>Sellers</Nav.Link>
             </LinkContainer>
-            <NavDropdown title="Analytics" id="basic-nav-dropdown">
-              <NavDropdown.Item href="/vin">Vin</NavDropdown.Item>
-              <NavDropdown.Item href="/safety">Safety</NavDropdown.Item>
+            <NavDropdown title="Analytics">
+              <LinkContainer to="/vin">
+                <NavDropdown.Item> Vin </NavDropdown.Item>
+              </LinkContainer>
+              <LinkContainer to="/safety">
+                <NavDropdown.Item> Safety</NavDropdown.Item>
+              </LinkContainer>
             </NavDropdown>
             {!showLogin && (
-              <NavDropdown title="Account" id="basic-nav-dropdown">
-                <NavDropdown.Item href="/account">My Profile</NavDropdown.Item>
+              <NavDropdown title="Account">
+                <LinkContainer to="/account">
+                  <NavDropdown.Item> My Profile</NavDropdown.Item>
+                </LinkContainer>
               </NavDropdown>
             )}
           </Nav>

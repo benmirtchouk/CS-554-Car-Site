@@ -85,8 +85,9 @@ router.put('/', async (req, res)=> {
         return res.status(status).send();
     }
 
+
     const listingData = {
-        vin: req.body.vin,
+        vin: vin,
         location: (req.body.coordinates || []).map(parseFloat),
         price: parseFloat(req.body.price),
         millage: parseInt(req.body.millage),
@@ -96,6 +97,7 @@ router.put('/', async (req, res)=> {
         sellerId: sellerId,
         metadata: data,
     };
+
 
     let listing;
     try {
@@ -112,8 +114,10 @@ router.put('/', async (req, res)=> {
     /// Attempt to insert a listing, return a 422 on a conflict of the same vin to ensure there aren't similar listings
     try {
         await insertListing(listing);
+        console.log(`Vin ${vin} listed for sale`)
         return res.json(listing.asDictionary());
     } catch(e) {
+        console.log(`Vin of ${vin} is already listed for sale`)
         if (e instanceof KeyAlreadyExists) {
             return res.status(422).json({message:"Vin is already listed for sale"});
         }
