@@ -18,7 +18,7 @@
       "bodyClass": "Sedan/Saloon",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "JH4KA3171KC016159",
@@ -39,7 +39,7 @@
       "bodyClass": "Coupe",
       "doors": "2"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "1G11C5SA8GF148816",
@@ -60,7 +60,7 @@
       "bodyClass": "Sedan/Saloon",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "1FM5K8D8XDGB85844",
@@ -81,7 +81,7 @@
       "bodyClass": "Sport Utility Vehicle (SUV)/Multi-Purpose Vehicle (MPV)",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "KMHCT5AE4GU256",
@@ -102,7 +102,7 @@
       "bodyClass": "Hatchback/Liftback/Notchback",
       "doors": "5"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "KMHCT4AE6FU849519",
@@ -123,7 +123,7 @@
       "bodyClass": "Sedan/Saloon",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "KMHCT5AE4HU3407",
@@ -144,7 +144,7 @@
       "bodyClass": "Hatchback/Liftback/Notchback",
       "doors": "5"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "5NPDH4AE0FH620175",
@@ -165,7 +165,7 @@
       "bodyClass": "Sedan/Saloon",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "KNADM4A39G66964",
@@ -186,7 +186,7 @@
       "bodyClass": "Sedan/Saloon",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "KNADN4A38F6447083",
@@ -207,7 +207,7 @@
       "bodyClass": "Sedan/Saloon",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "KNAFK4A69F5388241",
@@ -228,7 +228,7 @@
       "bodyClass": "Sedan/Saloon",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "3N1BC1CP1CL372259",
@@ -250,7 +250,7 @@
       "driveType": "4x2",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "3N1AB7AP7EY215331",
@@ -272,7 +272,7 @@
       "driveType": "4x2",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "4T1BF1FKXGU2081",
@@ -294,7 +294,7 @@
       "driveType": "4x2",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "4T1BF1FK4GU2384",
@@ -316,7 +316,7 @@
       "driveType": "4x2",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "2C4RDGCG9DR591146",
@@ -338,7 +338,7 @@
       "driveType": "FWD/Front-Wheel Drive",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "WBAVM1C55FVZ93933",
@@ -359,7 +359,7 @@
       "bodyClass": "Sport Utility Vehicle (SUV)/Multi-Purpose Vehicle (MPV)",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "JHMZC5F12JC019322Stock",
@@ -381,7 +381,7 @@
       "driveType": "4x2",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "3FA6P0H70GR293891Stock",
@@ -403,7 +403,7 @@
       "driveType": "FWD/Front-Wheel Drive",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "MAJ3S2GE8KC261419",
@@ -425,7 +425,7 @@
       "driveType": "FWD/Front-Wheel Drive",
       "doors": "5"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "WDDSJ4GB4JN593747",
@@ -446,7 +446,7 @@
       "bodyClass": "Sedan/Saloon",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "1C4AJWAGXGL153056",
@@ -468,7 +468,7 @@
       "driveType": "4WD/4-Wheel Drive/4x4",
       "doors": "2"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "1C6RR7FG0GS172982",
@@ -489,7 +489,7 @@
       "bodyClass": "Pickup",
       "driveType": "4WD/4-Wheel Drive/4x4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "5UXTR9C58JLD73612",
@@ -511,7 +511,7 @@
       "driveType": "AWD/All-Wheel Drive",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "JTHFN48Y020030324",
@@ -533,7 +533,7 @@
       "driveType": "4x2",
       "doors": "2"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "1FMCU9J99KUA48526",
@@ -555,7 +555,7 @@
       "driveType": "4WD/4-Wheel Drive/4x4",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "1G1FH3D74H0103437",
@@ -576,7 +576,7 @@
       "bodyClass": "Convertible/Cabriolet",
       "doors": "2"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "1C4PJMAB3EW175317",
@@ -598,7 +598,7 @@
       "driveType": "4WD/4-Wheel Drive/4x4",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "JTHHP5BC4F5000239",
@@ -620,7 +620,7 @@
       "driveType": "4x2",
       "doors": "2"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "5TDJZRFH7KS564272",
@@ -642,7 +642,7 @@
       "driveType": "4WD/4-Wheel Drive/4x4",
       "doors": "5"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "4S4WMAPD6K3450018",
@@ -663,7 +663,7 @@
       "bodyClass": "Sport Utility Vehicle (SUV)/Multi-Purpose Vehicle (MPV)",
       "driveType": "AWD/All-Wheel Drive"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "JN8AY2NC8L9618361",
@@ -685,7 +685,7 @@
       "driveType": "4WD/4-Wheel Drive/4x4",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "SALCR2BG0GH615709",
@@ -706,7 +706,7 @@
       "bodyClass": "Sport Utility Vehicle (SUV)/Multi-Purpose Vehicle (MPV)",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "3N1AB7AP0EL676416",
@@ -728,7 +728,7 @@
       "driveType": "4x2",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "1GYKNBRS1JZ196371",
@@ -750,7 +750,7 @@
       "driveType": "AWD/All-Wheel Drive",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "4S4BSANC3F3229058",
@@ -772,7 +772,7 @@
       "driveType": "AWD/All-Wheel Drive",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "1GKKVRKD9GJ335927",
@@ -794,7 +794,7 @@
       "driveType": "AWD/All-Wheel Drive",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "JTDKARFU2L3110474",
@@ -816,7 +816,7 @@
       "driveType": "4x2",
       "doors": "5"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "JA4AZ3A37JZ059428",
@@ -838,7 +838,7 @@
       "driveType": "4WD/4-Wheel Drive/4x4",
       "doors": "5"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "KL4CJGSB9JB538472",
@@ -860,7 +860,7 @@
       "driveType": "AWD/All-Wheel Drive",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "1VWAA7A34MC006405",
@@ -881,7 +881,7 @@
       "bodyClass": "Sedan/Saloon",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "58ABK1GG8GU023979",
@@ -903,7 +903,7 @@
       "driveType": "4x2",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "2C3CDZAG7HH540796",
@@ -925,7 +925,7 @@
       "driveType": "RWD/Rear-Wheel Drive",
       "doors": "2"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "1GCVKREC3HZ10252",
@@ -947,7 +947,7 @@
       "driveType": "4WD/4-Wheel Drive/4x4",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "2T1BURHE4EC089764",
@@ -969,7 +969,7 @@
       "driveType": "4x2",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "3FA6P0H70GR293891",
@@ -991,7 +991,7 @@
       "driveType": "FWD/Front-Wheel Drive",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "WDDGJ4HB6FG403902",
@@ -1012,7 +1012,7 @@
       "bodyClass": "Coupe",
       "doors": "2"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "JHMZC5F12JC019322",
@@ -1034,7 +1034,7 @@
       "driveType": "4x2",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "1N6AD0EV2CC416726",
@@ -1055,7 +1055,7 @@
       "bodyClass": "Pickup",
       "driveType": "4WD/4-Wheel Drive/4x4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "JHMCM56603C055771",
@@ -1076,7 +1076,7 @@
       "bodyClass": "Sedan/Saloon",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "1FMCU9HD6JUC45436",
@@ -1098,7 +1098,7 @@
       "driveType": "4WD/4-Wheel Drive/4x4",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "JM1DKBC77G0116418",
@@ -1119,7 +1119,7 @@
       "bodyClass": "Wagon",
       "doors": "5"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "58ABZ1B18KU009197",
@@ -1141,7 +1141,7 @@
       "driveType": "4x2",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "1FTEX1EM0BFC26106",
@@ -1162,7 +1162,7 @@
       "bodyClass": "Pickup",
       "driveType": "4WD/4-Wheel Drive/4x4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "2HKRM4H55DH690453",
@@ -1184,7 +1184,7 @@
       "driveType": "AWD/All-Wheel Drive",
       "doors": "5"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "WA1BNAFY2J2003138",
@@ -1205,7 +1205,7 @@
       "bodyClass": "Sport Utility Vehicle (SUV)/Multi-Purpose Vehicle (MPV)",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "1ZVBP8AM5D5206313",
@@ -1226,7 +1226,7 @@
       "bodyClass": "Coupe",
       "doors": "2"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "JTMRFREV7JJ248109",
@@ -1248,7 +1248,7 @@
       "driveType": "4WD/4-Wheel Drive/4x4",
       "doors": "5"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "1G1ZB5ST1JF221376",
@@ -1270,7 +1270,7 @@
       "driveType": "FWD/Front-Wheel Drive",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "5NPE34AF7JH629878",
@@ -1292,7 +1292,7 @@
       "driveType": "FWD/Front-Wheel Drive",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "SHHFK7H44JU428322",
@@ -1314,7 +1314,7 @@
       "driveType": "4x2",
       "doors": "5"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "KL7CJNSB4MB341172",
@@ -1336,7 +1336,7 @@
       "driveType": "AWD/All-Wheel Drive",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "4T1B11HK1KU805515",
@@ -1358,7 +1358,7 @@
       "driveType": "4x2",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "JN1BJ1CR7JW201210",
@@ -1380,7 +1380,7 @@
       "driveType": "4WD/4-Wheel Drive/4x4",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "KMHC65LDXKU166685",
@@ -1401,7 +1401,7 @@
       "bodyClass": "Hatchback/Liftback/Notchback",
       "doors": "5"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "2FMPK4AP3LBB34303",
@@ -1423,7 +1423,7 @@
       "driveType": "AWD/All-Wheel Drive",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "3GNAXTEXXJS517640",
@@ -1445,7 +1445,7 @@
       "driveType": "AWD/All-Wheel Drive",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "WBA8A3C59JA487197",
@@ -1467,7 +1467,7 @@
       "driveType": "AWD/All-Wheel Drive",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "KMHC05LC5JU087691",
@@ -1488,7 +1488,7 @@
       "bodyClass": "Hatchback/Liftback/Notchback",
       "doors": "5"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "4T1B11HK1JU065821",
@@ -1510,7 +1510,7 @@
       "driveType": "4x2",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "WBA4J3C53KBL09313",
@@ -1532,7 +1532,7 @@
       "driveType": "AWD/All-Wheel Drive",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "JTMP1RFV3KD022038",
@@ -1554,7 +1554,7 @@
       "driveType": "4WD/4-Wheel Drive/4x4",
       "doors": "5"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "3GNCJPSB2JL362781",
@@ -1576,7 +1576,7 @@
       "driveType": "AWD/All-Wheel Drive",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "1GKS2DKL2MR225320",
@@ -1598,7 +1598,7 @@
       "driveType": "4WD/4-Wheel Drive/4x4",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "4T1B11HK9JU137235",
@@ -1620,7 +1620,7 @@
       "driveType": "4x2",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "KNMAT2MV1JP609443",
@@ -1642,7 +1642,7 @@
       "driveType": "4WD/4-Wheel Drive/4x4",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "3C4NJCBBXJT462217",
@@ -1664,7 +1664,7 @@
       "driveType": "FWD/Front-Wheel Drive",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "1HGCV1F57JA105963",
@@ -1686,7 +1686,7 @@
       "driveType": "4x2",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "1C6RR7FG3KS542301",
@@ -1707,7 +1707,7 @@
       "bodyClass": "Pickup",
       "driveType": "4WD/4-Wheel Drive/4x4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "KMHD74LF9JU665019",
@@ -1728,7 +1728,7 @@
       "bodyClass": "Sedan/Saloon",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "1FTFW1E50KFA25225",
@@ -1749,7 +1749,7 @@
       "bodyClass": "Pickup",
       "driveType": "4WD/4-Wheel Drive/4x4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "3VV1B7AX4KM067365",
@@ -1770,7 +1770,7 @@
       "bodyClass": "Sport Utility Vehicle (SUV)/Multi-Purpose Vehicle (MPV)",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "WMWXR3C00M2N99264",
@@ -1792,7 +1792,7 @@
       "driveType": "FWD/Front-Wheel Drive",
       "doors": "3"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "3VWDB7AJ0JM219435",
@@ -1814,7 +1814,7 @@
       "driveType": "FWD/Front-Wheel Drive",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "5NPE24AF3KH754333",
@@ -1835,7 +1835,7 @@
       "bodyClass": "Sedan/Saloon",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "1C6SRFFT4LN133264",
@@ -1856,7 +1856,7 @@
       "bodyClass": "Pickup",
       "driveType": "4WD/4-Wheel Drive/4x4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "4T1B11HK9KU300323",
@@ -1878,7 +1878,7 @@
       "driveType": "4x2",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "4T1B11HK2JU104612",
@@ -1900,7 +1900,7 @@
       "driveType": "4x2",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "5XYPHDA51KG464436",
@@ -1922,7 +1922,7 @@
       "driveType": "4WD/4-Wheel Drive/4x4",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "1N4AA6AP1JC391021",
@@ -1944,7 +1944,7 @@
       "driveType": "4x2",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "JN1EV7BR7MM752842",
@@ -1966,7 +1966,7 @@
       "driveType": "4WD/4-Wheel Drive/4x4",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "KL7CJPSB4JB688721",
@@ -1988,7 +1988,7 @@
       "driveType": "AWD/All-Wheel Drive",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "3C4NJDBBXJT470260",
@@ -2010,7 +2010,7 @@
       "driveType": "4WD/4-Wheel Drive/4x4",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "2T1BURHE4KC133533",
@@ -2032,7 +2032,7 @@
       "driveType": "4x2",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "WDD1J6FB0JF028639",
@@ -2053,7 +2053,7 @@
       "bodyClass": "Coupe",
       "doors": "2"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "2C3CDXGJ3KH530748",
@@ -2075,7 +2075,7 @@
       "driveType": "RWD/Rear-Wheel Drive",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "WMWXU3C52K2H87410",
@@ -2097,7 +2097,7 @@
       "driveType": "FWD/Front-Wheel Drive",
       "doors": "5"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "1N4BL4FV2LN303529",
@@ -2119,7 +2119,7 @@
       "driveType": "4x2",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "JM1GL1UM3J1325665",
@@ -2141,7 +2141,7 @@
       "driveType": "FWD/Front-Wheel Drive",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "2G1105S33J9175657",
@@ -2163,7 +2163,7 @@
       "driveType": "FWD/Front-Wheel Drive",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "2C3CDZAG7JH183013",
@@ -2185,7 +2185,7 @@
       "driveType": "RWD/Rear-Wheel Drive",
       "doors": "2"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "SJKCH5CR9JA046058",
@@ -2207,7 +2207,7 @@
       "driveType": "4WD/4-Wheel Drive/4x4",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "1N4BL4BV3KC23951",
@@ -2229,7 +2229,7 @@
       "driveType": "4x2",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "1HGCV2F36JA052306",
@@ -2251,7 +2251,7 @@
       "driveType": "4x2",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "1G1ZD5ST6JF169818",
@@ -2273,7 +2273,7 @@
       "driveType": "FWD/Front-Wheel Drive",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   },
   {
     "vin": "1FM5K8GT2JGB25343",
@@ -2295,6 +2295,6 @@
       "driveType": "4WD/4-Wheel Drive/4x4",
       "doors": "4"
     },
-    "photos": []
+    "photo": null
   }
 ]
