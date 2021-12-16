@@ -8,8 +8,8 @@ const AddListing = () => {
 
   const uploadListing = async (newListing, e) => {
     const { data, status } = await listing.addListing(newListing);
-    if (status === 200) {
-      setCreatedListing({ data: { metadata: data.metadata}, listing: data });
+    if (status >= 200 && status < 300) {
+      setCreatedListing({ data: { metadata: data.metadata }, listing: data });
       e.target.reset();
       setErrors([]);
     } else if (status >= 400 && status < 600) {

@@ -75,7 +75,7 @@ const uploadPhotoForVin = async (vin, photo) => {
         return null;
     } catch (e) {
         console.error(`Failed to upload image: ${e}`);
-        return null;
+        throw e;
     }
 }
 

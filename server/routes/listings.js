@@ -132,6 +132,7 @@ router.put('/', async (req, res)=> {
     try {
         await uploadPhotoForVin(vin, req.body.photo);
         const updatedListing = await listingForVin(vin);
+        console.log(`Image uploaded for ${vin}`);
         return res.json(updatedListing.asDictionary());
     } catch (e) {
         console.error(`Failed to upload image ${e}`);
