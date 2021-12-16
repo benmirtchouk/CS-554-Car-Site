@@ -4,16 +4,7 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet"
 const Listing = (props) => {
   const { listing } = props;
   console.log(listing);
-  // exteriorColor: "Blue"
-  // interiorColor: "Black"
-  // location: {longitude: 40.7468708, latitude: -74.0280354, coordinateArray: Array(2), coordinateJson: {…}, type: 'Point', …}
-  // metadata: {make: 'JEEP', model: 'Grand Cherokee', manufacturer: 'FCA US LLC', nullableStringKeys: Array(3), bodyClass: 'Sport Utility Vehicle (SUV)/Multi-Purpose Vehicle (MPV)', …}
-  // millage: 92000
-  // photos: []
-  // price: 9210.5
-  // sellerId: "NLBCVA3CMqY6pHht47tS0JKTasa2"
-  // vin: "1J4
-
+  
   return (
     <div className="listing">
       <dl>
