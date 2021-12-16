@@ -36,7 +36,6 @@ const AddListing = () => {
 
     const file = e.target.elements.photo.files[0];
 
-    // TODO validate this does not crash
     if (!file) {
       await uploadListing(newListing, e);
       return;

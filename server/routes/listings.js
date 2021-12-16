@@ -138,7 +138,6 @@ router.put('/', async (req, res)=> {
         console.error(`Failed to upload image ${e}`);
     }
 
-    /// TODO validate
     return res.status(202).json(listing.asDictionary());
 })
 

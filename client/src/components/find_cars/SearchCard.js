@@ -12,7 +12,6 @@ const SearchCard = (props) => {
   const { metadata } = data;
   const { make, model, modelYear } = metadata;
 
-  /// TODO decide how to handle getting the absolute url.
   const imgName = listing?.photo?.filename ?? null;
   const img = imgName
     ? `http://localhost:3001/images/${imgName}`
