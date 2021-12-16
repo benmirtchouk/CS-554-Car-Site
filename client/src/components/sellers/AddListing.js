@@ -6,6 +6,21 @@ const AddListing = () => {
   const [errors, setErrors] = useState([]);
   const [createdListing, setCreatedListing] = useState(null);
 
+  const uploadListing = async (newListing, e) => {
+    const { data, status } = await listing.addListing(newListing);
+    if (status >= 200 && status < 300) {
+      setCreatedListing({ data: { metadata: data.metadata }, listing: data });
+      e.target.reset();
+      setErrors([]);
+    } else if (status === 413) {
+      setErrors(["Image is too large!"]);
+    } else if (status >= 400 && status < 600 && data.message) {
+      setErrors([data.message]);
+    } else {
+      setErrors(["Failed to create listing"]);
+    }
+  };
+
   const submitHandler = async (e) => {
     e.preventDefault();
     setCreatedListing(null);
@@ -21,15 +36,28 @@ const AddListing = () => {
       vin: e.target.elements.vin.value,
     };
 
-    const { data, status } = await listing.addListing(newListing);
-    if (status === 200) {
-      setCreatedListing({ data: { metadata: data.metadata}, listing: data });
-      e.target.reset();
-    } else if (status >= 400 && status < 600) {
-      setErrors([data.message]);
-    } else {
-      setErrors(["Failed to create listing"]);
+    const file = e.target.elements.photo.files[0];
+
+    if (!file) {
+      await uploadListing(newListing, e);
+      return;
     }
+
+    const reader = new FileReader();
+
+    reader.readAsDataURL(file);
+
+    reader.onloadend = () => {
+      /// Courtesy validation for 800kb. Server does *not* directly validate image size, but *does* validate total request payload size.
+      const maxSizeBytes = 800 * 1024;
+      if (file.size >= maxSizeBytes) {
+        setErrors(["File must be smaller than 800kb"]);
+        e.target.elements.photo.value = "";
+        return;
+      }
+      newListing.photo = reader.result;
+      uploadListing(newListing, e);
+    };
   };
 
   return (
@@ -43,7 +71,7 @@ const AddListing = () => {
         <form onSubmit={submitHandler}>
           <div className="form-group flex-col">
             <label>
-              Vin:
+              Vin
               <input
                 id="vin"
                 type="text"
@@ -136,23 +164,27 @@ const AddListing = () => {
               />
             </label>
 
-            {/* <input id="photos" type="text" name="photos" placeholder="Photos..." required /> */}
+            <label>
+              Photo
+              <input
+                id="photo"
+                type="file"
+                name="photo"
+                accept=".png,.jpg,.jpeg, image/png, image/jpg, image/.jpeg"
+                title="Optional photo of the vehicle"
+              />
+            </label>
           </div>
 
           <button className="btn-primary px-10" type="submit" name="submitBtn">
             Add Listing
           </button>
-          {/* vin: Required, full vin number. Must not currently have a listing
-          coordinates: Required, array of form [longitude, latitude] as floats. 
-          price: Required, positive float
-          millage: Required, positive float
-          exteriorColor: Required, any non blank string
-          interiorColor: Required, any non blank string
-          photos: Array, currently ignored */}
         </form>
         <div className="errors">
           {errors.map((error) => (
-            <p className="error">{error}</p>
+            <p className="error" key={error}>
+              {error}
+            </p>
           ))}
         </div>
         {createdListing ? (

@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const VehicleListing = require('../src/DataModel/Automotive/VehicleListing');
-const { ValidationError, valida, validateNonBlankString } = require('../src/DataModel/Validation/ObjectProperties');
+const { ValidationError, validateNonBlankString } = require('../src/DataModel/Validation/ObjectProperties');
 const { nhtsa } = require("../api");
-const { insertListing, listingsWithinMileRadius } = require('../src/MongoOperations/listing');
+const { insertListing, listingsWithinMileRadius, uploadPhotoForVin, listingForVin } = require('../src/MongoOperations/listing');
 const { KeyAlreadyExists } = require('../src/MongoOperations/OperationErrors');
 const GeoJsonPoint = require('../src/DataModel/GeoJson/GeoJsonPoint');
+
 
 
 /**
@@ -62,7 +63,7 @@ router.get('/withinRadius', async (req, res) => {
  *      millage: Required, positive float
  *      exteriorColor: Required, any non blank string
  *      interiorColor: Required, any non blank string
- *      photos: Array, currently ignored
+ *      photo: Base64, optional. Data encoding should be included. Form: `data:<mimeType>;<encoding>,<encodedData>`
  */
 router.put('/', async (req, res)=> {
 
@@ -93,7 +94,6 @@ router.put('/', async (req, res)=> {
         millage: parseInt(req.body.millage),
         exteriorColor: req.body.exteriorColor,
         interiorColor: req.body.interiorColor,
-        photos: req.body.photos,
         sellerId: sellerId,
         metadata: data,
     };
@@ -111,11 +111,15 @@ router.put('/', async (req, res)=> {
     }
 
 
+    const hasPhoto = typeof req.body.photo === 'string';
     /// Attempt to insert a listing, return a 422 on a conflict of the same vin to ensure there aren't similar listings
     try {
         await insertListing(listing);
         console.log(`Vin ${vin} listed for sale`)
-        return res.json(listing.asDictionary());
+        if(!hasPhoto) {
+            return res.json(listing.asDictionary());
+        }
+
     } catch(e) {
         console.log(`Vin of ${vin} is already listed for sale`)
         if (e instanceof KeyAlreadyExists) {
@@ -124,6 +128,17 @@ router.put('/', async (req, res)=> {
         console.error(e);
         return res.status(500).json({message: "Internal server error"});
     }
+
+    try {
+        await uploadPhotoForVin(vin, req.body.photo);
+        const updatedListing = await listingForVin(vin);
+        console.log(`Image uploaded for ${vin}`);
+        return res.json(updatedListing.asDictionary());
+    } catch (e) {
+        console.error(`Failed to upload image ${e}`);
+    }
+
+    return res.status(202).json(listing.asDictionary());
 })
 
 

@@ -10,7 +10,6 @@ const SearchResults = (props) => {
     location: { state },
   } = props;
 
-
   useEffect(() => {
     (async () => {
       if (state === undefined) {
@@ -21,7 +20,7 @@ const SearchResults = (props) => {
       let resultsToSet = [];
       if (searchKey === "vin") {
         const { data } = await Searches.byVin(query);
-        data.vin = query
+        data.vin = query;
         resultsToSet = [{ data, listing: null }];
       } else {
         const { data } = await Searches.byComponents(query);
