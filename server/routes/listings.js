@@ -63,7 +63,7 @@ router.get('/withinRadius', async (req, res) => {
  *      millage: Required, positive float
  *      exteriorColor: Required, any non blank string
  *      interiorColor: Required, any non blank string
- *      photo: Base64, optional. Data encoding should be included. 
+ *      photo: Base64, optional. Data encoding should be included. Form: `data:<mimeType>;<encoding>,<encodedData>`
  */
 router.put('/', async (req, res)=> {
 
