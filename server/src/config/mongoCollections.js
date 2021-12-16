@@ -26,4 +26,10 @@
  module.exports = {
     listings: getCollectionFn("listings", { "location" : "2dsphere" } ),
     accounts: getCollectionFn("accounts", false ),
+
+
+    /// These classes are only needed for the seed file to clear data. Using them in normal logic
+    /// *will* break file storage. 
+    listingImageFiles: getCollectionFn("listingImages.files"),
+    listingImageChunks: getCollectionFn("listingImages.chunks"),
  };

@@ -1,3 +1,5 @@
+const { ObjectId } = require("mongodb");
+
 
 class ValidationError extends Error {
     constructor(expectedType, message) {
@@ -12,6 +14,14 @@ const validateNonBlankString = (string) => {
     string = string.trim()
     if (string.length === 0) { throw new ValidationError("string", "cannot be blank" )}
     return string;
+}
+
+const validateIsObjectId = (id) => {
+    if(id instanceof ObjectId) {
+        return id;
+    }
+    if(!ObjectId.isValid(id)) { throw new ValidationError("ObjectId", "Must be an object id") }
+    return new ObjectId(id);
 }
 
 const validateNullOrNonBlankString = (string) => {
@@ -54,5 +64,6 @@ module.exports = {
     validateNullOrNonBlankString,
     validateNonNegativeInteger,
     validatePositiveFloat,
+    validateIsObjectId,
     applyValidation,
 }

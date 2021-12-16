@@ -5,15 +5,18 @@ const { applyValidation,
         validateNullOrNonBlankString } = require('../Validation/ObjectProperties');
 const GeoJsonPoint = require('../GeoJson/GeoJsonPoint')
 const VehicleMetadata = require('./VehicleMetadata');
+const UploadedImage = require('../UploadedImage');
 
 /// Data object of a listing which performs validations of constraints upon construction and converting between
 /// different representations 
 class VehicleListing {
     constructor(dictionary) {
+        if(dictionary == null) { throw new Error("Listing being created with null dictionary!"); }
+        
         if (!dictionary._id) dictionary._id = null;
         else dictionary._id = dictionary._id.toString();
 
-        const {location, photos} = dictionary;
+        const {location, photo} = dictionary;
 
         const stringKeys = ["vin", "sellerId", "exteriorColor", "interiorColor"]
         
@@ -23,16 +26,15 @@ class VehicleListing {
         applyValidation(["_id"], dictionary, validateNullOrNonBlankString, this);
         this.location = new GeoJsonPoint(location);
         this.metadata = new VehicleMetadata(dictionary.metadata);
-        if(Array.isArray(photos) && photos.length > 0) {
-            console.error("Photos array validation is not implemented, passing empty array instead")
-        }
-        this.photos = []
+        this.photo = photo != null ? new UploadedImage(photo) : null;
+
     }
 
     asDictionary(coordinatesAsArray = true) {
         const dictionary = {
             ...this,
             location: coordinatesAsArray ? this.location.coordinateArray : this.location.geoJson,
+            photo: this.photo ? this.photo.asDictionary() : null,
             metadata: this.metadata.asDictionary(),
         }
         return dictionary;

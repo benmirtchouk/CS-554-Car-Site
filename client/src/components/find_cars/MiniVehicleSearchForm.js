@@ -49,6 +49,7 @@ const parseSearchQuery = (searchText) => {
   }
 };
 
+/// Note: There can only be one Search form visible on the screen at the time, or ids will be duplicated.
 const MiniVehicleSearchForm = () => {
   const [searchKey, setSearchKey] = useState(null);
   const history = useHistory();
@@ -81,7 +82,14 @@ const MiniVehicleSearchForm = () => {
         <FormControl
           className="placeholder-gray-500"
           placeholder="Find a Car"
+          id="mini-vehicle-search-form"
         />
+        <label
+          htmlFor="mini-vehicle-search-form"
+          className="screen-reader-only-label"
+        >
+          Search for:
+        </label>
         <DropdownButton
           variant="secondary"
           className="capitalize"

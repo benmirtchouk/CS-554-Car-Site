@@ -2,7 +2,10 @@ import React, { useContext, useState, useEffect } from "react";
 import { Redirect, useHistory } from "react-router-dom";
 import { IoLogoGoogle, IoLogoFacebook } from "react-icons/io";
 import { Button, Form } from "react-bootstrap";
-import { doCreateUserWithEmailAndPassword } from "../../firebase/FirebaseFunctions";
+import {
+	  doCreateUserWithEmailAndPassword,
+	  doSocialSignIn,
+} from "../../firebase/FirebaseFunctions";
 import { AuthContext } from "../../firebase/Auth";
 import { createAccount } from "../../data/account";
 
@@ -58,9 +61,12 @@ const SignUp = () => {
   }
 
   const handleButtonClick = async (provider) => {
-    await logInSocialMedia(provider)
+    console.log(`about to call logInSocialMedia`);
+    await doSocialSignIn(provider)
       .then(async () => {
-        history.goBack();
+	console.log(`got back from async call`);
+        history.push("/");
+        //history.goBack();
       })
       .catch((e) => {
         console.log(`${e}`);

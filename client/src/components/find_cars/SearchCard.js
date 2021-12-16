@@ -6,12 +6,22 @@ import { Link } from "react-router-dom";
 
 const SearchCard = (props) => {
   const fallbackImage = "/images/ImgNotAvailable.png";
-  const img = "";
 
   const { data, listing } = props;
-  const { vin } = listing;
+  const vin = listing?.vin;
   const { metadata } = data;
   const { make, model, modelYear } = metadata;
+
+  const imgName = listing?.photo?.filename ?? null;
+  const img = imgName
+    ? `http://localhost:3001/images/${imgName}`
+    : fallbackImage;
+  const imageOnError = !imgName
+    ? null
+    : (e) => {
+        e.target.src = fallbackImage;
+        e.onerror = null;
+      };
 
   const key = `search-${
     vin !== undefined ? vin : `${modelYear}-${make}-${model}`
@@ -25,10 +35,7 @@ const SearchCard = (props) => {
         className="img-responsive mx-2 px-2"
         src={img}
         alt="Vehicle"
-        onError={(e) => {
-          e.target.src = fallbackImage;
-          e.onerror = null;
-        }}
+        onError={imageOnError}
       />
 
       <div className="card-body">
@@ -72,6 +79,7 @@ const ListingDetails = (props) => {
     <div className="flex flex-col content-around" key={key}>
       <div>Listed for Sale</div>
       <div>
+        <span>VIN: {vin} </span>
         <span className="flex content-between">
           {" "}
           <span className="pr8"> Price: {price}</span>{" "}

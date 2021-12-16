@@ -10,7 +10,6 @@ const SearchResults = (props) => {
     location: { state },
   } = props;
 
-
   useEffect(() => {
     (async () => {
       if (state === undefined) {
@@ -21,8 +20,14 @@ const SearchResults = (props) => {
       let resultsToSet = [];
       if (searchKey === "vin") {
         const { data } = await Searches.byVin(query);
-        data.vin = query
-        resultsToSet = [{ data, listing: null }];
+        if (!data?.metadata?.modelId) {
+          resultsToSet = [];
+        } else {
+          data.vin = query;
+          resultsToSet = [
+            { data: { metadata: data.metadata }, listing: data.listing },
+          ];
+        }
       } else {
         const { data } = await Searches.byComponents(query);
         resultsToSet = data.map((e) => ({
@@ -35,11 +40,11 @@ const SearchResults = (props) => {
     })();
   }, [state]);
 
-  const tempDivs = searchResults.map((e) => SearchCard(e));
+  const searchCards = searchResults.map((e) => SearchCard(e));
   return (
     <div className="main_layout">
       <div className="mainbody">
-        {searchResults.length ? tempDivs : `No results for search term`}
+        {searchResults.length ? searchCards : `No results for search term`}
       </div>
     </div>
   );
