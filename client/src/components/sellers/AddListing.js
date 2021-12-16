@@ -48,9 +48,9 @@ const AddListing = () => {
     reader.readAsDataURL(file);
 
     reader.onloadend = () => {
-      /// Courtesy validation. Server does *not* directly validate image size, but *does* validate total request payload size.
-      const maxSizeKb = 800 * 1024;
-      if (file.size / 1024 >= maxSizeKb) {
+      /// Courtesy validation for 800kb. Server does *not* directly validate image size, but *does* validate total request payload size.
+      const maxSizeBytes = 800 * 1024;
+      if (file.size >= maxSizeBytes) {
         setErrors(["File must be smaller than 800kb"]);
         e.target.elements.photo.value = "";
         return;
