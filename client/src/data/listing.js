@@ -13,12 +13,6 @@ async function createHeader() {
   };
 }
 
-// async function getUrl(url, config) {
-//   return axios.get(url, {
-//     ...config,
-//     validateStatus: (status) => status < 500,
-//   });
-// }
 async function putUrl(url, data, config) {
   return axios.put(url, data, {
     ...config,

@@ -12,7 +12,9 @@ const AddListing = () => {
       setCreatedListing({ data: { metadata: data.metadata }, listing: data });
       e.target.reset();
       setErrors([]);
-    } else if (status >= 400 && status < 600) {
+    } else if (status === 413) {
+      setErrors(["Image is too large!"]);
+    } else if (status >= 400 && status < 600 && data.message) {
       setErrors([data.message]);
     } else {
       setErrors(["Failed to create listing"]);
@@ -54,7 +56,6 @@ const AddListing = () => {
         return;
       }
       newListing.photo = reader.result;
-      console.log(newListing.photo);
       uploadListing(newListing, e);
     };
   };
@@ -181,7 +182,9 @@ const AddListing = () => {
         </form>
         <div className="errors">
           {errors.map((error) => (
-            <p className="error">{error}</p>
+            <p className="error" key={error}>
+              {error}
+            </p>
           ))}
         </div>
         {createdListing ? (

@@ -5,7 +5,9 @@ const app = express();
 const configRoutes = require('./routes');
 
 app.use(cors());
-app.use(express.json({limit: '1.1mb'}));
+/// Note: On large payloads this will print out a stack trace in console, but it will correctly return a `413` to the client and end the request. 
+app.use(express.json({ limit: "1.1mb", type: "application/json" }));
+
 app.use(express.urlencoded({ extended: true }));
 
 configRoutes(app);
