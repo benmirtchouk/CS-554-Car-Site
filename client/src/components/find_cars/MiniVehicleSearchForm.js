@@ -88,7 +88,7 @@ const MiniVehicleSearchForm = () => {
           htmlFor="mini-vehicle-search-form"
           className="screen-reader-only-label"
         >
-          This is a test label
+          Search for:
         </label>
         <DropdownButton
           variant="secondary"

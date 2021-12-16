@@ -8,7 +8,7 @@ const SearchCard = (props) => {
   const fallbackImage = "/images/ImgNotAvailable.png";
 
   const { data, listing } = props;
-  const { vin } = listing;
+  const vin = listing?.vin;
   const { metadata } = data;
   const { make, model, modelYear } = metadata;
 
