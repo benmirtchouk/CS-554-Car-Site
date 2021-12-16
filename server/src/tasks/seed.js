@@ -1,6 +1,5 @@
-const { geocode, listings, accounts } = require("../config/mongoCollections");
+const { listings, accounts , listingImageFiles, listingImageChunks} = require("../config/mongoCollections");
 const mongoConnection = require("../config/mongoConnection");
-const { ObjectId } = require("mongodb");
 const listingData = require('./listingSeed.json');
 const accountData = require('./accountSeed.json');
 const listingMongoOperation = require('../MongoOperations/listing');
@@ -8,27 +7,20 @@ const accountMongoOperation = require('../MongoOperations/account');
 const VehicleListing = require('../DataModel/Automotive/VehicleListing');
 const Account = require('../DataModel/Account/Account');
 
-// #MARK:- Data construction operations, does *not* do validation, that is handled in data functions (or programmer validation when bypassed)
-
-const createGeocodedPoint = (longitude, latitude) => {
-    return {
-        coordinates: [longitude, latitude],
-        type: "Point"
-    }
-}
-
-
-
 
 async function seedDB() {
 
     console.log("Creating connections to collections");
     const listingCollection = await listings();
     const accountCollection = await accounts();
+    const listingImageFilesCollection = await listingImageFiles();
+    const listingImageChunksCollection = await listingImageChunks();
 
     console.log("Dropping any previous databases")
     await listingCollection.deleteMany({});
     await accountCollection.deleteMany({});
+    await listingImageFilesCollection.deleteMany({});
+    await listingImageChunksCollection.deleteMany({});
 
     try {
         console.log("Inserting Listings")
