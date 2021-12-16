@@ -8,7 +8,7 @@ admin.initializeApp({
 async function decodeIDToken(req, res, next) {
   if (req.headers?.authorization) {
     const idToken = req.headers.authorization;
-    console.log('decode', idToken);
+    // console.log('decode', idToken);
 
     try {
       const decodedToken = await admin.auth().verifyIdToken(idToken);
@@ -18,7 +18,7 @@ async function decodeIDToken(req, res, next) {
     }
   }
 
-  console.log('current user', req.currentUser);
+  // console.log('current user', req.currentUser);
   next();
 }
 
