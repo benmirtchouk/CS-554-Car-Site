@@ -1,6 +1,8 @@
 const { listings, accounts , listingImageFiles, listingImageChunks} = require("../config/mongoCollections");
 const mongoConnection = require("../config/mongoConnection");
-const listingData = require('./listingSeed.json');
+const listingData1 = require('./seed_files/listingSeed1.json');
+const listingData2 = require('./seed_files/listingSeed2.json');
+const listingData3 = require('./seed_files/listingSeed3.json');
 const accountData = require('./accountSeed.json');
 const listingMongoOperation = require('../MongoOperations/listing');
 const accountMongoOperation = require('../MongoOperations/account');
@@ -24,8 +26,18 @@ async function seedDB() {
     await listingImageChunksCollection.deleteMany({});
 
     try {
-        console.log("Inserting Listings")
-        for(const listingRawData of listingData) {
+        console.log("Inserting Listings from SeedFile1....")
+        for(const listingRawData of listingData1) {
+            const listing = new VehicleListing(listingRawData);
+            await listingMongoOperation.insertListing(listing);
+        }
+        console.log("Inserting Listings from SeedFile2....")
+        for(const listingRawData of listingData2) {
+            const listing = new VehicleListing(listingRawData);
+            await listingMongoOperation.insertListing(listing);
+        }
+        console.log("Inserting Listings from SeedFile3....")
+        for(const listingRawData of listingData3) {
             const listing = new VehicleListing(listingRawData);
             await listingMongoOperation.insertListing(listing);
         }
