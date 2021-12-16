@@ -79,6 +79,7 @@ const ListingDetails = (props) => {
     <div className="flex flex-col content-around" key={key}>
       <div>Listed for Sale</div>
       <div>
+        <span>VIN: {vin} </span>
         <span className="flex content-between">
           {" "}
           <span className="pr8"> Price: {price}</span>{" "}

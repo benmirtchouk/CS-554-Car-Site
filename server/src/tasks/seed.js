@@ -6,6 +6,7 @@ const listingMongoOperation = require('../MongoOperations/listing');
 const accountMongoOperation = require('../MongoOperations/account');
 const VehicleListing = require('../DataModel/Automotive/VehicleListing');
 const Account = require('../DataModel/Account/Account');
+const fs = require('fs');
 
 
 async function seedDB() {
@@ -32,6 +33,26 @@ async function seedDB() {
     } catch (err) {
         console.error(err);
     } 
+
+    try {
+        console.log("Inserting listing images")
+        const imageDirectory = "./src/tasks/listingSeedImages"
+        const seedImageFiles = fs.readdirSync(imageDirectory)
+        for(const fileName of seedImageFiles) {
+            const [vin, fileType] = fileName.split(".");
+            const header = `data:image/${fileType};base64,`
+            try {
+                const base64FileData = fs.readFileSync(`${imageDirectory}/${fileName}`, 'base64');
+                const photoContents = `${header}${base64FileData}`
+                await listingMongoOperation.uploadPhotoForVin(vin, photoContents);
+            } catch(e) {
+                console.error(`Failed to seed image for ${vin}. -- ${e}`);
+            }
+
+        }
+    } catch(e) {
+        console.error(`Failed to seed images. (Seed task should be ran from server root directory) -- ${e}`);
+    }
      
 
     try {

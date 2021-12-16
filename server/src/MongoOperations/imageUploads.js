@@ -7,7 +7,7 @@ const validImageTypes = new Set(["jpg", "jpeg", "png"]);
 const fileTypeMagicHexPrefix = {
     "jpg": "FFD8FF",
     "jpeg": "FFD8FF",
-    "png": "89504E47"
+    "png": "89504E47",
 }
 
 /// Convert a buffer of bytes into a Duplex. This is needed as GridFS *must* take a stream
@@ -74,7 +74,8 @@ const uploadImage = async (photo, vin ) => {
     const correctPrefix = imageData.startsWith(base64magicPrefix);
 
     if(!correctPrefix) {
-        throw new InvalidFile(base64magicPrefix, imageData.substring(0, base64magicPrefix.length), "File had incorrect magic number prefix")
+        const actualPrefix = imageData.substring(0, base64magicPrefix.length)
+        throw new InvalidFile(base64magicPrefix, actualPrefix, `File had incorrect magic number prefix: ${base64magicPrefix} | ${actualPrefix}`)
     }
    
     const buffer = Buffer.from(imageData, encoding);
