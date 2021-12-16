@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { listing } from "../../data";
 import Loading from "../Loading";
-import Listing from "./Listing";
+import Listing from "./ListingCard";
 
 const MyListings = () => {
   const [loading, setLoading] = useState(true);
@@ -32,7 +32,7 @@ const MyListings = () => {
       <br />
       {
         listings.map(ls => (
-          <Listing listing={ls} key={ls.vin} />
+          <Listing listing={ls} key={ls._id} />
         ))
       }
     </div>

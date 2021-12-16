@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet"
 import { listing } from "../../data";
 import Loading from "../Loading";
-import Listing from "./Listing";
+import Listing from "./ListingCard";
 
 const AllListings = () => {
   const [loading, setLoading] = useState(true);
@@ -56,7 +56,7 @@ const AllListings = () => {
       </div>
       {
         listings.map(ls => (
-          <Listing listing={ls} key={ls.vin} />
+          <Listing listing={ls} key={ls._id} />
         ))
       }
     </div>

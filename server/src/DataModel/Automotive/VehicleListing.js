@@ -1,4 +1,8 @@
-const { applyValidation, validateNonBlankString, validateNonNegativeInteger, validatePositiveFloat} = require('../Validation/ObjectProperties');
+const { applyValidation,
+        validateNonBlankString,
+        validateNonNegativeInteger,
+        validatePositiveFloat,
+        validateNullOrNonBlankString } = require('../Validation/ObjectProperties');
 const GeoJsonPoint = require('../GeoJson/GeoJsonPoint')
 const VehicleMetadata = require('./VehicleMetadata');
 
@@ -6,6 +10,8 @@ const VehicleMetadata = require('./VehicleMetadata');
 /// different representations 
 class VehicleListing {
     constructor(dictionary) {
+        if (!dictionary._id) dictionary._id = null;
+        else dictionary._id = dictionary._id.toString();
 
         const {location, photos} = dictionary;
 
@@ -14,6 +20,7 @@ class VehicleListing {
         applyValidation(stringKeys, dictionary, validateNonBlankString, this)
         applyValidation(["millage"], dictionary, validateNonNegativeInteger, this);
         applyValidation(["price"], dictionary, validatePositiveFloat, this);
+        applyValidation(["_id"], dictionary, validateNullOrNonBlankString, this);
         this.location = new GeoJsonPoint(location);
         this.metadata = new VehicleMetadata(dictionary.metadata);
         if(Array.isArray(photos) && photos.length > 0) {
