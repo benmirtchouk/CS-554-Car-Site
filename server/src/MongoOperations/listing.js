@@ -54,12 +54,24 @@ async function getAllListings(paginationRequest) {
     return listingData.map(e => new VehicleListing(e));
 }
 
-async function getUserListings(userid) {
+async function getUserListings(userid, paginationRequest) {
     if (typeof userid !== 'string') throw 'userid must be a string';
+    if(!paginationRequest instanceof PaginationRequest) {
+        throw new Error("Pagination request not provided")
+    }
+    const {offset, limit } = paginationRequest
     
     const collection = await listings();
-    const listingData = await collection.find({ sellerId: userid }).toArray()
-    return listingData.map(e => new VehicleListing(e));
+    const listingCursor = await collection.find({ sellerId: userid })
+    const totalListings = await listingCursor.count();
+    const listingData = await listingCursor.
+                        skip(offset)
+                        .limit(limit)
+                        .toArray()
+    return {
+        totalSize: totalListings,
+        results: listingData.map(e => new VehicleListing(e))
+    };
 }
 
 const searchListings = async (query, paginationRequest) => {
