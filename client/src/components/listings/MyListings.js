@@ -22,7 +22,7 @@ const MyListings = () => {
         offset
       );
 
-      if (Math.floor(status/100) === 2 && data) {
+      if (Math.floor(status / 100) === 2 && data) {
         setTotalSize(data.pagination.totalCount);
         setListings(data.results);
       }
@@ -47,11 +47,9 @@ const MyListings = () => {
         totalSize={totalSize}
       />
       <br />
-      {
-        listings.map(ls => (
-          <Listing listing={ls} key={ls._id} />
-        ))
-      }
+      {listings.map((ls) => (
+        <Listing listing={ls} key={ls._id} />
+      ))}
     </div>
   );
 };
