@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-
 import {
   Form,
   Button,
@@ -10,6 +9,8 @@ import {
   DropdownButton,
   FormControl,
 } from "react-bootstrap";
+import { geocode } from "../../data";
+
 
 const parseSearchQuery = (searchText) => {
   const tokens = searchText.split(" ").filter((e) => e !== "");
@@ -67,6 +68,17 @@ const MiniVehicleSearchForm = () => {
     if (typeof searchKey !== "string") {
       query.searchKey = "components";
       query.query = parseSearchQuery(searchText);
+    } else if (searchKey === "location") {
+      
+      alert(`Searching ${searchText}`)
+      const {data, status} = await geocode.geocodeAddress(searchText);
+      if(status > 400 || !data) {
+        return; 
+      }
+
+      query.searchKey = searchKey;
+      query.query = { [searchKey]: data.location };
+
     } else {
       query.searchKey = searchKey;
       query.query =

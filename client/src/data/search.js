@@ -37,7 +37,6 @@ const byLocation = async (query) => {
     throw new Error("longitude and latitude required");
   }
 
-  /// RADIUS AN UNITS
   const header = await createHeader();
   const { data, status } = await queryUrl(`http://localhost:3001/listing/withinRadius`, {
     ...header,

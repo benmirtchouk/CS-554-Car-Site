@@ -9,14 +9,10 @@ async function queryUrl(url, config) {
 
 // eslint-disable-next-line import/prefer-default-export
 export async function geocodeAddress(address) {
-  const urlSafeAddress = address
-    .trim()
-    .split(" ")
-    .filter((e) => e !== "")
-    .join("+");
 
-  const { data, status } = await queryUrl(
-    `https://nominatim.openstreetmap.org/search?format=json&q=${urlSafeAddress}&output=json`
-  );
+    const { data, status} = await queryUrl(
+      `http://localhost:3001/geocode/address?address=${address}`
+    )
+    alert(status);
   return { data, status };
 }
