@@ -59,7 +59,6 @@ const SearchResults = (props) => {
     })();
   }, [state, offset, resultsPerPage]);
 
-  /// TODO select the header form on click?
   if (state === undefined) {
     return <div> Please enter a search term</div>;
   }
