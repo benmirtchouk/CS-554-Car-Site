@@ -45,10 +45,10 @@ export async function getAllListings(limit = 20, offset = 10) {
   return { data, status };
 }
 
-export async function getUserListings() {
+export async function getUserListings(limit = 20, offset = 10) {
   const header = await createHeader();
   const { data, status } = await getUrl(
-    `http://localhost:3001/listing?user=true`,
+    `http://localhost:3001/listing?user=true&limit=${limit}&offset=${offset}`,
     header
   );
   return { data, status };
