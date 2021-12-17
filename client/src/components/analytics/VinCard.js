@@ -9,11 +9,10 @@ import "../../Carigs.css";
 const VinCard = ({ info }) => {
   const otherImg = "/images/ImgNotAvailable.png";
   const img = info.VehiclePicture ? info.VehiclePicture : otherImg;
-  const key = `c-${info.VehicleId}`;
 
   return (
     <>
-      <Card style={{ width: "18rem" }} key={key}>
+      <Card style={{ width: "18rem" }}>
         <Card.Img
           variant="top"
           src={img}
@@ -24,7 +23,9 @@ const VinCard = ({ info }) => {
           }}
         />
         <Card.Body>
-          <Card.Title>Card Title</Card.Title>
+          <Card.Title>
+            {info.Make} {info.Model} {info.ModelYear}
+          </Card.Title>
           <Card.Text>
             Some quick example text to build on the card title and make up the
             bulk of the cards content.
@@ -32,7 +33,7 @@ const VinCard = ({ info }) => {
           <Button variant="primary">Go somewhere</Button>
         </Card.Body>
       </Card>
-      <div className="card">
+      {/* <div className="card">
         <img
           className="img-responsive mx-2 px-2"
           src={img}
@@ -43,9 +44,6 @@ const VinCard = ({ info }) => {
           }}
         />
         <div className="card-body">
-          <h2 className="card-title">
-            {info.Make} {info.Model} {info.ModelYear}
-          </h2>
           <div className="card-text">
             <p className="detKey">
               <span className="detKey">Manufacturer Name:</span>
@@ -96,7 +94,7 @@ const VinCard = ({ info }) => {
             </p>
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   );
 };

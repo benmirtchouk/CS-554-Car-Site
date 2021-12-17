@@ -227,7 +227,7 @@ p.LoginError {
   font-size: 75%
 }
 
-div.card img {
+/* div.card img {
   border-radius:15px 0px 0px 0px;
   max-height:150px;
   max-width:200px;
@@ -262,7 +262,7 @@ div.card-text {
   font-size: 14px;
   padding-bottom: 10px;
   margin-bottom: 10px;
-}
+} */
 
 span.detKey {
   text-align: left;
