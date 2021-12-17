@@ -1,26 +1,12 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from "react";
+import React from "react";
 
 const Pagination = (props) => {
-  const { currentPage, pageSize, goToPage, totalSize } = props;
+  const { currentPage, pageSize, setPageSize, goToPage, totalSize } = props;
 
   const totalPages = Math.ceil(totalSize / pageSize);
   const shouldShowPrevious = currentPage > 0;
   const shouldShowNext = currentPage <= totalPages;
-
-  const makeButton = (targetPage, label, className) => (
-    <button
-      type="button"
-      key={`pagination-${label}-${targetPage}`}
-      className={className}
-      onClick={(e) => {
-        e.preventDefault();
-        goToPage(targetPage);
-      }}
-    >
-      {label}
-    </button>
-  );
 
   const spreadAmount = 2;
   const pages = Array.from(
@@ -44,11 +30,39 @@ const Pagination = (props) => {
     shouldShowNext,
   });
 
-  const links = pages.map((i) =>
-    makeButton(i.to, i.text, `${i.class} px-10`.trim())
-  );
+  const links = pages.map((i) => (
+    <button
+      type="button"
+      key={`pagination-${i.text}-${i.to}`}
+      className={`${i.class} px-10`.trim()}
+      onClick={(e) => {
+        e.preventDefault();
+        goToPage(i.to);
+      }}
+    >
+      {i.text}
+    </button>
+  ));
 
-  return <div className="flex content-center">{links}</div>;
+  return (
+    <div className="flex content-center">
+      {links}
+      <label>
+        Results per page
+        <input
+          type="number"
+          step="5"
+          min="5"
+          max="20"
+          value={pageSize}
+          onChange={(e) => {
+            e.preventDefault();
+            setPageSize(e.target.value - 0);
+          }}
+        />
+      </label>
+    </div>
+  );
 };
 
 const appendTextLabelsToArray = (

@@ -85,7 +85,6 @@ const searchListings = async (query, paginationRequest) => {
     .find({$and: formattedQuery})
 
     const count = await searchCursor.count()
-    console.log(count);
 
     const listingData = (await searchCursor
                         .skip(offset)

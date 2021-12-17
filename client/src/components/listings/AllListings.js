@@ -11,16 +11,16 @@ const AllListings = () => {
   // eslint-disable-next-line no-unused-vars
   const [page, setPage] = useState(0);
   const [totalSize, setTotalSize] = useState(null);
+  const [listingsPerPage, setListingsPerPage] = useState(10);
 
-  const listingPageLimit = 10;
-  const offset = page * listingPageLimit;
+  const offset = page * listingsPerPage;
 
   useEffect(() => {
     async function fetchData() {
       setLoading(true);
 
       const { data, status } = await listing.getAllListings(
-        listingPageLimit,
+        listingsPerPage,
         offset
       );
 
@@ -34,7 +34,7 @@ const AllListings = () => {
     }
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [offset]);
+  }, [offset, listingsPerPage]);
 
   const getAveragePosition = (positions) => {
     const sm = positions.reduce(
@@ -54,7 +54,8 @@ const AllListings = () => {
       <br />
       <Pagination
         currentPage={page}
-        pageSize={listingPageLimit}
+        pageSize={listingsPerPage}
+        setPageSize={setListingsPerPage}
         goToPage={setPage}
         totalSize={totalSize}
       />

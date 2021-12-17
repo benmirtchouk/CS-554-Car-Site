@@ -11,11 +11,10 @@ const SearchResults = (props) => {
   const [searchResults, setSearchResults] = useState([]);
 
   const [loading, setLoading] = useState(true);
-  // eslint-disable-next-line no-unused-vars
   const [page, setPage] = useState(0);
   const [totalSize, setTotalSize] = useState(null);
+  const [resultsPerPage, setResultsPerPage] = useState(10);
 
-  const resultsPerPage = 10;
   const offset = page * resultsPerPage;
 
   const {
@@ -41,9 +40,10 @@ const SearchResults = (props) => {
             { data: { metadata: data.metadata }, listing: data.listing },
           ];
         }
+      } else if (query === undefined || query === null) {
+        return;
       } else {
-        /// TODO handle garbage input
-        query.limit = 3;
+        query.limit = resultsPerPage;
         query.offset = offset;
         const { data } = await Searches.byComponents(query);
         const { pagination, results } = data;
@@ -57,7 +57,7 @@ const SearchResults = (props) => {
       setSearchResults(Array.isArray(resultsToSet) ? resultsToSet : []);
       setLoading(!Array.isArray(resultsToSet));
     })();
-  }, [state, offset]);
+  }, [state, offset, resultsPerPage]);
 
   /// TODO select the header form on click?
   if (state === undefined) {
@@ -75,6 +75,7 @@ const SearchResults = (props) => {
           <Pagination
             currentPage={page}
             pageSize={resultsPerPage}
+            setPageSize={setResultsPerPage}
             goToPage={setPage}
             totalSize={totalSize}
           />
