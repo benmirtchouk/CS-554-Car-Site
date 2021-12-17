@@ -8,7 +8,6 @@ import Listing from "./ListingCard";
 const AllListings = () => {
   const [loading, setLoading] = useState(true);
   const [listings, setListings] = useState([]);
-  // eslint-disable-next-line no-unused-vars
   const [page, setPage] = useState(0);
   const [totalSize, setTotalSize] = useState(null);
   const [listingsPerPage, setListingsPerPage] = useState(10);
@@ -18,6 +17,7 @@ const AllListings = () => {
   useEffect(() => {
     async function fetchData() {
       setLoading(true);
+      setListings(null);
 
       const { data, status } = await listing.getAllListings(
         listingsPerPage,
@@ -66,7 +66,7 @@ const AllListings = () => {
             center={getAveragePosition(
               listings.map((ls) => ls.location.coordinateArray)
             )}
-            zoomLevel='4'
+            zoomLevel='1'
           />
         )}
       </div>
