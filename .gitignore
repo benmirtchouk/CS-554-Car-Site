@@ -12,3 +12,7 @@ yarn.lock
 *.swp
 *.rdb
 server/firebase/serviceAccount.json
+server/src/tasks/listingSeedImages/*.jpeg
+server/src/tasks/listingSeedImages/*.jpg
+server/src/tasks/listingSeedImages/*.png
+server/src/tasks/seed_files/*.json

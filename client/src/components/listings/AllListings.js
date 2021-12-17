@@ -3,7 +3,7 @@ import { listing } from "../../data";
 import Loading from "../Loading";
 import VehicleMap from "../MapLogic/VehicleMap";
 import Pagination from "../Pagination";
-import Listing from "./ListingCard";
+import ListingCard from "./ListingCard";
 
 const AllListings = () => {
   const [loading, setLoading] = useState(true);
@@ -71,7 +71,7 @@ const AllListings = () => {
         )}
       </div>
       {listings.map((ls) => (
-        <Listing listing={ls} key={ls._id} />
+        <ListingCard listing={ls} key={ls._id} />
       ))}
     </div>
   );

@@ -321,3 +321,7 @@ div.listing > dl {
   height: 0;
   overflow: hidden;
 }
+
+.single-listing > .mapcontainer {
+  height: 50vh;
+}

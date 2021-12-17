@@ -45,6 +45,24 @@ export async function getAllListings(limit = 20, offset = 10) {
   return { data, status };
 }
 
+export async function getListing(id) {
+  const header = await createHeader();
+  const { data, status } = await getUrl(
+    `http://localhost:3001/listing/${id}`,
+    header
+  );
+  return { data, status };
+}
+
+export async function buyListing(id) {
+  const header = await createHeader();
+  const { data, status } = await getUrl(
+    `http://localhost:3001/listing/buy/${id}`,
+    header
+  );
+  return { data, status };
+}
+
 export async function getUserListings() {
   const header = await createHeader();
   const { data, status } = await getUrl(

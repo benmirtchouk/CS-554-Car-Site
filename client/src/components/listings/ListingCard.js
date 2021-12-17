@@ -1,7 +1,8 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import SingleVehicleMap from "../MapLogic/SingleVehicleMap";
 
-const Listing = (props) => {
+const ListingCard = (props) => {
   const { listing } = props;
   
   return (
@@ -39,10 +40,11 @@ const Listing = (props) => {
           <dt>vin:</dt>
           <dd>{listing.vin}</dd>
         </div>
+        <Link to={`/listing/${listing._id}`}>View Listing</Link>
       </dl>
       <SingleVehicleMap listing={listing} zoomLevel="13" />
     </div>
   );
 };
 
-export default Listing;
+export default ListingCard;
