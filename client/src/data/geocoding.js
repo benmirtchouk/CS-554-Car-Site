@@ -13,6 +13,5 @@ export async function geocodeAddress(address) {
     const { data, status} = await queryUrl(
       `http://localhost:3001/geocode/address?address=${address}`
     )
-    alert(status);
   return { data, status };
 }

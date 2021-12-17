@@ -69,8 +69,6 @@ const MiniVehicleSearchForm = () => {
       query.searchKey = "components";
       query.query = parseSearchQuery(searchText);
     } else if (searchKey === "location") {
-      
-      alert(`Searching ${searchText}`)
       const {data, status} = await geocode.geocodeAddress(searchText);
       if(status > 400 || !data) {
         return; 

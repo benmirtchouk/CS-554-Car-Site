@@ -20,7 +20,6 @@ async function cacheJSON(req, res, next) {
   const cached = await client.hgetAsync('__express__', url);
 
   if (cached !== null) {
-    console.log("Cache hit!")
     const { status, json } = JSON.parse(cached);
     res.status(status).json(json);
   } else {
@@ -29,7 +28,6 @@ async function cacheJSON(req, res, next) {
       const status = res.statusCode;
       if (status == 200) {
         client.hsetAsync('__express__', url, JSON.stringify({ status, json }));
-        console.log("Cached!")
       }
 
       res.json = _json;
