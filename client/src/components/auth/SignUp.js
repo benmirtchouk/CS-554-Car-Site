@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Redirect, useHistory } from "react-router-dom";
 import { IoLogoGoogle, IoLogoFacebook } from "react-icons/io";
 import { Button, Form } from "react-bootstrap";
@@ -7,6 +7,7 @@ import {
 	  doSocialSignIn,
 } from "../../firebase/FirebaseFunctions";
 import { AuthContext } from "../../firebase/Auth";
+import { createAccount } from "../../data/account";
 
 const SignUp = () => {
   const { currentUser } = useContext(AuthContext);
@@ -31,16 +32,33 @@ const SignUp = () => {
 
     try {
       await doCreateUserWithEmailAndPassword(email.value, firstPwd.value);
-      history.push("/login");
     } catch (e) {
       console.log(`${e}`);
       alert(e);
+      return false;
     }
 
+    history.push("/login");
     return true;
   };
 
-  if (currentUser) return <Redirect to="/" />;
+  const doCreateAccount = async () => {
+    try {
+      await createAccount();
+    } catch (e) {
+      console.log('unexpected error', e);
+    }
+  };
+
+  useEffect(() => {
+    if (currentUser) {
+      doCreateAccount();
+    }
+  }, [currentUser]);
+
+  if (currentUser) {
+    return <Redirect to="/" />;
+  }
 
   const handleButtonClick = async (provider) => {
     console.log(`about to call logInSocialMedia`);
@@ -115,7 +133,7 @@ const SignUp = () => {
           <Form.Control
             type="password"
             placeholder="Confirm password"
-            id="password"
+            id="passwordCnfrm"
             name="secondPwd"
             className="form-control"
           />
@@ -124,115 +142,7 @@ const SignUp = () => {
           Login
         </Button>
       </Form>
-      {/* <div className="main_layout">
-      <SideBar side_links={slinks} />
-      <div className="mainbody">
-        <h1>Register New User</h1>
-        {pwMatch && <h4 className="error">{pwMatch}</h4>}
-        <form className="RegisterForm" onSubmit={handleSubmit}>
-          <div className="form-group input-group">
-            <label className="reglabel" htmlFor="displayName">Name:</label>
-            <input name="displayName" className="form-control" placeholder="enter name" type="text" />
-          </div>
-          <div className="form-group input-group">
-            <label className="reglabel" htmlFor="email">Email:</label>
-            <input name="email" className="form-control" placeholder="enter email address" type="email" />
-          </div>
-          <div className="form-group input-group">
-            <label className="reglabel" htmlFor="phone">Phone Number:</label>
-            <input name="phoneNumber" className="form-control" placeholder="enter phone number" type="tel" />
-          </div>
-          <div className="form-group input-group">
-            <label className="reglabel" htmlFor="firstPwd">Password:</label>
-            <input name="firstPwd" className="form-control" placeholder="password" type="password" />
-          </div>
-          <div className="form-group input-group">
-            <label className="reglabel" htmlFor="secondPwd">Confirm Password:</label>
-            <input name="secondPwd" className="form-control" placeholder="confirm password" type="password" />
-          </div>
-
-          <div className="form-group">
-            <button id="submitBtn" type="submit" name="submitBtn" className="login-btn btn-block"> Register </button>
-          </div>
-        </form>
-      </div> */}
     </div>
-    // <div className="main_layout">
-    //   <Sidebar side_links={slinks} />
-    //   <div className="mainbody">
-    //     <h1>Register New User</h1>
-    //     {pwMatch && <h4 className="error">{pwMatch}</h4>}
-    //     <form className="RegisterForm" onSubmit={handleSubmit}>
-    //       <div className="form-group input-group">
-    //         <label className="reglabel" htmlFor="displayName">
-    //           Name:
-    //         </label>
-    //         <input
-    //           name="displayName"
-    //           className="form-control"
-    //           placeholder="enter name"
-    //           type="text"
-    //         />
-    //       </div>
-    //       <div className="form-group input-group">
-    //         <label className="reglabel" htmlFor="email">
-    //           Email:
-    //         </label>
-    //         <input
-    //           name="email"
-    //           className="form-control"
-    //           placeholder="enter email address"
-    //           type="email"
-    //         />
-    //       </div>
-    //       <div className="form-group input-group">
-    //         <label className="reglabel" htmlFor="phone">
-    //           Phone Number:
-    //         </label>
-    //         <input
-    //           name="phoneNumber"
-    //           className="form-control"
-    //           placeholder="enter phone number"
-    //           type="tel"
-    //         />
-    //       </div>
-    //       <div className="form-group input-group">
-    //         <label className="reglabel" htmlFor="firstPwd">
-    //           Password:
-    //         </label>
-    //         <input
-    //           name="firstPwd"
-    //           className="form-control"
-    //           placeholder="password"
-    //           type="password"
-    //         />
-    //       </div>
-    //       <div className="form-group input-group">
-    //         <label className="reglabel" htmlFor="secondPwd">
-    //           Confirm Password:
-    //         </label>
-    //         <input
-    //           name="secondPwd"
-    //           className="form-control"
-    //           placeholder="confirm password"
-    //           type="password"
-    //         />
-    //       </div>
-
-    //       <div className="form-group">
-    //         <button
-    //           id="submitBtn"
-    //           type="submit"
-    //           name="submitBtn"
-    //           className="login-btn btn-block"
-    //         >
-    //           {" "}
-    //           Register{" "}
-    //         </button>
-    //       </div>
-    //     </form>
-    //   </div>
-    // </div>
   );
 };
 

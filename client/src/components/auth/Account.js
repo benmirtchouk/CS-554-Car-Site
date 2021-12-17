@@ -238,7 +238,6 @@ const Account = () => {
     }
 
     const account = {
-      _id: currentUser.uid,
       firstName: firstName,
       lastName: lastName,
       displayName: displayName,

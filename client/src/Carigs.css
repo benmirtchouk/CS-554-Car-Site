@@ -291,6 +291,27 @@ p.detKey {
   overflow-y: scroll;
 }
 
+div.listing {
+  margin: 20px 0;
+  background: #e6e6e6;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+}
+
+div.listing > dl {
+  flex: 1
+}
+
+.mapcontainer {
+  flex: 3;
+  height: 100%;
+  min-height: 25vh;
+}
+
+.all_listings_map {
+  height: 50vh;
+}
 #input-group-dropdown-2 {
   text-transform: capitalize;
 }

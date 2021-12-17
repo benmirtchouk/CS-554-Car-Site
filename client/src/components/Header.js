@@ -75,7 +75,7 @@ const Header = () => {
                 <Button
                   variant="outline-primary"
                 >
-                  {currentUser.displayName}
+                  {currentUser.displayName ?? currentUser.email}
                 </Button>
               </LinkContainer>
             )}

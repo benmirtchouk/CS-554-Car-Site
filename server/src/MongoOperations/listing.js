@@ -32,6 +32,19 @@ const parseMakeModelForQuery = (query, operator="$and") => {
 
 }
 
+async function getAllListings() {
+    const collection = await listings();
+    const listingData = await collection.find({}).toArray()
+    return listingData.map(e => new VehicleListing(e));
+}
+
+async function getUserListings(userid) {
+    if (typeof userid !== 'string') throw 'userid must be a string';
+    
+    const collection = await listings();
+    const listingData = await collection.find({ sellerId: userid }).toArray()
+    return listingData.map(e => new VehicleListing(e));
+}
 
 const searchListings = async (query) => {
     const collection = await listings();
@@ -135,10 +148,11 @@ const listingsWithinRadianRadius = async (centerPoint, radius) => {
 
 module.exports = {
     listingForVin,
+    getAllListings,
+    getUserListings,
     searchListings,
     insertListing,
     listingsWithinMileRadius,
     listingsWithinRadianRadius,
     uploadPhotoForVin,
-
 }
