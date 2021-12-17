@@ -3,6 +3,7 @@
 import React from "react";
 
 import { Link } from "react-router-dom";
+import SingleVehicleMap from "../MapLogic/SingleVehicleMap";
 
 const SearchCard = (props) => {
   const fallbackImage = "/images/ImgNotAvailable.png";
@@ -71,8 +72,8 @@ const SearchCard = (props) => {
 
 const ListingDetails = (props) => {
   const { listing } = props;
-  const { vin, exteriorColor, interiorColor, millage, price, location } =
-    listing;
+  const { vin, exteriorColor, interiorColor, millage, price } = listing;
+  listing.location.coordinateArray = listing.location;
 
   const key = `listing-${vin}`;
   return (
@@ -91,7 +92,7 @@ const ListingDetails = (props) => {
           <span>Interior {interiorColor} </span>
         </span>
       </div>
-      Location {location}
+      <SingleVehicleMap listing={listing} zoomLevel={15} />
     </div>
   );
 };

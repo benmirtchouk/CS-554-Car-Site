@@ -1,10 +1,13 @@
 import React, { useState } from "react";
-import { listing } from "../../data";
+import { listing, geocode } from "../../data";
 import SearchCard from "../find_cars/SearchCard";
+import SingleVehicleMap from "../MapLogic/SingleVehicleMap";
 
 const AddListing = () => {
   const [errors, setErrors] = useState([]);
   const [createdListing, setCreatedListing] = useState(null);
+  const [geocodedData, setGeoCodedData] = useState(null);
+  const [geocodeDataLoading, setGeocodeDataLoading] = useState(false);
 
   const uploadListing = async (newListing, e) => {
     const { data, status } = await listing.addListing(newListing);
@@ -12,6 +15,7 @@ const AddListing = () => {
       setCreatedListing({ data: { metadata: data.metadata }, listing: data });
       e.target.reset();
       setErrors([]);
+      setGeoCodedData(null);
     } else if (status === 413) {
       setErrors(["Image is too large!"]);
     } else if (status >= 400 && status < 600 && data.message) {
@@ -24,13 +28,17 @@ const AddListing = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     setCreatedListing(null);
+    if (geocodeDataLoading) {
+      setErrors([
+        "Cannot submit form while Geocoded address is being looked up!",
+      ]);
+      return;
+    }
+    const { lat, lon } = geocodedData;
     const newListing = {
       exteriorColor: e.target.elements.exteriorColor.value,
       interiorColor: e.target.elements.interiorColor.value,
-      coordinates: [
-        e.target.elements.longitude.value,
-        e.target.elements.latitude.value,
-      ],
+      coordinates: [lon, lat],
       millage: e.target.elements.millage.value,
       price: e.target.elements.price.value,
       vin: e.target.elements.vin.value,
@@ -60,6 +68,33 @@ const AddListing = () => {
     };
   };
 
+  const geocodeAddress = async (e) => {
+    e.preventDefault();
+    const address = e.target.value.trim();
+    if (address === geocodedData?.searchedTerm || address.length === 0) {
+      return;
+    }
+    setGeocodeDataLoading(true);
+    setGeoCodedData(null);
+    setCreatedListing(null);
+
+    const { data, status } = await geocode.geocodeAddress(address);
+    if (status >= 400 || data.length === 0) {
+      setErrors(["Failed to geocode address"]);
+    } else {
+      const result = data[0];
+      setErrors([]);
+      setGeoCodedData({
+        lat: result.lat,
+        lon: result.lon,
+        displayName: result.display_name,
+        searchedTerm: address,
+      });
+    }
+
+    setGeocodeDataLoading(false);
+  };
+
   return (
     <div className="main_layout">
       <div className="mainbody">
@@ -83,38 +118,19 @@ const AddListing = () => {
               />
             </label>
 
-            <div id="coordinates" className="form-group flex-row">
-              <label>
-                Longitude
-                <input
-                  id="longitude"
-                  type="number"
-                  name="longitude"
-                  placeholder="Longitude..."
-                  step="0.0000001"
-                  min="-180"
-                  max="180"
-                  className="mx-2"
-                  title="The longitude of where the vehicle is sold"
-                  required
-                />
-              </label>
-              <label>
-                Latitude
-                <input
-                  id="latitude"
-                  type="number"
-                  name="latitude"
-                  placeholder="Latitude..."
-                  step="0.0000001"
-                  min="-90"
-                  max="90"
-                  className="mx-2"
-                  title="The longitude of where the vehicle is sold"
-                  required
-                />
-              </label>
-            </div>
+            <label>
+              Street Address
+              <input
+                id="streetAddress"
+                type="text"
+                name="streetAddress"
+                placeholder="Street address of vehicle"
+                title="Where is the vehicle located?"
+                onBlur={geocodeAddress}
+                disabled={geocodeDataLoading}
+                required
+              />
+            </label>
             <label>
               Price
               <input
@@ -187,6 +203,23 @@ const AddListing = () => {
             </p>
           ))}
         </div>
+        {geocodedData?.displayName ? (
+          <span>
+            This vehicle is at {geocodedData.displayName}
+            <br />
+            <SingleVehicleMap
+              listing={{
+                location: {
+                  coordinateArray: [geocodedData.lon, geocodedData.lat],
+                },
+              }}
+              zoomLevel="15"
+            />
+          </span>
+        ) : (
+          ""
+        )}
+
         {createdListing ? (
           <div>
             Created <br />

@@ -3,7 +3,8 @@ const VehicleListing = require('../DataModel/Automotive/VehicleListing')
 const { InternalMongoError, KeyAlreadyExists } = require('./OperationErrors');
 const { ValidationError } = require('../DataModel/Validation/ObjectProperties');
 const GeoJsonPoint = require('../DataModel/GeoJson/GeoJsonPoint');
-const { uploadImage} = require('./imageUploads');
+const { uploadImage } = require('./imageUploads');
+const PaginationRequest = require('../PaginationRequest');
 
 const listingForVin = async (vin) => {
     if(typeof vin !== 'string') { throw new Error("Vin is not a string!"); }
@@ -32,9 +33,24 @@ const parseMakeModelForQuery = (query, operator="$and") => {
 
 }
 
-async function getAllListings() {
+/// Get the size of collection from its metadata. 
+/// Note: While this function may be skewed, without sharding or a forced shutdown it should be accurate per the docs
+const countFromMetadata = async () => {
     const collection = await listings();
-    const listingData = await collection.find({}).toArray()
+    return await collection.count();
+}
+
+async function getAllListings(paginationRequest) {
+    if(!paginationRequest instanceof PaginationRequest) {
+        throw new Error("Pagination request not provided")
+    }
+    const {offset, limit} = paginationRequest;
+
+    const collection = await listings();
+    const listingData = await collection.find({})
+    .skip(offset)
+    .limit(limit)
+    .toArray()
     return listingData.map(e => new VehicleListing(e));
 }
 
@@ -46,11 +62,15 @@ async function getUserListings(userid) {
     return listingData.map(e => new VehicleListing(e));
 }
 
-const searchListings = async (query) => {
+const searchListings = async (query, paginationRequest) => {
+    if(!paginationRequest instanceof PaginationRequest) {
+        throw new Error("Pagination request not provided")
+    }
+
+    const {offset, limit } = paginationRequest;
     const collection = await listings();
 
    const formattedQuery = parseMakeModelForQuery(query);
-
     if (isFinite(query.year - 0)) {
         formattedQuery.push({['metadata.modelYear']: query.year - 0})
     }
@@ -60,19 +80,35 @@ const searchListings = async (query) => {
         return
     }
 
-    const listingData = await collection.find({$and: formattedQuery}).toArray()
 
-    return listingData 
-            .map (e => new VehicleListing(e))
+    const searchCursor = await collection
+    .find({$and: formattedQuery})
+
+    const count = await searchCursor.count()
+
+    const listingData = (await searchCursor
+                        .skip(offset)
+                        .limit(limit)
+                        .toArray())
+                        .map (e => new VehicleListing(e))
+
+
+    return {
+        totalSize: count,
+        results: listingData
+    } 
+            
 }
 
 
 
 const uploadPhotoForVin = async (vin, photo) => {
-    if (typeof photo !== 'string' || typeof vin !== 'string') { return false; }
+    if (typeof photo !== 'string' || typeof vin !== 'string') { 
+        throw new Error(`Vin or photo is not a string.${vin} ${typeof photo}`)
+     }
 
     const listing = await listingForVin(vin);
-    if (!listing) { return false; }
+    if (!listing) { throw new Error("Listing not found!") }
 
     
     const collection = await listings();
@@ -81,11 +117,13 @@ const uploadPhotoForVin = async (vin, photo) => {
         if(_id == null || filename == null) {
             throw new Error(`One required field null! ${_id} ${filename}`);
         }
-        collection.updateOne(
+
+        await collection.updateOne(
             { vin: vin },
             { $set: {"photo": {_id, filename}}}
         )
-        return null;
+
+        return {_id, filename};
     } catch (e) {
         console.error(`Failed to upload image: ${e}`);
         throw e;
@@ -148,6 +186,7 @@ const listingsWithinRadianRadius = async (centerPoint, radius) => {
 
 module.exports = {
     listingForVin,
+    countFromMetadata,
     getAllListings,
     getUserListings,
     searchListings,

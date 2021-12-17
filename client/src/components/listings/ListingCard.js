@@ -1,9 +1,8 @@
 import React from "react";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet"
+import SingleVehicleMap from "../MapLogic/SingleVehicleMap";
 
 const Listing = (props) => {
   const { listing } = props;
-  console.log(listing);
   
   return (
     <div className="listing">
@@ -41,17 +40,7 @@ const Listing = (props) => {
           <dd>{listing.vin}</dd>
         </div>
       </dl>
-      <MapContainer className="mapcontainer" center={listing.location.coordinateArray} zoom={13} scrollWheelZoom={false}>
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        <Marker position={listing.location.coordinateArray}>
-          <Popup>
-            A simple popup!
-          </Popup>
-        </Marker>
-      </MapContainer>
+      <SingleVehicleMap listing={listing} zoomLevel="13" />
     </div>
   );
 };
