@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { listing } from "../../data";
 import Loading from "../Loading";
-import Listing from "./ListingCard";
+import ListingCard from "./ListingCard";
 import Pagination from "../Pagination";
 
 const MyListings = () => {
@@ -47,9 +47,11 @@ const MyListings = () => {
         totalSize={totalSize}
       />
       <br />
-      {listings.map((ls) => (
-        <Listing listing={ls} key={ls._id} />
-      ))}
+      {
+        listings.map(ls => (
+          <ListingCard listing={ls} key={ls._id} />
+        ))
+      }
     </div>
   );
 };

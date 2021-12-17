@@ -13,6 +13,7 @@ import {
   AllListings,
   MyListings,
   AddListing,
+  Listing,
   MessageBoard,
   Vin,
   Safety,
@@ -62,6 +63,7 @@ const App = () => {
                   <PrivateRoute path="/sellers" component={Sellers} />
                   <PrivateRoute path="/sell_car" component={SellCar} />
                   <Route path="/listings" component={AllListings} />
+                  <Route path="/listing/:id" component={Listing} />
                   <PrivateRoute path="/my_listings" component={MyListings} />
                   <PrivateRoute path="/add_listing" component={AddListing} />
                   <PrivateRoute

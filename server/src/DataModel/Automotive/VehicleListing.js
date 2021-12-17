@@ -2,7 +2,8 @@ const { applyValidation,
         validateNonBlankString,
         validateNonNegativeInteger,
         validatePositiveFloat,
-        validateNullOrNonBlankString } = require('../Validation/ObjectProperties');
+        validateNullOrNonBlankString,
+        validateBoolean } = require('../Validation/ObjectProperties');
 const GeoJsonPoint = require('../GeoJson/GeoJsonPoint')
 const VehicleMetadata = require('./VehicleMetadata');
 const UploadedImage = require('../UploadedImage');
@@ -16,6 +17,8 @@ class VehicleListing {
         if (!dictionary._id) dictionary._id = null;
         else dictionary._id = dictionary._id.toString();
 
+        if (typeof dictionary.sold !== 'boolean') dictionary.sold = false;
+
         const {location, photo} = dictionary;
 
         const stringKeys = ["vin", "sellerId", "exteriorColor", "interiorColor"]
@@ -24,6 +27,7 @@ class VehicleListing {
         applyValidation(["millage"], dictionary, validateNonNegativeInteger, this);
         applyValidation(["price"], dictionary, validatePositiveFloat, this);
         applyValidation(["_id"], dictionary, validateNullOrNonBlankString, this);
+        applyValidation(["sold"], dictionary, validateBoolean, this);
         this.location = new GeoJsonPoint(location);
         this.metadata = new VehicleMetadata(dictionary.metadata);
         this.photo = photo != null ? new UploadedImage(photo) : null;

@@ -78,7 +78,10 @@ const ListingDetails = (props) => {
   const key = `listing-${vin}`;
   return (
     <div className="flex flex-col content-around" key={key}>
-      <div>Listed for Sale</div>
+      <div>
+        Listed for Sale
+        <Link to={`/listing/${listing._id}`}>View Listing</Link>
+      </div>
       <div>
         <span>VIN: {vin} </span>
         <span className="flex content-between">

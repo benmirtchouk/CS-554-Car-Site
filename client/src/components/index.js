@@ -26,6 +26,7 @@ export { default as MessageBoard } from "./messaging/MessageBoard";
 export { default as AllListings } from "./listings/AllListings";
 export { default as MyListings } from "./listings/MyListings";
 export { default as AddListing } from "./listings/AddListing";
+export { default as Listing } from "./listings/Listing";
 
 // Sellers
 export { default as RecentSales } from "./sellers/RecentSales";

@@ -5,6 +5,7 @@ const { ValidationError } = require('../DataModel/Validation/ObjectProperties');
 const GeoJsonPoint = require('../DataModel/GeoJson/GeoJsonPoint');
 const { uploadImage } = require('./imageUploads');
 const PaginationRequest = require('../PaginationRequest');
+const { ObjectId } = require('mongodb');
 
 const listingForVin = async (vin) => {
     if(typeof vin !== 'string') { throw new Error("Vin is not a string!"); }
@@ -38,6 +39,33 @@ const parseMakeModelForQuery = (query, operator="$and") => {
 const countFromMetadata = async () => {
     const collection = await listings();
     return await collection.count();
+}
+
+async function getListing(id) {
+    if(!id instanceof ObjectId) {
+        throw new Error("Invalid id provided")
+    }
+    const collection = await listings();
+    const listing = await collection.findOne({_id: id})
+    return listing === null ? null : new VehicleListing(listing);
+}
+
+async function buyListing(userid, id) {
+    if (typeof userid !== 'string') throw 'userid must be a string';
+    if(!id instanceof ObjectId) {
+        throw new Error("Invalid id provided")
+    }
+    const collection = await listings();
+    const listing = await collection.findOne({_id: id})
+
+    if (listing === null || listing.sold) return false;
+    
+    await collection.updateOne(
+        { _id: id },
+        { $set: {sold: true}}
+    );
+
+    return true;
 }
 
 async function getAllListings(paginationRequest) {
@@ -199,6 +227,7 @@ const listingsWithinRadianRadius = async (centerPoint, radius) => {
 module.exports = {
     listingForVin,
     countFromMetadata,
+    getListing,
     getAllListings,
     getUserListings,
     searchListings,
@@ -206,4 +235,5 @@ module.exports = {
     listingsWithinMileRadius,
     listingsWithinRadianRadius,
     uploadPhotoForVin,
+    buyListing,
 }

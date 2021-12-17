@@ -19,7 +19,7 @@ const VehicleMap = (props) => {
       {listings.map((e) => (
         <VehicleMarker
           listing={e}
-          key={`marker-${e.location.coordinateArray}`}
+          key={`marker-${e._id}`}
         />
       ))}
     </MapContainer>

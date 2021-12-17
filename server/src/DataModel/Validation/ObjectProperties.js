@@ -46,6 +46,11 @@ const validatePositiveFloat = (float) => {
     return float - 0;
 }
 
+const validateBoolean = (bool) => {
+    if(typeof bool != 'boolean') { throw new ValidationError("bool", "must be a boolean") }
+    return !!bool;
+}
+
 const applyValidation = (keys, inputDictionary, validationFunction, onObject) => {
     if(onObject == null) { return }
     if(inputDictionary == null || typeof inputDictionary !== 'object') { throw new ValidationError("object", "Input object was null or not an object!") }
@@ -72,4 +77,5 @@ module.exports = {
     validatePositiveFloat,
     validateIsObjectId,
     applyValidation,
+    validateBoolean
 }
