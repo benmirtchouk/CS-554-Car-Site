@@ -1,5 +1,6 @@
 import React from "react";
 import { Marker, Popup } from "react-leaflet";
+import { Link } from "react-router-dom";
 
 const VehicleMarker = (props) => {
   const { listing } = props;
@@ -14,6 +15,10 @@ const VehicleMarker = (props) => {
         {listing?.metadata?.model}
         <br />
         {listing?.vin}
+        <br />
+        {listing?.sold ? 'Sold' : 'For Sale'}
+        <br />
+        <Link to={`/listing/${listing?._id}`}>View Listing</Link>
       </Popup>
     </Marker>
   );

@@ -1,15 +1,17 @@
 const express = require('express');
 const router = express.Router();
 const VehicleListing = require('../src/DataModel/Automotive/VehicleListing');
-const { ValidationError, validateNonBlankString } = require('../src/DataModel/Validation/ObjectProperties');
+const { ValidationError, validateNonBlankString, validateIsObjectId } = require('../src/DataModel/Validation/ObjectProperties');
 const { nhtsa } = require("../api");
-const { insertListing, 
+const { insertListing,
     countFromMetadata,
-    listingsWithinMileRadius, 
+    listingsWithinMileRadius,
     uploadPhotoForVin,
     listingForVin,
-    getAllListings, 
-    getUserListings } = require('../src/MongoOperations/listing');
+    getListing,
+    getAllListings,
+    getUserListings,
+    buyListing } = require('../src/MongoOperations/listing');
 const { KeyAlreadyExists } = require('../src/MongoOperations/OperationErrors');
 const GeoJsonPoint = require('../src/DataModel/GeoJson/GeoJsonPoint');
 const PaginationRequest = require('../src/PaginationRequest');
@@ -33,17 +35,58 @@ router.get('/', async (req, res) => {
         data = results;
         totalCount = totalSize;
     } else {
-        
         data = await getAllListings(paginationRequest);
         totalCount = await countFromMetadata();
     }
-    
+
     res.json({
         pagination: {
             totalCount
         },
         results: data
     });
+});
+
+router.get('/:id', async (req, res) => {
+    let id;
+    try {
+        id = validateIsObjectId(req.params.id);
+    } catch (e) {
+        return res.status(400).json({message: "Id must be a valid id"} );
+    }
+
+    try {
+        listing = await getListing(id);
+        if (listing === null)
+            return res.status(404).json({message: "No such listing found"});
+        return res.json(listing);
+    } catch (e) {
+        console.error(e);
+        return res.status(500).json({message: "Internal Server Error"})
+    }
+});
+
+router.get('/buy/:id', async (req, res) => {
+    const userid = req.currentUser?.user_id;
+    if (!userid)
+        return res.status(401).json({ message: 'You must be logged in to buy a car' });
+
+    let id;
+    try {
+        id = validateIsObjectId(req.params.id);
+    } catch (e) {
+        return res.status(400).json({message: "Id must be a valid id"} );
+    }
+
+    try {
+        success = await buyListing(userid, id);
+        if (!success)
+            return res.status(400).json({message: "Cannot buy listing"});
+        return res.json({message: 'success'});
+    } catch (e) {
+        console.error(e);
+        return res.status(500).json({message: "Internal Server Error"})
+    }
 });
 /**
  * Route to get all listings within a specified radius
@@ -77,12 +120,12 @@ router.get('/withinRadius', async (req, res) => {
         return res.status(400).json( {message: `${longitude} ${latitude} is not a valid longitude & latitude position`} );
     }
 
-    /// Perform the search with no limit on returned results. 
+    /// Perform the search with no limit on returned results.
     try {
         const listings = (await listingsWithinMileRadius(centerPoint, radius))
                          .map(e => e.asDictionary())
         return res.json(listings);
-    
+
     } catch (e) {
         console.error(e);
         return res.status(500).json({message: "Internal Server Error"})
@@ -94,7 +137,7 @@ router.get('/withinRadius', async (req, res) => {
  * Create a new listing in the database
  * Params:
  *      vin: Required, full vin number. Must not currently have a listing
- *      coordinates: Required, array of form [longitude, latitude] as floats. 
+ *      coordinates: Required, array of form [longitude, latitude] as floats.
  *      price: Required, positive float
  *      millage: Required, positive float
  *      exteriorColor: Required, any non blank string

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { listing } from "../../data";
 import Loading from "../Loading";
-import Listing from "./ListingCard";
+import ListingCard from "./ListingCard";
 import Pagination from "../Pagination";
 
 const MyListings = () => {
@@ -49,7 +49,7 @@ const MyListings = () => {
       <br />
       {
         listings.map(ls => (
-          <Listing listing={ls} key={ls._id} />
+          <ListingCard listing={ls} key={ls._id} />
         ))
       }
     </div>
