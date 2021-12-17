@@ -15,6 +15,7 @@ const AddListing = () => {
       setCreatedListing({ data: { metadata: data.metadata }, listing: data });
       e.target.reset();
       setErrors([]);
+      setGeoCodedData(null);
     } else if (status === 413) {
       setErrors(["Image is too large!"]);
     } else if (status >= 400 && status < 600 && data.message) {
@@ -69,8 +70,8 @@ const AddListing = () => {
 
   const geocodeAddress = async (e) => {
     e.preventDefault();
-    const address = e.target.value;
-    if (address.trim() === geocodedData?.searchedTerm) {
+    const address = e.target.value.trim();
+    if (address === geocodedData?.searchedTerm || address.length === 0) {
       return;
     }
     setGeocodeDataLoading(true);

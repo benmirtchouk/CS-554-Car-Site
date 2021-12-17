@@ -103,10 +103,12 @@ const searchListings = async (query, paginationRequest) => {
 
 
 const uploadPhotoForVin = async (vin, photo) => {
-    if (typeof photo !== 'string' || typeof vin !== 'string') { return false; }
+    if (typeof photo !== 'string' || typeof vin !== 'string') { 
+        throw new Error(`Vin or photo is not a string.${vin} ${typeof photo}`)
+     }
 
     const listing = await listingForVin(vin);
-    if (!listing) { return false; }
+    if (!listing) { throw new Error("Listing not found!") }
 
     
     const collection = await listings();
@@ -115,11 +117,13 @@ const uploadPhotoForVin = async (vin, photo) => {
         if(_id == null || filename == null) {
             throw new Error(`One required field null! ${_id} ${filename}`);
         }
-        collection.updateOne(
+
+        await collection.updateOne(
             { vin: vin },
             { $set: {"photo": {_id, filename}}}
         )
-        return null;
+
+        return {_id, filename};
     } catch (e) {
         console.error(`Failed to upload image: ${e}`);
         throw e;
