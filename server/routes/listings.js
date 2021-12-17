@@ -10,6 +10,7 @@ const { insertListing,
     getUserListings } = require('../src/MongoOperations/listing');
 const { KeyAlreadyExists } = require('../src/MongoOperations/OperationErrors');
 const GeoJsonPoint = require('../src/DataModel/GeoJson/GeoJsonPoint');
+const PaginationRequest = require('../src/PaginationRequest');
 
 router.get('/', async (req, res) => {
     const userid = req.currentUser?.user_id;
@@ -21,9 +22,15 @@ router.get('/', async (req, res) => {
         data = await getUserListings(userid);
         totalCount = data.length
     } else {
-        const limit = req.query.limit  > 0 ? parseInt(req.query.limit ) : 100;
-        const offset = req.query.offset >= 0 ? parseInt(req.query.offset) : 0;
-        data = await getAllListings(limit, offset);
+        let paginationRequest;
+        try {
+            paginationRequest = new PaginationRequest(req.query);
+        } catch (e) {
+            console.error(e);
+            return res.status(400).json({message: e.message});
+        }
+        
+        data = await getAllListings(paginationRequest);
         totalCount = await countFromMetadata();
     }
     

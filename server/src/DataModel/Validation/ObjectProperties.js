@@ -36,6 +36,11 @@ const validateNonNegativeInteger = (int) => {
     return int - 0;
 }
 
+const validatePositiveInteger = (int) => {
+    if(!Number.isInteger(int - 0 ) || int <= 0) { throw new ValidationError("integer", "must be non-negative")}
+    return int - 0;
+}
+
 const validatePositiveFloat = (float) => {
     if(!isFinite(float) || float <= 0) { throw new ValidationError("float", "must be positive") }
     return float - 0;
@@ -62,6 +67,7 @@ module.exports = {
     ValidationError,
     validateNonBlankString,
     validateNullOrNonBlankString,
+    validatePositiveInteger,
     validateNonNegativeInteger,
     validatePositiveFloat,
     validateIsObjectId,

@@ -3,11 +3,12 @@ import VehicleMap from "./VehicleMap";
 
 const SingleVehicleMap = (props) => {
   const { listing, zoomLevel } = props;
+  const [lng, lat] = listing.location.coordinateArray;
 
   return (
     <VehicleMap
       listings={[listing]}
-      center={listing.location.coordinateArray}
+      center={{ lat, lng }}
       zoomLevel={zoomLevel}
     />
   );

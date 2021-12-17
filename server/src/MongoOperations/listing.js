@@ -4,6 +4,7 @@ const { InternalMongoError, KeyAlreadyExists } = require('./OperationErrors');
 const { ValidationError } = require('../DataModel/Validation/ObjectProperties');
 const GeoJsonPoint = require('../DataModel/GeoJson/GeoJsonPoint');
 const { uploadImage} = require('./imageUploads');
+const PaginationRequest = require('../PaginationRequest');
 
 const listingForVin = async (vin) => {
     if(typeof vin !== 'string') { throw new Error("Vin is not a string!"); }
@@ -39,11 +40,11 @@ const countFromMetadata = async () => {
     return await collection.count();
 }
 
-async function getAllListings(limit=20, offset=0) {
-    if(!Number.isInteger(limit) || !Number.isInteger(offset) || 
-    limit < 0 || offset < 0 ){
-        throw new Error("Invalid limit or offset");
+async function getAllListings(paginationRequest) {
+    if(!paginationRequest instanceof PaginationRequest) {
+        throw new Error("Pagination request not provided")
     }
+    const {offset, limit} = paginationRequest;
 
     const collection = await listings();
     const listingData = await collection.find({})
@@ -61,11 +62,15 @@ async function getUserListings(userid) {
     return listingData.map(e => new VehicleListing(e));
 }
 
-const searchListings = async (query) => {
+const searchListings = async (query, paginationRequest) => {
+    if(!paginationRequest instanceof PaginationRequest) {
+        throw new Error("Pagination request not provided")
+    }
+
+    const {offset, limit } = paginationRequest;
     const collection = await listings();
 
    const formattedQuery = parseMakeModelForQuery(query);
-
     if (isFinite(query.year - 0)) {
         formattedQuery.push({['metadata.modelYear']: query.year - 0})
     }
@@ -75,10 +80,25 @@ const searchListings = async (query) => {
         return
     }
 
-    const listingData = await collection.find({$and: formattedQuery}).toArray()
 
-    return listingData 
-            .map (e => new VehicleListing(e))
+    const searchCursor = await collection
+    .find({$and: formattedQuery})
+
+    const count = await searchCursor.count()
+    console.log(count);
+
+    const listingData = (await searchCursor
+                        .skip(offset)
+                        .limit(limit)
+                        .toArray())
+                        .map (e => new VehicleListing(e))
+
+
+    return {
+        totalSize: count,
+        results: listingData
+    } 
+            
 }
 
 

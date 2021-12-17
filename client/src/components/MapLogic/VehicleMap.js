@@ -5,6 +5,9 @@ import VehicleMarker from "./VehicleMarker";
 const VehicleMap = (props) => {
   const { listings, center, zoomLevel } = props;
 
+  if (!center || !zoomLevel) {
+    throw new Error(`Not set! ${center} ${zoomLevel}`);
+  }
   return (
     <MapContainer
       className="mapcontainer"
