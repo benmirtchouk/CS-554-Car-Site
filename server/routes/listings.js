@@ -21,9 +21,9 @@ router.get('/', async (req, res) => {
         data = await getUserListings(userid);
         totalCount = data.length
     } else {
-        /// TODO VALIDATE
-        const { limit, offset } = req.query;
-        data = await getAllListings(limit - 0, offset - 0);
+        const limit = req.query.limit  > 0 ? parseInt(req.query.limit ) : 100;
+        const offset = req.query.offset >= 0 ? parseInt(req.query.offset) : 0;
+        data = await getAllListings(limit, offset);
         totalCount = await countFromMetadata();
     }
     

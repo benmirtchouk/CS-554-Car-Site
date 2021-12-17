@@ -32,7 +32,9 @@ const Pagination = (props) => {
       to: p,
       text: p + 1,
       class: `${
-        p === currentPage && parseInt(p, 10) ? "text-red-700" : ""
+        p === currentPage && Number.isFinite(parseInt(p, 10))
+          ? "text-red-700"
+          : ""
       }`.trim(),
     }));
 
@@ -57,12 +59,10 @@ const appendTextLabelsToArray = (
   data
 ) => {
   const paginationTextClass = "px-10";
-  if (pageNum - pageSpread > 0) {
+  if (pageNum - pageSpread > 0 || pages[0].to === 0) {
     pages.unshift({ to: 0, text: "First", class: paginationTextClass });
-  } else if (pages[0].to === 0) {
-    // eslint-disable-next-line no-param-reassign
-    pages[0].text = "First";
   }
+
   if (data.shouldShowPrevious) {
     pages.unshift({
       to: pageNum - 1,
