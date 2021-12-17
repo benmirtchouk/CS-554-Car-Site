@@ -38,7 +38,8 @@ const SignUp = () => {
       return false;
     }
 
-    history.push("/login");
+    history.push("/account");
+    //history.push("/login");
     return true;
   };
 
@@ -65,7 +66,7 @@ const SignUp = () => {
     await doSocialSignIn(provider)
       .then(async () => {
 	console.log(`got back from async call`);
-        history.push("/");
+        history.push("/account");
         //history.goBack();
       })
       .catch((e) => {

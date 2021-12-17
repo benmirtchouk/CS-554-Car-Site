@@ -552,7 +552,7 @@ const Account = () => {
                   className="form-control"
                   size="sm"
                   value={phoneNumber}
-                  pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                  pattern="[0-9]{0,1}-{0,1}[0-9]{3}-{0,1}[0-9]{3}-{0,1}[0-9]{4}"
                   type="tel"
                   onChange={(e) => {
                     if (e.target.value === null) setPhoneNumber("");
