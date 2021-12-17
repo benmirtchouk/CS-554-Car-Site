@@ -36,10 +36,10 @@ export async function addListing(listing) {
   return { data, status };
 }
 
-export async function getAllListings() {
+export async function getAllListings(limit = 20, offset = 10) {
   const header = await createHeader();
   const { data, status } = await getUrl(
-    `http://localhost:3001/listing`,
+    `http://localhost:3001/listing?limit=${limit}&offset=${offset}`,
     header
   );
   return { data, status };

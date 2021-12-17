@@ -32,9 +32,24 @@ const parseMakeModelForQuery = (query, operator="$and") => {
 
 }
 
-async function getAllListings() {
+/// Get the size of collection from its metadata. 
+/// Note: While this function may be skewed, without sharding or a forced shutdown it should be accurate per the docs
+const countFromMetadata = async () => {
     const collection = await listings();
-    const listingData = await collection.find({}).toArray()
+    return await collection.count();
+}
+
+async function getAllListings(limit=20, offset=0) {
+    if(!Number.isInteger(limit) || !Number.isInteger(offset) || 
+    limit < 0 || offset < 0 ){
+        throw new Error("Invalid limit or offset");
+    }
+
+    const collection = await listings();
+    const listingData = await collection.find({})
+    .skip(offset)
+    .limit(limit)
+    .toArray()
     return listingData.map(e => new VehicleListing(e));
 }
 
@@ -148,6 +163,7 @@ const listingsWithinRadianRadius = async (centerPoint, radius) => {
 
 module.exports = {
     listingForVin,
+    countFromMetadata,
     getAllListings,
     getUserListings,
     searchListings,

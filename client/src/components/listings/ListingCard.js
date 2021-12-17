@@ -48,7 +48,7 @@ const Listing = (props) => {
         />
         <Marker position={listing.location.coordinateArray}>
           <Popup>
-            A simple popup!
+            A {listing.metadata.modelYear} {listing.metadata.make} {listing.metadata.model} <br /> {listing.vin}
           </Popup>
         </Marker>
       </MapContainer>

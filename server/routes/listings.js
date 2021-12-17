@@ -3,25 +3,36 @@ const router = express.Router();
 const VehicleListing = require('../src/DataModel/Automotive/VehicleListing');
 const { ValidationError, validateNonBlankString } = require('../src/DataModel/Validation/ObjectProperties');
 const { nhtsa } = require("../api");
-const { insertListing, listingsWithinMileRadius, getAllListings, getUserListings } = require('../src/MongoOperations/listing');
+const { insertListing, 
+    countFromMetadata,
+    listingsWithinMileRadius, 
+    getAllListings, 
+    getUserListings } = require('../src/MongoOperations/listing');
 const { KeyAlreadyExists } = require('../src/MongoOperations/OperationErrors');
 const GeoJsonPoint = require('../src/DataModel/GeoJson/GeoJsonPoint');
 
 router.get('/', async (req, res) => {
     const userid = req.currentUser?.user_id;
     let data;
-    
+    let totalCount;
     if (req.query.user === 'true') {
         if (!userid)
         return res.status(401).json({ message: 'You must be logged in to view user listings' });
         data = await getUserListings(userid);
+        totalCount = data.length
     } else {
-        data = await getAllListings();
+        /// TODO VALIDATE
+        const { limit, offset } = req.query;
+        data = await getAllListings(limit - 0, offset - 0);
+        totalCount = await countFromMetadata();
     }
     
-    // console.log('userid', userid);
-    // console.log('data', data);
-    res.json(data);
+    res.json({
+        pagination: {
+            totalCount
+        },
+        results: data
+    });
 });
 /**
  * Route to get all listings within a specified radius
