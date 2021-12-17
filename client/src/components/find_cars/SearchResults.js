@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import Searches from "../../data/search";
 import SearchCard from "./SearchCard";
 import Pagination from "../Pagination";
-import { Loading } from "..";
+import Loading from "../Loading";
 
 const SearchResults = (props) => {
   const [searchResults, setSearchResults] = useState([]);
