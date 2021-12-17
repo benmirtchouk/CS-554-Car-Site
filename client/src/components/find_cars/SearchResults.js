@@ -39,33 +39,33 @@ const SearchResults = (props) => {
       if (searchKey === "vin") {
         const { data } = await Searches.byVin(query);
         setTotalSize(0);
-        if (!data?.metadata?.modelId) {
-          resultsToSet = [];
-        } else {
-          data.vin = query;
-          resultsToSet = [
-            { data: { metadata: data.metadata }, listing: data.listing },
-          ];
-        }
       } else if (query === undefined || query === null) {
         return;
       } else if (searchKey === "location") {
         const enteredLocation = query.location;
-        /// TODO FIX PAGE REFRESH
-        if (!enteredLocation && !cachedQuery) { return; }
-        const { data, status } = cachedQuery?.geocodedData
-          ? { data: cachedQuery.geocodedData, status: 200 }
-          : await geocode.geocodeAddress(enteredLocation);
-        if(status >= 400 || !data) {
+        if (!enteredLocation && !cachedQuery) {
+          return;
+        }
+        /// If the user has entered a location, reset the pagination offset for the new query
+        if (enteredLocation) {
+          setPage(0);
+        }
+        const geoCodeSearch = enteredLocation
+          ? await geocode.geocodeAddress(enteredLocation)
+          : { data: cachedQuery.geocodedData, status: 200 };
+
+        const { data, status } = geoCodeSearch;
+
+        if (status >= 400 || !data) {
           resultsToSet = [];
-        }else {
+        } else {
           delete query.location;
           const { lat, lon } = data[0];
           query.limit = resultsPerPage;
           query.offset = offset;
           query.longitude = lon;
           query.latitude = lat;
-          query.radius = 1;
+          query.radius = 25;
           query.units = "miles";
           query.limit = resultsPerPage;
           query.offset = offset;
@@ -81,8 +81,6 @@ const SearchResults = (props) => {
             listing: e,
           }));
         }
-
-
       } else {
         query.limit = resultsPerPage;
         query.offset = offset;
@@ -98,8 +96,8 @@ const SearchResults = (props) => {
         }));
       }
 
-      const resultsAreArray = Array.isArray(resultsToSet) 
-      setSearchResults(resultsAreArray? resultsToSet : []);
+      const resultsAreArray = Array.isArray(resultsToSet); 
+      setSearchResults(resultsAreArray ? resultsToSet : []);
       setLoading(!resultsAreArray);
     })();
   }, [state, offset, resultsPerPage, cachedQuery]);

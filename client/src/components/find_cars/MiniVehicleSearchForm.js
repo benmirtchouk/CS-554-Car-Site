@@ -54,7 +54,7 @@ const MiniVehicleSearchForm = () => {
   const [searchKey, setSearchKey] = useState(null);
   const history = useHistory();
 
-  const carSearchHandler = (event) => {
+  const carSearchHandler = async (event) => {
     event.preventDefault();
     const form = event.target;
     const searchText = form.elements[0].value;
