@@ -10,10 +10,10 @@ const VehicleMarker = (props) => {
   return (
     <Marker position={location}>
       <Popup>
-        A {listing.metadata.modelYear} {listing.metadata.make}{" "}
-        {listing.metadata.model}
+        A {listing?.metadata?.modelYear} {listing?.metadata?.make}{" "}
+        {listing?.metadata?.model}
         <br />
-        {listing.vin}
+        {listing?.vin}
       </Popup>
     </Marker>
   );

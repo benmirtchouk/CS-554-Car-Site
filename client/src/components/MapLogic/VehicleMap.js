@@ -5,9 +5,6 @@ import VehicleMarker from "./VehicleMarker";
 const VehicleMap = (props) => {
   const { listings, center, zoomLevel } = props;
 
-  if (!center || !zoomLevel) {
-    throw new Error(`Not set! ${center} ${zoomLevel}`);
-  }
   return (
     <MapContainer
       className="mapcontainer"
@@ -20,7 +17,10 @@ const VehicleMap = (props) => {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       {listings.map((e) => (
-        <VehicleMarker listing={e} />
+        <VehicleMarker
+          listing={e}
+          key={`marker-${e.location.coordinateArray}`}
+        />
       ))}
     </MapContainer>
   );

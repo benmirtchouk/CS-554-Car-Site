@@ -3,7 +3,7 @@ const VehicleListing = require('../DataModel/Automotive/VehicleListing')
 const { InternalMongoError, KeyAlreadyExists } = require('./OperationErrors');
 const { ValidationError } = require('../DataModel/Validation/ObjectProperties');
 const GeoJsonPoint = require('../DataModel/GeoJson/GeoJsonPoint');
-const { uploadImage} = require('./imageUploads');
+const { uploadImage } = require('./imageUploads');
 const PaginationRequest = require('../PaginationRequest');
 
 const listingForVin = async (vin) => {

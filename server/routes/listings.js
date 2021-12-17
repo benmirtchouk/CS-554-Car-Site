@@ -6,6 +6,8 @@ const { nhtsa } = require("../api");
 const { insertListing, 
     countFromMetadata,
     listingsWithinMileRadius, 
+    uploadPhotoForVin,
+    listingForVin,
     getAllListings, 
     getUserListings } = require('../src/MongoOperations/listing');
 const { KeyAlreadyExists } = require('../src/MongoOperations/OperationErrors');

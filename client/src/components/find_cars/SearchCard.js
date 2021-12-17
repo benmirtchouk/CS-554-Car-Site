@@ -92,7 +92,7 @@ const ListingDetails = (props) => {
           <span>Interior {interiorColor} </span>
         </span>
       </div>
-      <SingleVehicleMap listing={listing} zoomLevel={3} />
+      <SingleVehicleMap listing={listing} zoomLevel={15} />
     </div>
   );
 };
