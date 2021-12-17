@@ -316,7 +316,7 @@ router.get("/picture/:make/:model/:year", async function (req, res, next) {
       picture = vehicles.data.Results[0].VehiclePicture;
     }
 
-    res.status(status).json(picture);
+    res.status(200).json(picture);
   } catch (e) {
     console.log(e);
     return res.status(500).json({ error: `${e}` });
