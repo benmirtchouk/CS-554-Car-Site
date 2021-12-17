@@ -14,7 +14,7 @@ const MyListings = () => {
       const { data, status } = await listing.getUserListings();
 
       if (Math.floor(status/100) === 2 && data) {
-        setListings(data);
+        setListings(data.results);
       }
 
       setLoading(false);
