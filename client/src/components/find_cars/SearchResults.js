@@ -6,6 +6,7 @@ import Searches from "../../data/search";
 import SearchCard from "./SearchCard";
 import Pagination from "../Pagination";
 import Loading from "../Loading";
+import { geocode } from "../../data";
 
 const SearchResults = (props) => {
   const [searchResults, setSearchResults] = useState([]);
@@ -14,6 +15,7 @@ const SearchResults = (props) => {
   const [page, setPage] = useState(0);
   const [totalSize, setTotalSize] = useState(null);
   const [resultsPerPage, setResultsPerPage] = useState(10);
+  const [cachedQuery, setCachedQuery] = useState(null);
 
   const offset = page * resultsPerPage;
 
@@ -27,6 +29,11 @@ const SearchResults = (props) => {
         return;
       }
       const { searchKey, query } = state;
+      if(cachedQuery && searchKey !== cachedQuery.searchKey) {
+        setCachedQuery(null);
+        setPage(0);
+        setTotalSize(1);
+      }
 
       let resultsToSet = [];
       if (searchKey === "vin") {
@@ -42,22 +49,60 @@ const SearchResults = (props) => {
         }
       } else if (query === undefined || query === null) {
         return;
+      } else if (searchKey === "location") {
+        const enteredLocation = query.location;
+        /// TODO FIX PAGE REFRESH
+        if (!enteredLocation && !cachedQuery) { return; }
+        const { data, status } = cachedQuery?.geocodedData
+          ? { data: cachedQuery.geocodedData, status: 200 }
+          : await geocode.geocodeAddress(enteredLocation);
+        if(status >= 400 || !data) {
+          resultsToSet = [];
+        }else {
+          delete query.location;
+          const { lat, lon } = data[0];
+          query.limit = resultsPerPage;
+          query.offset = offset;
+          query.longitude = lon;
+          query.latitude = lat;
+          query.radius = 1;
+          query.units = "miles";
+          query.limit = resultsPerPage;
+          query.offset = offset;
+          const searchData = await Searches.byLocation(query);
+          const { pagination, results } = searchData.data;
+          setTotalSize(pagination.totalCount);
+          setCachedQuery({
+            searchKey,
+            geocodedData: data,
+          });
+          resultsToSet = results.map((e) => ({
+            data: { metadata: e.metadata },
+            listing: e,
+          }));
+        }
+
+
       } else {
         query.limit = resultsPerPage;
         query.offset = offset;
         const { data } = await Searches.byComponents(query);
         const { pagination, results } = data;
         setTotalSize(pagination.totalSize);
+        setCachedQuery({
+          searchKey
+        })
         resultsToSet = results.map((e) => ({
           data: { metadata: e.metadata },
           listing: e,
         }));
       }
 
-      setSearchResults(Array.isArray(resultsToSet) ? resultsToSet : []);
-      setLoading(!Array.isArray(resultsToSet));
+      const resultsAreArray = Array.isArray(resultsToSet) 
+      setSearchResults(resultsAreArray? resultsToSet : []);
+      setLoading(!resultsAreArray);
     })();
-  }, [state, offset, resultsPerPage]);
+  }, [state, offset, resultsPerPage, cachedQuery]);
 
   if (state === undefined) {
     return <div> Please enter a search term</div>;

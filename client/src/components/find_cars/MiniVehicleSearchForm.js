@@ -110,6 +110,9 @@ const MiniVehicleSearchForm = () => {
           <Dropdown.Item href="#" eventKey="vin">
             VIN
           </Dropdown.Item>
+          <Dropdown.Item href="#" eventKey="location">
+            Location
+          </Dropdown.Item>
           <Dropdown.Item href="#" eventKey="freeform">
             Freeform
           </Dropdown.Item>

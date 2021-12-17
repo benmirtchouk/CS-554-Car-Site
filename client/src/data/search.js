@@ -32,6 +32,20 @@ const byVin = async (vin) => {
   return { data, status };
 };
 
+const byLocation = async (query) => {
+  if(!query.longitude || !query.latitude ) {
+    throw new Error("longitude and latitude required");
+  }
+
+  /// RADIUS AN UNITS
+  const header = await createHeader();
+  const { data, status } = await queryUrl(`http://localhost:3001/listing/withinRadius`, {
+    ...header,
+    params: query,
+  });
+  return { data, status };
+}
+
 const byComponents = async (query) => {
   const header = await createHeader();
   const { data, status } = await queryUrl(`${baseURL}components/`, {
@@ -43,6 +57,7 @@ const byComponents = async (query) => {
 
 const Searches = {
   byVin,
+  byLocation,
   byComponents,
 };
 

@@ -172,27 +172,39 @@ const milesToRadian = (miles) => {
 
 
 /// Convenience wrapper for a location query which converts miles to Radians 
-const listingsWithinMileRadius = async (centerPoint, radius) => {
-    return await listingsWithinRadianRadius(centerPoint, milesToRadian(radius))
+const listingsWithinMileRadius = async (centerPoint, radius, paginationRequest) => {
+    return await listingsWithinRadianRadius(centerPoint, milesToRadian(radius), paginationRequest)
 }
 
 /// Find all data points within the provided radius, in radians, from the center point
-const listingsWithinRadianRadius = async (centerPoint, radius) => {
+const listingsWithinRadianRadius = async (centerPoint, radius, paginationRequest) => {
     if (!isFinite(radius) || radius < 0) { throw new ValidationError("Radians must be non negative!"); }
     if (! (centerPoint instanceof GeoJsonPoint) ) { throw new Error("Center point must be a GeoJson point!")}
+    if (! (paginationRequest instanceof PaginationRequest)) { throw new Error("Pagination request must be supplied!"); }
+    const {offset, limit} = paginationRequest;
+    
     const collection = await listings();
-    const results = (await collection.find({
+    const resultCursor = await collection.find({
         location: { 
             $geoWithin: { 
                 $centerSphere: [ centerPoint.coordinateArray, radius ] 
             } 
         }
     })
-    .toArray())
 
-    return results
-            .map(e => { return {...e, location: e.location.coordinates}})
-            .map(e => new VehicleListing(e))
+    const totalCount = await resultCursor.count();
+    const results = await resultCursor
+                    .skip(offset)
+                    .limit(limit)
+                    .toArray();
+    const listingResult = results
+                    .map(e => new VehicleListing(e))
+
+    
+    return {
+        totalCount: totalCount,
+        results: listingResult
+    } 
 }
 
 

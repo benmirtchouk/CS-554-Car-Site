@@ -77,11 +77,23 @@ router.get('/withinRadius', async (req, res) => {
         return res.status(400).json( {message: `${longitude} ${latitude} is not a valid longitude & latitude position`} );
     }
 
+    let paginationRequest;
+    try {
+        paginationRequest = new PaginationRequest(req.query);
+    } catch (e) {
+        return res.status(400).json({message: e.message});
+    }
+
     /// Perform the search with no limit on returned results. 
     try {
-        const listings = (await listingsWithinMileRadius(centerPoint, radius))
-                         .map(e => e.asDictionary())
-        return res.json(listings);
+        const {totalCount, results} = (await listingsWithinMileRadius(centerPoint, radius, paginationRequest))
+                         
+        return res.json({
+            pagination: {
+                totalCount
+            },
+            results: results.map(e => e.asDictionary())
+        });
     
     } catch (e) {
         console.error(e);
