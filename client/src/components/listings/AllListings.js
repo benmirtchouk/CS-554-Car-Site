@@ -38,7 +38,7 @@ const AllListings = () => {
 
   const getAveragePosition = (positions) => {
     const sm = positions.reduce(
-      (cur, pos) => [cur[0] + pos[0], cur[1] + pos[1]],
+      (cur, pos) =>  [cur[1] + pos[1], cur[0] + pos[0]],
       [0, 0]
     );
     return [sm[0] / positions.length, sm[1] / positions.length];
@@ -66,7 +66,7 @@ const AllListings = () => {
             center={getAveragePosition(
               listings.map((ls) => ls.location.coordinateArray)
             )}
-            zoomLevel='1'
+            zoomLevel="1"
           />
         )}
       </div>
