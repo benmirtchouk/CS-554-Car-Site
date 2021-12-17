@@ -16,11 +16,12 @@ router.get("/address", async (req, res) => {
         return res.status(400).json({message: "Address cannot be blank"});
     }
 
-    if (true) {
-        return;
-    }
 
-    let {data, status} = await queryUrl( `https://nominatim.openstreetmap.org/search?format=json&q=${formattedAddress}&output=json`)
+    /// Console tracking of rate limits
+    console.log(`${new Date().toISOString()} Geocoding request sent`);
+
+
+    let {data, status} = await queryUrl( `https://nominatim.openstreetmap.org/search?format=json&q=${formattedAddress}&output=json`, 'Carigslist-Student-Project-User-Submitted-Address-Geocode')
 
     if(status > 400 || !data){
         return res.status(400).json({message: "Failed to geocode"});
