@@ -18,22 +18,23 @@ const PaginationRequest = require('../src/PaginationRequest');
 
 router.get('/', async (req, res) => {
     const userid = req.currentUser?.user_id;
+    let paginationRequest;
+    try {
+        paginationRequest = new PaginationRequest(req.query);
+    } catch (e) {
+        console.error(e);
+        return res.status(400).json({message: e.message});
+    }
+
     let data;
     let totalCount;
     if (req.query.user === 'true') {
         if (!userid)
         return res.status(401).json({ message: 'You must be logged in to view user listings' });
-        data = await getUserListings(userid);
-        totalCount = data.length
+        const { totalSize, results } = await getUserListings(userid, paginationRequest);
+        data = results;
+        totalCount = totalSize;
     } else {
-        let paginationRequest;
-        try {
-            paginationRequest = new PaginationRequest(req.query);
-        } catch (e) {
-            console.error(e);
-            return res.status(400).json({message: e.message});
-        }
-
         data = await getAllListings(paginationRequest);
         totalCount = await countFromMetadata();
     }
