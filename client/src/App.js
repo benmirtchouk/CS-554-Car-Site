@@ -11,6 +11,7 @@ import {
   SellCar,
   Sidebar,
   RecentSales,
+  RecentListings,
   AllListings,
   MyListings,
   AddListing,
@@ -39,6 +40,10 @@ const App = () => {
       name: "Recent Sales",
       link: "/recent_sales",
     },
+    {
+      name: "Recent Listings",
+      link: "/recent_listings",
+    },
   ]);
 
   return (
@@ -63,7 +68,10 @@ const App = () => {
                     )}
                   />
                   <PrivateRoute path="/sellers" component={Sellers} />
-                  <PrivateRoute path="/seller/:sellerId" component={SellerDetails} />
+                  <PrivateRoute
+                    path="/seller/:sellerId"
+                    component={SellerDetails}
+                  />
                   <PrivateRoute path="/sell_car" component={SellCar} />
                   <Route path="/listings" component={AllListings} />
                   <Route path="/listing/:id" component={Listing} />
@@ -74,6 +82,7 @@ const App = () => {
                     component={MessageBoard}
                   />
                   <Route path="/recent_sales" component={RecentSales} />
+                  <Route path="/recent_listings" component={RecentListings} />
                   <Route path="/safety" component={Safety} />
                   <Route path="/vin" component={Vin} />
                   <Route path="/login" component={Login} />
