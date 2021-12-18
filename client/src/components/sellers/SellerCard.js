@@ -51,7 +51,7 @@ const SellerCard = (props) => {
         if(typeof setSeller !== 'function') { return; }
         setSeller(data.seller)
     }
-    const key = `{ firstName} {lastName} -- {displayName}`;
+    const key = `${firstName}${lastName} -- ${displayName}`;
 
     return(
         <Card key={key}>
@@ -97,7 +97,7 @@ const SellerCard = (props) => {
                      <Row>
                         <Col>
                             {sellerComments.map(({displayName, commentText}) =>  
-                            <div>
+                            <div key={`${displayName}-${commentText}`}>
                                 {displayName}: {commentText}
                             </div>
                             )}
