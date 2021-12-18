@@ -44,12 +44,13 @@ const App = () => {
     <AuthProvider>
       <Router>
         <div className="App">
+          <div id="top" />
           <Header />
-          <Row>
-            <Col xs={6} md={2} className="bg-gray-50 h-sidebar">
+          <Row className="nav-offset">
+            <Col xs={12} md={2} className="sidebar">
               <Sidebar sideItems={sideItems} />
             </Col>
-            <Col xs={12} md={10}>
+            <Col xs={12} md={{ span: 10, offset: 2 }}>
               <Container>
                 {/* only act on one route  */}
                 <Switch>

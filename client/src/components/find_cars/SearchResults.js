@@ -138,6 +138,17 @@ const SearchResults = (props) => {
         )}
 
         {searchResults.length ? searchCards : `No results for search term`}
+        {totalSize > 1 ? (
+          <Pagination
+            currentPage={page}
+            pageSize={resultsPerPage}
+            setPageSize={setResultsPerPage}
+            goToPage={setPage}
+            totalSize={totalSize}
+          />
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );
