@@ -25,7 +25,7 @@ const Seller = (props) => {
     }
 
 
-    return <SellerCard seller={seller} showSellerLink={false} />
+    return <SellerCard seller={seller} showSellerLink={false} setSeller={setSeller} allowRatings={true} />
 }
 
 export default Seller
