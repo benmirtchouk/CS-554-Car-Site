@@ -1,6 +1,13 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from "react";
-import { ButtonGroup, Dropdown, DropdownButton } from "react-bootstrap";
+import {
+  Button,
+  ButtonGroup,
+  Badge,
+  Container,
+  Dropdown,
+  DropdownButton,
+} from "react-bootstrap";
 import { BarChart, Bar, XAxis, YAxis } from "recharts";
 import {
   getSafetyReport,
@@ -9,7 +16,7 @@ import {
 } from "../../data/nhtsa";
 import Loading from "../Loading";
 import ListError from "../ListError";
-import Card from "./Card";
+import Car from "./Car";
 
 const Safety = (props) => {
   /// Use nil safe coercion.
@@ -186,85 +193,73 @@ const Safety = (props) => {
   return (
     <div key="safety" className="main_layout">
       <div className="mainbody">
-        <form onSubmit={submitHandler}>
-          <ButtonGroup>
-            <DropdownButton
-              as={ButtonGroup}
-              title="Model Year"
-              id="years-dropdown"
-              onSelect={handleYearSelect}
-            >
-              {years.map((yr) => (
-                <Dropdown.Item key={yr} eventKey={yr}>
-                  {yr}
-                </Dropdown.Item>
-              ))}
-            </DropdownButton>
-            <DropdownButton
-              as={ButtonGroup}
-              title="Make"
-              id="make-dropdown"
-              onSelect={handleMakeSelect}
-            >
-              {makes.map((val) => (
-                <Dropdown.Item key={val} eventKey={val}>
-                  {val}
-                </Dropdown.Item>
-              ))}
-            </DropdownButton>
-            <DropdownButton
-              as={ButtonGroup}
-              title="Models"
-              id="models-dropdown"
-              onSelect={handleModelSelect}
-            >
-              {models.map((val1) => (
-                <Dropdown.Item key={val1} eventKey={val1}>
-                  {val1}
-                </Dropdown.Item>
-              ))}
-            </DropdownButton>
-          </ButtonGroup>
-          <button
-            className="btn-primary px-10 mx-10"
-            type="submit"
-            name="submitBtn"
-          >
-            {" "}
-            Query Stats
-          </button>
-        </form>
-
-        <div key="cars" className="container">
-          <div className="row justify-content-start">
-            <div className="content col-12 align-items-left px-1">
-              {extendedCarHeader && cardQuery && (
-                <h1 className="sum-header">
-                  Car Safety({make}, {model}, {year})
-                </h1>
-              )}
-              {(!extendedCarHeader || !cardQuery) && (
-                <h1 className="sum-header">Car Safety</h1>
-              )}
-            </div>
-          </div>
-          <div className="row justify-content-start">
-            {cdata.map((item, indx) => {
+        <Container>
+          <h1 className="sum-header">
+            <Badge>Car Safety</Badge> {make}, {model}, {year}
+          </h1>
+          <form onSubmit={submitHandler}>
+            <ButtonGroup className="subnav">
+              <DropdownButton
+                as={ButtonGroup}
+                title={year ? year : "Model Year"}
+                id="years-dropdown"
+                variant="secondary"
+                disabled={year.length <= 1}
+                onSelect={handleYearSelect}
+              >
+                {years.map((yr) => (
+                  <Dropdown.Item key={yr} eventKey={yr}>
+                    {yr}
+                  </Dropdown.Item>
+                ))}
+              </DropdownButton>
+              <DropdownButton
+                as={ButtonGroup}
+                variant="secondary"
+                title={make ? make : "Make"}
+                id="make-dropdown"
+                disabled={make.length <= 1}
+                onSelect={handleMakeSelect}
+              >
+                {makes.map((val) => (
+                  <Dropdown.Item key={val} eventKey={val}>
+                    {val}
+                  </Dropdown.Item>
+                ))}
+              </DropdownButton>
+              <DropdownButton
+                variant="secondary"
+                as={ButtonGroup}
+                title={model ? model : "Models"}
+                id="models-dropdown"
+                onSelect={handleModelSelect}
+                disabled={models.length <= 1}
+              >
+                {models.map((val1) => (
+                  <Dropdown.Item key={val1} eventKey={val1}>
+                    {val1}
+                  </Dropdown.Item>
+                ))}
+              </DropdownButton>
+              <Button variant="primary" type="submit">
+                Query Stats
+              </Button>
+            </ButtonGroup>
+          </form>
+          {
+            cdata.map((item, indx) => {
               const keyVal = `car-${indx}-${item.Id}`;
               const keyVal1 = `Kcar-${indx}-${item.Id}`;
               return (
-                <div
-                  key={keyVal1}
-                  className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12 align-items-start px-2"
-                >
+                <div key={keyVal1}>
                   {extendedCarHeader && cardQuery && (
-                    <Card key={keyVal} info={{ item }} />
+                    <Car key={keyVal} info={{ item }} />
                   )}
                 </div>
               );
-            })}
-          </div>
-        </div>
+            })[0]
+          }
+        </Container>
         <select onChange={(e) => setSelectedChartStat(e.target.value)}>
           <option value="ModelYear">ModelYear</option>
           <option value="ComplaintsCount">ComplaintsCount</option>
