@@ -1,36 +1,44 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 // import io from 'socket.io-client';
 import { AuthContext } from "../../firebase/Auth";
-import { SocketContext } from "../../socket";
 
+const MessageBoard = (props) => {
+  const [ chat, setChat ] = useState([]);
+  const chatRef = useRef([]);
+  
+  const { currentUser } = useContext(AuthContext);
+  const { socket } = props;
 
-const MessageBoard = () => {
+  const current_username = currentUser.displayName ?? currentUser.email;
+  const uid = currentUser.uid;
 
-  const auth = useContext(AuthContext);
-  const userName = auth.currentUser.displayName;
-  console.log(auth);
-
-  const socket = useContext(SocketContext);
-  console.log("socket", socket);
-
-  // join room in useEffect
-  // const socketRef = useRef();
-
-  // const room = `${userName}--with--${sellerName}`;
+  console.log('cur', currentUser);
+  console.log('socket', socket);
 
   useEffect(() => {
-    // socketRef.current = io('/');
-    console.log("use Effect fired");
-    socket.emit('join', userName);
-    // socketRef.current.emit('join', room);
-    // socketRef.current.onAny((event, ...args) => {
-    //   console.log(event, args);
-    // });
+    chatRef.current = chat;
+  }, [chat]);
+
+  useEffect(() => {
+    const add_chat = (username, message) => {
+      // We cannot just update the ref to 'chat' because changes to it will not trigger a re-render
+      // Thus we change the state 'chat' and later (above useEffect) waterfall this change to the ref
+      setChat([ ...chatRef.current, { username, message } ]);
+    };
+    
+    socket.emit('user_join_leave', { uid, username: current_username, joined: true } );
+
+    socket.on('message', ({ username, message }) => {
+      add_chat(username, message);
+    });
+    socket.on('user_join_leave', ({ username, joined }) => {
+      add_chat(`${username}`, `Has ${joined ? 'joined' : 'left'} the chat`);
+    });
 
     return () => {
-      // socketRef.current.disconnect();
-    };
-  }, [socket, userName]);
+      socket.emit('user_join_leave', { uid, username: current_username, joined: false } );
+    }
+  }, [socket, uid]);
 
   // useEffect(() => {
   //   socketRef.current.on('message', (message) => {
@@ -43,7 +51,7 @@ const MessageBoard = () => {
     e.preventDefault();
     const msgEle = document.getElementById('message');
     console.log(`${msgEle.value} received`);
-    // socketRef.current.emit('message', msgEle.value);
+    socket.emit('message', { uid, username: current_username, message: msgEle.value });
     msgEle.value = '';
     msgEle.focus();
   }
@@ -56,7 +64,16 @@ const MessageBoard = () => {
         <br />
         <br />
 
-        <p>User: {userName}</p>
+        <p>User: {current_username}</p>
+        <div id="chatlog">
+          { chat.map(({ username, message}, index) => (
+            <div key={index}>
+              <h3>
+                {username}: <span>{message}</span>
+              </h3>
+            </div>
+          )) }
+        </div>
         <form onSubmit={onMessageSubmit}>
           <div>
             <input

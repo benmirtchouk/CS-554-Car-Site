@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Route, Redirect } from "react-router-dom";
 import { AuthContext } from "../../firebase/Auth";
 
-const PrivateRoute = ({ component: RouteComponent, ...rest }) => {
+const PrivateRoute = ({ component: RouteComponent, socket: socket, ...rest }) => {
   const { currentUser } = useContext(AuthContext);
 
   return (
@@ -10,7 +10,7 @@ const PrivateRoute = ({ component: RouteComponent, ...rest }) => {
       {...rest}
       render={(routeProps) =>
         currentUser ? (
-          <RouteComponent {...routeProps} />
+          <RouteComponent socket={socket} {...routeProps} />
         ) : (
           <Redirect to="login" />
         )

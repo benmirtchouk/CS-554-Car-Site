@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Row, Col, Container } from "react-bootstrap";
 import io from "socket.io-client";
@@ -35,17 +35,24 @@ import {
 import "./App.css";
 import "./Carigs.css";
 
-const socket = io("http://localhost:3001", {
-  transports: ['websocket'],
-  withCredentials: true,
-  extraHeaders: {
-    "cred-header": "abcd"
-  }
-});
-const SocketContext = React.createContext(socket);
-
-
 const App = () => {
+  const [socket, setSocket] = useState(undefined);
+
+  useEffect(() => {
+    setSocket(io("http://localhost:3001", {
+      transports: ['websocket'],
+      withCredentials: true,
+      extraHeaders: {
+        "cred-header": "abcd"
+      }
+    }));
+    return () => {
+      if (socket) {
+        socket.disconnect();
+      }
+    };
+  }, []);
+
   return (
     <AuthProvider>
       <Router>
@@ -71,12 +78,11 @@ const App = () => {
                   <Route path="/listing/:id" component={Listing} />
                   <PrivateRoute path="/my_listings" component={MyListings} />
 
-                  {/* <SocketContext.Provider value={socket}> */}
-                    <PrivateRoute
-                      path="/message_board"
-                      component={MessageBoard}
-                    />
-                  {/* </SocketContext.Provider> */}
+                  <PrivateRoute
+                    path="/message_board"
+                    socket={socket}
+                    component={MessageBoard}
+                  />
 
                   <PrivateRoute path="/add_listing" component={AddListing} />
                   <Route path="/recent_sales" component={RecentSales} />

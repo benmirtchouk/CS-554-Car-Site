@@ -26,41 +26,29 @@ app.use(express.urlencoded({ extended: true }));
 
 configRoutes(app);
 
+// userlist = {};
+
 io.on('connection', (socket) => {
   console.log("new connection", socket.id);
 
-  socket.on('join', user => {
-    // let split = roomName.split('--with--');
-    console.log(`join request from romm: ${user}`)
+  // userlist[socket.authorization_token] = socket.id;
 
-    // ensure two users trying to join can join in the same room
-    // assumption: all usernames must be unique!
-    // let unique = [...new Set(split)].sort((a, b) => (a < b ? -1 : 1));
-    // let updatedRoomName = `${unique[0]}--with--${unique[1]}`;
-
-    // Array.from(socket.rooms)
-    //   .filter(it => it !== socket.id)
-    //   .forEach(id => {
-    //     socket.leave(id);
-    //     socket.removeAllListeners(`message`);
-    //   });
-
-    // socket.join(updatedRoomName);
+  socket.on('user_join_leave', ({ uid, username, joined }) => {
+    socket.broadcast.emit("user_join_leave", { username, joined });
   });
 
-  socket.on(`message`, message => {
-    Array.from(socket.rooms)
-      // .filter(it => it !== socket.id)
-      .forEach(id => {
-        socket.to(id).emit('message', message);
-      });
+  socket.on('message', ({ uid, username, message }) => {
+    socket.broadcast.emit("message", { username, message });
   });
+
+  // socket.on('message_to', ({ from_uid, to_uid, message }) => {
+  //   // console.log('got message', message);
+  //   socket.to(userlist[to_uid]).emit('asd', 'asd');
+  // });
 
   socket.on('disconnect', () => {
-    console.log(socket.id + ' ==== diconnected');
     socket.removeAllListeners();
   });
-
 });
 
 http.listen(3001, () => {
