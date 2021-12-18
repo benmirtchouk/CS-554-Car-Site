@@ -22,7 +22,7 @@ const {
 const PaginationRequest = require('../src/PaginationRequest');
 
 
-router.get("/getAll", async (req, res) => {
+router.get("/mostListed", async (req, res) => {
     let paginationRequest;
     try {
         paginationRequest = new PaginationRequest(req.query);
