@@ -70,18 +70,15 @@ const App = () => {
                   <Route path="/listings" component={AllListings} />
                   <Route path="/listing/:id" component={Listing} />
                   <PrivateRoute path="/my_listings" component={MyListings} />
-                  <SocketContext.Provider value={socket}>
+
+                  {/* <SocketContext.Provider value={socket}> */}
                     <PrivateRoute
                       path="/message_board"
                       component={MessageBoard}
                     />
-                  </SocketContext.Provider>
+                  {/* </SocketContext.Provider> */}
 
                   <PrivateRoute path="/add_listing" component={AddListing} />
-                  <PrivateRoute
-                    path="/message_board"
-                    component={MessageBoard}
-                  />
                   <Route path="/recent_sales" component={RecentSales} />
                   <Route path="/recent_listings" component={RecentListings} />
                   <Route path="/safety" component={Safety} />
