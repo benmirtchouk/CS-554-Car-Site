@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { seller } from "../../data";
-import Seller from "./SellerDetails";
+import { Button } from "react-bootstrap";
 const sellerDataFetching = seller;
 
 
@@ -33,11 +33,15 @@ const SellerCard = (props) => {
     const addComment = async(e) => {
         e.preventDefault();
 
-        const { data, status } = await sellerDataFetching.putComment("👋", _id)
+        const comment = e.target.elements.comment.value;
+
+        const { data, status } = await sellerDataFetching.putComment(comment, _id)
         if(status >= 400 || !data) {
             alert(status)
             return
         }
+
+        e.target.reset();
 
         if(typeof setSeller !== 'function') { return; }
         setSeller(data.seller)
@@ -65,7 +69,14 @@ const SellerCard = (props) => {
         </div> 
 
         <div>
-            <button type="button" onClick={addComment}> Say Hello! </button>
+            <form onSubmit={addComment}>
+                <label>
+                    Add Comment: 
+                    <input name="comment" type="text" placeholder="How did a sale go?"required />
+                    <Button type="submit"> Comment </Button>
+                </label>
+            </form>
+           
         </div>
 
         <div>
