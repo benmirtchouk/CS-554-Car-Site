@@ -11,7 +11,24 @@
     "firstName": "George",
     "lastName": "Clooney",
     "like": 154,
-    "dislike": 22
+    "dislike": 22,
+    "sellerComments": [
+      {
+        "commentText": "They sell worse cars than me!",
+        "posterId": "eXacRX9x5dfz3Q5ofQPlDnLnBlo2",
+        "displayName": "bobbybrown"
+      },
+      {
+        "commentText": "First person I bought from here",
+        "posterId": "iaeX0NDgDCVc4uei8ZFHeYYWTAd2",
+        "displayName": "dantheman"
+      },
+      {
+        "commentText": "What is your favorite car brand to sell?",
+        "posterId": "1NaTFiLPTSQNq9TnwtsSOSwSGNu1",
+        "displayName": "susyque"
+      }
+    ]
   },
   {
     "_id": "zzBOX6fDqPYB7SJO4566tljQPQX2",
@@ -25,7 +42,19 @@
     "firstName": "Taylor",
     "lastName": "Swift",
     "like": 354,
-    "dislike": 18
+    "dislike": 18,
+    "sellerComments": [
+      {
+        "commentText": "Good music, good car sales",
+        "posterId": "d6NnmHYgRlTZr6WDH7khncandMr2",
+        "displayName": "brad"
+      },
+      {
+        "commentText": "Car had the best cup holder",
+        "posterId": "gss3MtJM8dbOIPpz4tnmGbfXTuD3",
+        "displayName": "hrock"
+      }
+    ]
   },
   {
     "_id": "d6NnmHYgRlTZr6WDH7khncandMr2",
@@ -81,7 +110,14 @@
     "firstName": "Bob",
     "lastName": "Brown",
     "like": 0,
-    "dislike": 12
+    "dislike": 12,
+    "sellerComments": [
+      {
+        "commentText": "Never had a good deal",
+        "posterId": "ZR46vGA11Lg2gTrpnvVObxxIrX93",
+        "displayName": "lisa"
+      }
+    ]
   },
   {
     "_id": "01ynPObM48U56oR5E5uKq8LRNbh2",
@@ -109,7 +145,14 @@
     "firstName": "Dan",
     "lastName": "Paget",
     "like": 69,
-    "dislike": 25
+    "dislike": 25,
+    "sellerComments": [
+      {
+        "commentText": "The man, the myth, the legend",
+        "posterId": "iaeX0NDgDCVc4uei8ZFHeYYWTAd2",
+        "displayName": "dantheman"
+      }
+    ]
   },
   {
     "_id": "z4ZbD5PFJofAXAzprWEHUIxxDhu1",
@@ -165,7 +208,14 @@
     "firstName": "Thomas",
     "lastName": "Smith",
     "like": 50,
-    "dislike": 50
+    "dislike": 50,
+    "sellerComments": [
+      {
+        "commentText": "Boring, but efficient transaction ",
+        "posterId": "rZzFad2jfVUTvZIvOpBfg2YlSg12",
+        "displayName": "sherlock"
+      }
+    ]
   },
   {
     "_id": "rZzFad2jfVUTvZIvOpBfg2YlSg12",
