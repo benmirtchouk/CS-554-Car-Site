@@ -62,7 +62,7 @@ async function buyListing(userid, id) {
     
     await collection.updateOne(
         { _id: id },
-        { $set: {sold: true}}
+        { $set: {sold: true, dateSold: new Date(Date.now())}}
     );
 
     return true;
@@ -173,6 +173,11 @@ const uploadPhotoForVin = async (vin, photo) => {
 const insertListing = async (listing) => { 
     if (!(listing instanceof VehicleListing)) { throw new Error("Objecting being inserted must be a vehicle listing!") }
 
+    //typically listing shouldn't have a creation date at
+    // first - but there will be one when seeding the data
+    // so skip if there is a date already.
+    if (listing.createdOn===undefined || listing.createdOn===null)
+        listing.createdOn=new Date();
 
     const existing = await listingForVin(listing.vin);
 
