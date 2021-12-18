@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { seller } from "../../data";
+import Seller from "./SellerDetails";
 const sellerDataFetching = seller;
 
 
@@ -11,7 +12,7 @@ const SellerCard = (props) => {
         throw new Error("Seller must be provided!")
     }
 
-    const {firstName, lastName, displayName, city, state, totalListings, _id, like, dislike, ratio} = seller;
+    const {firstName, lastName, displayName, city, state, totalListings, _id, like, dislike, ratio, sellerComments} = seller;
     const shouldShowSellerLink = props.showSellerLink !== undefined ? !!props.showSellerLink : true;
     const userCanRateSeller = props.allowRatings !== undefined ? !!props.allowRatings : false;
 
@@ -29,6 +30,19 @@ const SellerCard = (props) => {
         setSeller({...seller, like, dislike})
     }
 
+    const addComment = async(e) => {
+        e.preventDefault();
+
+        const { data, status } = await sellerDataFetching.putComment("👋", _id)
+        if(status >= 400 || !data) {
+            alert(status)
+            return
+        }
+
+        if(typeof setSeller !== 'function') { return; }
+        setSeller(data.seller)
+    }
+
     return (<div>
         <span>{firstName} {lastName} -- {displayName} </span>
         <span> Based in {city}, {state} </span>
@@ -41,8 +55,6 @@ const SellerCard = (props) => {
             <Link to={`/seller/${_id}`}> Go to info </Link> :
             ""
         }
-
-
         <div>
             <button type="button" disabled={!userCanRateSeller} onClick={(e) => rateSellerOnClick(e, false)}>👎 {dislike || 0}</button>
             <button type="button" disabled={!userCanRateSeller} onClick={(e) => rateSellerOnClick(e, true)}>👍 {like || 0} </button>
@@ -51,6 +63,23 @@ const SellerCard = (props) => {
                 ''
             }
         </div> 
+
+        <div>
+            <button type="button" onClick={addComment}> Say Hello! </button>
+        </div>
+
+        <div>
+            {Array.isArray(sellerComments) &&
+                <div>
+                    {sellerComments.map(({displayName, commentText}) =>  
+                    <div>
+                        {displayName}: {commentText}
+                    </div>
+                    )}
+                </div>
+
+            }
+        </div>
  
 
         

@@ -4,7 +4,9 @@ const {
   validateNonBlankString,
   validateNullOrNonBlankString,
   validateNonNegativeInteger,
+  ValidationError
 } = require("../Validation/ObjectProperties");
+const SellerComment = require("./SellerComment");
 
 /// Representation of Account data for a given user
 const nullableStringKeys = [
@@ -40,6 +42,17 @@ class Account {
       if(int === undefined) { return null }
       return validateNonNegativeInteger(int);
     }, this)
+
+
+    let sellerComments = dictionary.sellerComments === null ? undefined: dictionary.sellerComments
+
+    if(sellerComments !== undefined) {
+        if(!Array.isArray(sellerComments)) { throw new ValidationError("NullableArrayOfComments", "must be an array if non null"); }
+        sellerComments = sellerComments.map(e => new SellerComment(e));
+    }
+    this.sellerComments = sellerComments
+
+
   }
 
   asDictionary() {
@@ -47,11 +60,16 @@ class Account {
       _id: this._id,
     };
 
-    for (const key of nullableStringKeys) {
+    for (const key of nullableStringKeys.concat(nullableIntKeys)) {
       if (this[key]) {
         dictionary[key] = this[key];
       }
     }
+
+    if(this.sellerComments != null) {
+      dictionary.sellerComments = this.sellerComments.map(e => e.asDictionary() )
+    }
+
     return dictionary;
   }
 }
