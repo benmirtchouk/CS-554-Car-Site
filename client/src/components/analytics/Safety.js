@@ -1,20 +1,17 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from "react";
 import { ButtonGroup, Dropdown, DropdownButton } from "react-bootstrap";
-import { BarChart, Bar, XAxis, YAxis } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis } from "recharts";
 import {
   getSafetyReport,
   getSafetyMakesForModelYear,
   getSafetyModelsForMakeModelYear,
 } from "../../data/nhtsa";
-import "../../App.css";
-import "../../Carigs.css";
 import Loading from "../Loading";
 import ListError from "../ListError";
 import Card from "./Card";
 
 const Safety = (props) => {
-
   /// Use nil safe coercion.
   // eslint-disable-next-line react/destructuring-assignment
   const passedState = props?.location?.state ?? {};
@@ -168,9 +165,9 @@ const Safety = (props) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    if (!year || year.length < 1) alert("ModelYear must be selected");
-    if (!make || make.length < 1) alert("Make must be selected");
-    if (!model || model.length < 1) alert("Model must be selected");
+    // if (!year || year.length < 1) alert("ModelYear must be selected");
+    // if (!make || make.length < 1) alert("Make must be selected");
+    // if (!model || model.length < 1) alert("Model must be selected");
 
     if (year && make && model) getData();
   };
@@ -274,24 +271,41 @@ const Safety = (props) => {
           <option value="RecallsCount">RecallsCount</option>
           <option value="InvestigationCount">InvestigationCount</option>
           <option value="OverallRating">OverallRating</option>
-          <option value="OverallFrontCrashRating">OverallFrontCrashRating</option>
-          <option value="CrashPassengersideRating">CrashPassengersideRating</option>
+          <option value="OverallFrontCrashRating">
+            OverallFrontCrashRating
+          </option>
+          <option value="CrashPassengersideRating">
+            CrashPassengersideRating
+          </option>
           <option value="OverallSideCrashRating">OverallSideCrashRating</option>
           <option value="OverallSideCrashRating">OverallSideCrashRating</option>
-          <option value="SideCrashDriversideRating">SideCrashDriversideRating</option>
-          <option value="SideCrashPassengersideRating">SideCrashPassengersideRating</option>
-          <option value="SideCrashPassengersideRating">SideCrashPassengersideRating</option>
+          <option value="SideCrashDriversideRating">
+            SideCrashDriversideRating
+          </option>
+          <option value="SideCrashPassengersideRating">
+            SideCrashPassengersideRating
+          </option>
+          <option value="SideCrashPassengersideRating">
+            SideCrashPassengersideRating
+          </option>
           <option value="RolloverRating">RolloverRating</option>
           <option value="RolloverRating2">RolloverRating2</option>
           <option value="RolloverPossiblity">RolloverPossiblity</option>
           <option value="RolloverPossiblity2">RolloverPossiblity2</option>
           <option value="SidePoleCrashRating">SidePoleCrashRating</option>
         </select>
-        { selectedChartStat !== undefined && (
-          <BarChart width={600} height={300} data={cdata.map((car => ({ name: car.Description, uv: car?.[selectedChartStat] })))}>
+        {selectedChartStat !== undefined && (
+          <BarChart
+            width={600}
+            height={300}
+            data={cdata.map((car) => ({
+              name: car.Description,
+              uv: car?.[selectedChartStat],
+            }))}
+          >
             <XAxis dataKey="name" />
             <YAxis />
-            <Bar dataKey="uv" barSize={30} fill="#8884d8"/>
+            <Bar dataKey="uv" barSize={30} fill="#8884d8" />
           </BarChart>
         )}
       </div>

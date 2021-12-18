@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React from "react";
+import { Pagination as Pag, Form, Container, Row, Col } from "react-bootstrap";
 
 const Pagination = (props) => {
   const { currentPage, pageSize, setPageSize, goToPage, totalSize } = props;
@@ -30,38 +31,42 @@ const Pagination = (props) => {
     shouldShowNext,
   });
 
-  const links = pages.map((i) => (
-    <button
-      type="button"
-      key={`pagination-${i.text}-${i.to}`}
-      className={`${i.class} px-10`.trim()}
-      onClick={(e) => {
-        e.preventDefault();
-        goToPage(i.to);
-      }}
-    >
-      {i.text}
-    </button>
-  ));
-
   return (
-    <div className="flex content-center">
-      {links}
-      <label>
-        Results per page
-        <input
-          type="number"
-          step="5"
-          min="5"
-          max="20"
-          value={pageSize}
-          onChange={(e) => {
-            e.preventDefault();
-            setPageSize(e.target.value - 0);
-          }}
-        />
-      </label>
-    </div>
+    <Row>
+      <Col xs>
+        <Pag>
+          {pages.map((i) => (
+            <Pag.Item
+              type="button"
+              key={`pagination-${i.text}-${i.to}`}
+              className={`${i.class} px-10`.trim()}
+              onClick={(e) => {
+                e.preventDefault();
+                goToPage(i.to);
+              }}
+            >
+              {i.text}
+            </Pag.Item>
+          ))}
+        </Pag>
+      </Col>
+      <Col xs>
+        <Form.Group class="block">
+          <Form.Label>Results per page</Form.Label>
+          <Form.Control
+            type="number"
+            step="5"
+            min="5"
+            max="20"
+            value={pageSize}
+            onChange={(e) => {
+              e.preventDefault();
+              setPageSize(e.target.value - 0);
+            }}
+          />
+        </Form.Group>
+      </Col>
+    </Row>
   );
 };
 

@@ -13,7 +13,7 @@ export { default as FindByYear } from "./find_cars/FindByYear";
 export { default as PrivateRoute } from "./auth/PrivateRoute";
 export { default as Login } from "./auth/Login";
 export { default as Account } from "./auth/Account";
-export { default as PasswordReset} from "./auth/PasswordReset";
+export { default as PasswordReset } from "./auth/PasswordReset";
 export { default as SignUp } from "./auth/SignUp";
 
 // Firebase

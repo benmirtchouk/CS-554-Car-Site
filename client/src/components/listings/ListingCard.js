@@ -4,7 +4,7 @@ import SingleVehicleMap from "../MapLogic/SingleVehicleMap";
 
 const ListingCard = (props) => {
   const { listing } = props;
-  
+
   return (
     <div className="listing">
       <dl>

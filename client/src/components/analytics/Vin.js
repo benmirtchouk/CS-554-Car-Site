@@ -4,7 +4,7 @@ import "../../App.css";
 import "../../Carigs.css";
 import Loading from "../Loading";
 import ListError from "../ListError";
-import Card from "./VinCard";
+import VinCard from "./VinCard";
 
 const Vin = () => {
   const [vin, setVin] = useState(undefined);
@@ -124,9 +124,9 @@ const Vin = () => {
               <h1 className="sum-header">Car Vin({vin})</h1>
             </div>
           </div>
-          <div className="row justify-content-start">
-            {showCard && vin && <Card key={vinData.VehicleId} info={vinData} />}
-          </div>
+          {showCard && vin && (
+            <VinCard key={vinData.VehicleId} info={vinData} />
+          )}
         </div>
       </div>
     </div>
