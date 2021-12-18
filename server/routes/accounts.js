@@ -44,6 +44,33 @@ router.get("/", async (req, res) => {
   }
 });
 
+
+/**
+ * GET /account/byId/:id
+ * Retrieve the specified user account
+ * Params: none
+ *   id: user id
+ * Return codes: 400, 500
+ */
+router.get("/by/:id", async(req, res) => {
+  const id = req.params.id.trim();
+  if(id.length === 0) {
+    return res.status(400).message({message: "Id cannot be blank"});
+  }
+
+
+  try {
+    const account = await getAccount(id);
+    if(account == null) {
+      return res.status(404).json({message: "User not found"})
+    }
+    return res.json(account);
+  } catch (e) {
+    console.error(e);
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+})
+
 /**
  * PUT /account/:id
  * update the user account

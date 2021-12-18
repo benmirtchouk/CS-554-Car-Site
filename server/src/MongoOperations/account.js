@@ -34,6 +34,7 @@ const getAccount = async (id) => {
   const collection = await accounts();
 
   // return account - even if it's null
+  console.log(id)
   try {
     account = await collection.findOne({ _id: id });
     return account;

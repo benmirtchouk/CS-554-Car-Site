@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { seller } from "../../data";
+import SellerCard from "./SellerCard";
 
 const Sellers = () => {
 
@@ -19,14 +20,8 @@ const Sellers = () => {
   }, [])
 
 
-  const sellers = topListedSellers.map(e => {
-    return (<div>
-      <span>{e.firstName} {e.lastName} -- {e.displayName} </span>
-      <span> Based in {e.city}, {e.state} </span>
-      <span> With a total of {e.totalListings} cars on Carigslist!</span>
-    </div>)
+  const sellers = topListedSellers.map(e => <SellerCard key={e._id} seller={e} />  )
 
-  })
 
   return (
   <div className="main_layout">
