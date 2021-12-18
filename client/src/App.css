@@ -9,6 +9,7 @@ body {
 
 .nav-offset {
   margin-top: 56px !important;
+  min-height: 100vh !important;
 }
 
 .signup-or {

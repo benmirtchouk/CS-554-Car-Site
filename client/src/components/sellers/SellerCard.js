@@ -3,6 +3,7 @@ import { seller } from "../../data";
 import { Button, Card, Row, Col, Nav, Form } from "react-bootstrap";
 import { AuthContext } from "../../firebase/Auth";
 import { useContext } from "react";
+
 const sellerDataFetching = seller;
 
 
