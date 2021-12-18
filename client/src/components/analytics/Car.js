@@ -13,6 +13,7 @@ const Car = ({ info }) => {
   const otherImg = "/images/ImgNotAvailable.png";
   const img = item.VehiclePicture ? item.VehiclePicture : otherImg;
 
+  const carousel_pics = ['FrontCrashPicture', 'SideCrashPicture', 'SidePolePicture'].filter(pic_type => item[pic_type]);
   return (
     <Container>
       <Row className="full-width">
@@ -28,44 +29,26 @@ const Car = ({ info }) => {
           />
           <p className="detKey">{item.Description}</p>
         </Col>
-        <Col>
-          <h2>Crash Images:</h2>
-          <Carousel>
-            <div>
-              <img
-                className="mx-auto"
-                src={item.FrontCrashPicture}
-                alt="Retrieved Car"
-                onError={(e) => {
-                  e.target.src = otherImg;
-                  e.onerror = null;
-                }}
-              />
-            </div>
-            <div>
-              <img
-                className="mx-auto"
-                src={item.SideCrashPicture}
-                alt="Retrieved Car"
-                onError={(e) => {
-                  e.target.src = otherImg;
-                  e.onerror = null;
-                }}
-              />
-            </div>
-            <div>
-              <img
-                className="mx-auto"
-                src={item.SidePolePicture}
-                alt="Retrieved Car"
-                onError={(e) => {
-                  e.target.src = otherImg;
-                  e.onerror = null;
-                }}
-              />
-            </div>
-          </Carousel>
-        </Col>
+        { carousel_pics.length > 0 && (
+          <Col>
+            <h2>Crash Images:</h2>
+            <Carousel>
+              { carousel_pics.map(pic_type => (
+                <div key={pic_type}>
+                  <img
+                    className="mx-auto"
+                    src={item[pic_type]}
+                    alt="Retrieved Car"
+                    onError={(e) => {
+                      e.target.src = otherImg;
+                      e.onerror = null;
+                    }}
+                  />
+                </div>
+              )) }
+            </Carousel>
+          </Col>
+        )}
       </Row>
       <Row>
         <Col>
@@ -89,7 +72,7 @@ const Car = ({ info }) => {
                 <td>
                   <ReactStars
                     edit={false}
-                    count={item.OverallRating}
+                    count={parseInt(item.OverallRating)}
                     size={15}
                     activeColor="#ffd700"
                   />
@@ -100,7 +83,7 @@ const Car = ({ info }) => {
                 <td>
                   <ReactStars
                     edit={false}
-                    count={item.OverallFrontCrashRating}
+                    count={parseInt(item.OverallFrontCrashRating)}
                     size={15}
                     activeColor="#ffd700"
                   />
@@ -118,7 +101,7 @@ const Car = ({ info }) => {
                 <td>
                   <ReactStars
                     edit={false}
-                    count={item.OverallSideCrashRating}
+                    count={parseInt(item.OverallSideCrashRating)}
                     size={15}
                     activeColor="#ffd700"
                   />
@@ -129,7 +112,7 @@ const Car = ({ info }) => {
                 <td>
                   <ReactStars
                     edit={false}
-                    count={item.SideCrashDriversideRating}
+                    count={parseInt(item.SideCrashDriversideRating)}
                     size={15}
                     activeColor="#ffd700"
                   />
@@ -140,7 +123,7 @@ const Car = ({ info }) => {
                 <td>
                   <ReactStars
                     edit={false}
-                    count={item.SideCrashPassengersideRating}
+                    count={parseInt(item.SideCrashPassengersideRating)}
                     size={15}
                     activeColor="#ffd700"
                   />
@@ -151,7 +134,7 @@ const Car = ({ info }) => {
                 <td>
                   <ReactStars
                     edit={false}
-                    count={item.RolloverRating}
+                    count={parseInt(item.RolloverRating)}
                     size={15}
                     activeColor="#ffd700"
                   />
@@ -162,7 +145,7 @@ const Car = ({ info }) => {
                 <td>
                   <ReactStars
                     edit={false}
-                    count={item.SidePoleCrashRating}
+                    count={parseInt(item.SidePoleCrashRating)}
                     size={15}
                     activeColor="#ffd700"
                   />
