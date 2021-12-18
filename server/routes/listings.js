@@ -8,6 +8,7 @@ const { insertListing,
     listingsWithinMileRadius,
     uploadPhotoForVin,
     listingForVin,
+    getRecentlyByDateKey,
     getListing,
     getAllListings,
     getUserListings,
@@ -88,6 +89,40 @@ router.get('/buy/:id', async (req, res) => {
         return res.status(500).json({message: "Internal Server Error"})
     }
 });
+
+router.get("/recentSales", async (req, res) => {
+    let paginationRequest;
+    try {
+        paginationRequest = new PaginationRequest(req.query);
+    } catch (e) {
+        return res.status(400).json({message: e.message});
+    }
+
+
+    const soldListings = await getRecentlyByDateKey(paginationRequest, "soldOn");
+
+    return res.json({
+        listings: soldListings.map(e => e.asDictionary())
+    })
+})
+
+router.get("/recentListings", async (req, res) => {
+    let paginationRequest;
+    try {
+        paginationRequest = new PaginationRequest(req.query);
+    } catch (e) {
+        return res.status(400).json({message: e.message});
+    }
+
+
+    const newListings = await getRecentlyByDateKey(paginationRequest, "createdOn");
+
+    return res.json({
+        listings: newListings.map(e => e.asDictionary())
+    });
+
+});
+
 /**
  * Route to get all listings within a specified radius
  * Params:

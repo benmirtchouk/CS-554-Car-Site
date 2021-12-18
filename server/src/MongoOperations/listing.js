@@ -82,6 +82,28 @@ async function getAllListings(paginationRequest) {
     return listingData.map(e => new VehicleListing(e));
 }
 
+const getRecentlyByDateKey = async (paginationRequest, dateKey) => {
+    if(!paginationRequest instanceof PaginationRequest) {
+        throw new Error("Pagination request not provided")
+    }
+    const {offset, limit} = paginationRequest;
+
+    const validKeys = new Set(["soldOn", "createdOn"]);
+    if(!validKeys.has(dateKey)) {
+        throw new Error("Key does not exist in schema");
+    }
+
+    const collection = await listings();
+    const listingData = await collection
+                        .find({[dateKey]: {$ne: null}})
+                        .sort({[dateKey]: -1})
+                        .skip(offset)
+                        .limit(limit)
+                        .toArray();
+    return listingData.map(e => new VehicleListing(e));
+
+}
+
 async function getUserListings(userid, paginationRequest) {
     if (typeof userid !== 'string') throw 'userid must be a string';
     if(!paginationRequest instanceof PaginationRequest) {
@@ -140,6 +162,28 @@ const searchListings = async (query, paginationRequest) => {
             
 }
 
+const getAllSellers = async (paginationRequest) => {
+    if(!paginationRequest instanceof PaginationRequest) {
+        throw new Error("Pagination request not provided")
+    }
+
+    const {offset, limit } = paginationRequest;
+    const collection = await listings();
+
+    const pipeline = [
+        {$group : {_id: "$sellerId", count: { $sum: 1 } }},
+        {$sort: { count: -1}},
+        {$skip: offset},
+        {$limit: limit},
+    ];
+    const aggCursor = collection.aggregate(pipeline);
+    const data = {}
+    for await (const doc of aggCursor) {
+        data[doc._id] = doc.count
+    }
+
+    return data;
+}
 
 
 const uploadPhotoForVin = async (vin, photo) => {
@@ -247,10 +291,12 @@ module.exports = {
     getListing,
     getAllListings,
     getUserListings,
+    getRecentlyByDateKey,
     searchListings,
     insertListing,
     listingsWithinMileRadius,
     listingsWithinRadianRadius,
+    getAllSellers,
     uploadPhotoForVin,
     buyListing,
 }

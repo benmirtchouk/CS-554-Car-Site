@@ -31,6 +31,7 @@ export { default as Listing } from "./listings/Listing";
 // Sellers
 export { default as RecentSales } from "./sellers/RecentSales";
 export { default as SellCar } from "./sellers/SellCar";
+export { default as SellerDetails} from "./sellers/SellerDetails"
 export { default as Sellers } from "./sellers/Sellers";
 
 // Main Components

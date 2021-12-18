@@ -19,6 +19,11 @@ const nullableStringKeys = [
   "lastName",
 ];
 
+const nullableIntKeys = [
+  "like",
+  "dislike"
+]
+
 class Account {
   constructor(dictionary) {
     const nonBlankKeys = ["_id"];
@@ -30,6 +35,11 @@ class Account {
       validateNullOrNonBlankString,
       this
     );
+
+    applyValidation(nullableIntKeys, dictionary, (int) => {
+      if(int === undefined) { return null }
+      return validateNonNegativeInteger(int);
+    }, this)
   }
 
   asDictionary() {

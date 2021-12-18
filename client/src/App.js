@@ -7,6 +7,7 @@ import {
   Header,
   Home,
   Sellers,
+  SellerDetails,
   SellCar,
   Sidebar,
   RecentSales,
@@ -62,6 +63,7 @@ const App = () => {
                     )}
                   />
                   <PrivateRoute path="/sellers" component={Sellers} />
+                  <PrivateRoute path="/seller/:sellerId" component={SellerDetails} />
                   <PrivateRoute path="/sell_car" component={SellCar} />
                   <Route path="/listings" component={AllListings} />
                   <Route path="/listing/:id" component={Listing} />

@@ -56,11 +56,16 @@ export async function createAccount() {
   return { data, status };
 }
 
-export async function getAccount() {
+export async function getAccount(id = null) {
   // console.log(`calling http://localhost:3001/account to get an account using getUrl`);
+  
+  const baseURL=`http://localhost:3001/account`
+  const url = typeof id === 'string' ? `${baseURL}/by/${id}` : baseURL;
+  
+  
   const header = await createHeader();
   const { data, status } = await queryUrl(
-    `http://localhost:3001/account`,
+    url,
     header
   );
   return { data, status };
