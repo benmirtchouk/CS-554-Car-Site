@@ -20,8 +20,6 @@ const PaginationRequest = require('../src/PaginationRequest');
 
 const getAccountsFromAggregationResult = async (aggregationResults, aggregatedKey) => {
   const ids = Object.keys(aggregationResults);
-  console.log(aggregatedKey)
-  console.log(aggregationResults)
   const accounts = (await getAccounts(ids)) 
                    .map(e => { console.log(e); return {...e, [aggregatedKey]: aggregationResults[e._id] } });
   
