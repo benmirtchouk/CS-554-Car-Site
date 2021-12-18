@@ -3,9 +3,9 @@
 import React from "react";
 import { Badge, Button, Card, Row, Col } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
-import SingleVehicleMap from "../MapLogic/SingleVehicleMap";
+import SingleVehicleMap from "./MapLogic/SingleVehicleMap";
 
-const SearchCard = (props) => {
+const CarD = (props) => {
   const fallbackImage = "/images/ImgNotAvailable.png";
 
   const { data, listing } = props;
@@ -114,4 +114,4 @@ const ListingDetails = (props) => {
   );
 };
 
-export default SearchCard;
+export default CarD;

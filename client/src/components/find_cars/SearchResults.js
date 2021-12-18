@@ -3,7 +3,7 @@
 
 import React, { useEffect, useState } from "react";
 import Searches from "../../data/search";
-import SearchCard from "./SearchCard";
+import CarD from "../CarD";
 import Pagination from "../Pagination";
 import Loading from "../Loading";
 
@@ -68,7 +68,21 @@ const SearchResults = (props) => {
 
   const {
     location: { state },
+    setSidebar,
   } = props;
+
+  useEffect(() => {
+    setSidebar([
+      {
+        name: "All Listings",
+        link: "/listings",
+      },
+      {
+        name: "My Listings",
+        link: "/my_listings",
+      },
+    ]);
+  }, [setSidebar]);
 
   useEffect(() => {
     (async () => {
@@ -121,7 +135,7 @@ const SearchResults = (props) => {
     return <Loading />;
   }
 
-  const searchCards = searchResults.map((e) => SearchCard(e));
+  const searchCards = searchResults.map((e) => CarD(e));
   return (
     <div className="main_layout">
       <div className="mainbody">

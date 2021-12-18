@@ -3,7 +3,7 @@ import { listing } from "../../data";
 import Loading from "../Loading";
 import VehicleMap from "../MapLogic/VehicleMap";
 import Pagination from "../Pagination";
-import ListingCard from "./ListingCard";
+import CarD from "../CarD";
 
 const AllListings = () => {
   const [loading, setLoading] = useState(true);
@@ -48,6 +48,8 @@ const AllListings = () => {
     return <Loading />;
   }
 
+  console.log(listings)
+
   return (
     <div className="main_layout">
       <h1>Listings</h1>
@@ -70,9 +72,10 @@ const AllListings = () => {
           />
         )}
       </div>
-      {listings.map((ls) => (
-        <ListingCard listing={ls} key={ls._id} />
-      ))}
+      {listings.map((ls) => CarD({
+        data: {metadata: ls.metadata},
+        listing: ls
+      }))}
     </div>
   );
 };

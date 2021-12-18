@@ -72,3 +72,16 @@ body {
   margin: 0;
   line-height: 38px;
 }
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.form-page {
+  max-width: 370px;
+  margin: 0 auto;
+}
+
+.line-through {
+  text-decoration: line-through;
+}
