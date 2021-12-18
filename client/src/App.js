@@ -51,7 +51,7 @@ const App = () => {
         socket.disconnect();
       }
     };
-  }, []);
+  }, [socket]);
 
   return (
     <AuthProvider>

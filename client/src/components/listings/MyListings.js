@@ -48,6 +48,8 @@ const MyListings = () => {
     return <Loading />;
   }
 
+  if (listings.length === 0) return <p>You have no listings!</p>;
+
   console.log(listings);
 
   return (
