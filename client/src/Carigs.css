@@ -347,3 +347,42 @@ div.listing > dl {
   left: 50%;
   transform: translateX(-50%);
 }
+
+.main-chat-body {
+  width: 100%;
+}
+
+.chat-container {
+  margin-bottom: 60px;
+  height: 75vh;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+
+  --shadow-color: 0deg 0% 67%;
+  --shadow-elevation-high:
+    0.2px 0.2px 0.3px hsl(var(--shadow-color) / 0.33),
+    1px 1px 1.5px -0.4px hsl(var(--shadow-color) / 0.32),
+    1.9px 1.9px 2.9px -0.8px hsl(var(--shadow-color) / 0.31),
+    3.2px 3.1px 4.8px -1.2px hsl(var(--shadow-color) / 0.3),
+    5.3px 5.1px 7.9px -1.6px hsl(var(--shadow-color) / 0.29),
+    8.4px 8.1px 12.6px -2px hsl(var(--shadow-color) / 0.28),
+    12.9px 12.4px 19.3px -2.4px hsl(var(--shadow-color) / 0.27),
+    19.1px 18.4px 28.6px -2.8px hsl(var(--shadow-color) / 0.26);
+
+  box-shadow: var(--shadow-elevation-high);
+}
+
+.chat-container > form {
+  display: flex;
+  flex-direction: row;
+}
+.chat-container > form > input {
+  flex-grow: 1;
+}
+
+.chatlog {
+  overflow: auto;
+  flex-grow: 1;
+  margin: 10px 10px 0 10px;
+}
