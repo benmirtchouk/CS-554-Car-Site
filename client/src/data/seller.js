@@ -25,7 +25,15 @@ async function postUrl(url, body, config) {
       ...config,
       validateStatus: (status) => status < 500,
     });
-  }
+}
+
+async function putUrl(url, body, config) {
+  return axios.put(url, body, {
+    ...config,
+    validateStatus: (status) => status < 500,
+  });
+}
+
 
 export async function getMostListedSellers(limit = 20, offset = 0) {
     const header = await createHeader();
@@ -44,6 +52,17 @@ export async function getHighestRatedSellers(limit=20, offset = 0) {
     );
     return { data, status };
 }
+
+export async function putComment(commentText, toSellerId) {
+  const header = await createHeader();
+  const { data, status } = await putUrl(
+    `http://localhost:3001/seller/${toSellerId}/comment`, {
+      commentText
+    },
+    header
+  );
+  return { data, status };
+} 
 
 export async function rateUser(sellerId, isLike, isAdding) {
     if(typeof sellerId !== 'string' || sellerId.length === 0) {
