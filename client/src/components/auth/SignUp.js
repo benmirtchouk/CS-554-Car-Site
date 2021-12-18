@@ -24,14 +24,14 @@ const SignUp = () => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     setPwMatch("");
-    const { email, firstPwd, secondPwd } = e.target.elements;
+    const { email, firstPwd, secondPwd, displayName } = e.target.elements;
     if (firstPwd.value !== secondPwd.value) {
       setPwMatch("Passwords do not match");
       return false;
     }
 
     try {
-      await doCreateUserWithEmailAndPassword(email.value, firstPwd.value);
+      await doCreateUserWithEmailAndPassword(email.value, firstPwd.value, displayName.value);
     } catch (e) {
       console.log(`${e}`);
       alert(e);
@@ -43,9 +43,9 @@ const SignUp = () => {
     return true;
   };
 
-  const doCreateAccount = async () => {
+  const doCreateAccount = async (displayName) => {
     try {
-      await createAccount();
+      await createAccount(displayName);
     } catch (e) {
       console.log('unexpected error', e);
     }
@@ -53,7 +53,9 @@ const SignUp = () => {
 
   useEffect(() => {
     if (currentUser) {
-      doCreateAccount();
+      console.log(Object.keys(currentUser));
+      console.log("currentUser", currentUser, currentUser.email, currentUser.displayName);
+      doCreateAccount(currentUser.displayName);
     }
   }, [currentUser]);
 
@@ -119,6 +121,16 @@ const SignUp = () => {
             directly share everything you give us with Mark Zuckerberg.
           </Form.Text>
         </Form.Group>
+	<Form.Group className="mb-3">
+	  <Form.Label>Display Name</Form.Label>
+	    <Form.Control
+              placeholder="Enter Display Name"
+              id="displayName"
+              name="displayName"
+              className="form-control"
+              type="input"
+            />
+	</Form.Group>
         <Form.Group className="mb-3">
           <Form.Label>Password</Form.Label>
           <Form.Control
