@@ -30,8 +30,16 @@ async function seedDB() {
 	let i=0;
         for(const listingRawData of listingData1) {
             const listing = new VehicleListing(listingRawData);
-	    if (!(i%10))
+	    let dt = new Date();
+	    dt.setDate(dt.getDate()-(2*50 -(i%10*5)));
+	    // console.log(`CreateOn Date: ${dt.toString()}`);
+	    listing["createdOn"]=dt;
+	    if (!(i%10)){
+	        dt.setDate(dt.getDate()-(2*10 -(i%10*5)));
+	        // console.log(`Sold Date: ${dt.toString()}`);
+	        listing["soldOn"]=dt;
 		listing["sold"]=true;
+	    }
             await listingMongoOperation.insertListing(listing);
             i=i+1;
         }
@@ -39,8 +47,16 @@ async function seedDB() {
 	i=0;
         for(const listingRawData of listingData2) {
             const listing = new VehicleListing(listingRawData);
-	    if (!(i%10))
+	    let dt = new Date();
+	    dt.setDate(dt.getDate()-(2*25 -(i%10*3)));
+	    // console.log(`Created On Date: ${dt.toString()}`);
+	    listing["createdOn"]=dt;
+	    if (!(i%10)){
+	        dt.setDate(dt.getDate()-(2*5 -(i%10*5)));
+	        // console.log(`Sold Date: ${dt.toString()}`);
+	        listing["soldOn"]=dt;
 		listing["sold"]=true;
+	    }
             await listingMongoOperation.insertListing(listing);
             i=i+1;
         }
@@ -48,8 +64,15 @@ async function seedDB() {
 	i=0;
         for(const listingRawData of listingData3) {
             const listing = new VehicleListing(listingRawData);
-	    if (!(i%10))
+	    let dt = new Date();
+	    dt.setDate(dt.getDate()-(25 +(i%10)));
+	    // console.log(`Created On Date: ${dt.toString()}`);
+	    listing["createdOn"]=dt;
+	    if (!(i%10)){
+	        dt.setDate(dt.getDate()-((i%10)));
+	        // console.log(`Sold On Date: ${dt.toString()}`);
 		listing["sold"]=true;
+	    }
             await listingMongoOperation.insertListing(listing);
             i=i+1;
         }

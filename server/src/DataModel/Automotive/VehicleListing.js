@@ -1,6 +1,8 @@
 const { applyValidation,
         validateNonBlankString,
         validateNonNegativeInteger,
+        validateDateString,
+        validateDate,
         validatePositiveFloat,
         validateNullOrNonBlankString,
         validateBoolean } = require('../Validation/ObjectProperties');
@@ -28,6 +30,8 @@ class VehicleListing {
         applyValidation(["price"], dictionary, validatePositiveFloat, this);
         applyValidation(["_id"], dictionary, validateNullOrNonBlankString, this);
         applyValidation(["sold"], dictionary, validateBoolean, this);
+        applyValidation(["createdOn"], dictionary, validateDate, this);
+        applyValidation(["soldOn"], dictionary, validateDate, this);
         this.location = new GeoJsonPoint(location);
         this.metadata = new VehicleMetadata(dictionary.metadata);
         this.photo = photo != null ? new UploadedImage(photo) : null;
