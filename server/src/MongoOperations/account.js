@@ -165,7 +165,6 @@ const addComment = async ( comment, toSellerId ) => {
     
   )
 
-  console.log(updateResult);
   if(updateResult.modifiedCount === 0) {
     throw new UserDoesNotExist(toSellerId, "Target user does not exist!");
   }

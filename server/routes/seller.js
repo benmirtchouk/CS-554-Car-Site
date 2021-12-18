@@ -3,6 +3,7 @@ const router = express.Router();
 
 
 const {
+  getAccount,
 getAccounts,
   modifyRating,
   getTopRated,
@@ -106,10 +107,18 @@ router.post("/:id/rate", async (req, res) => {
 
 router.put("/:id/comment", async (req, res) => {
   const userId = req.currentUser?.user_id
-  const displayName = req.currentUser?.displayName || "Anon user";
-  if(!userId || !displayName) {
+  if(!userId) {
     return res.status(401).json({message: "Must be logged in to comment"});
   }
+
+  let postingUserAccount;
+  try {
+    postingUserAccount = getAccount(userId);
+  } catch (e) {
+    console.log(`Failed to find mongo account, falling back to firebase ${e}`);
+  }
+
+  const displayName = postingUserAccount?.displayName ?? req.currentUser?.name ?? "Anon user";
 
   const sellerId = req.params.id;
 
