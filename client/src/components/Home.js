@@ -2,7 +2,6 @@ import React, { useEffect } from "react"; // useContext
 import { Link } from "react-router-dom";
 
 const Home = ({ setSidebar }) => {
-  
   useEffect(() => {
     setSidebar([
       {

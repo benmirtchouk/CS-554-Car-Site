@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
 
 import React from "react";
-
-import { Link } from "react-router-dom";
+import { Badge, Button, Card, Row, Col } from "react-bootstrap";
+import { LinkContainer } from "react-router-bootstrap";
 import SingleVehicleMap from "../MapLogic/SingleVehicleMap";
 
 const SearchCard = (props) => {
@@ -31,42 +31,90 @@ const SearchCard = (props) => {
   const isForSale = listing != null && !!Object.keys(listing).length;
 
   return (
-    <div key={key} className="card">
-      <img
-        className="img-responsive mx-2 px-2"
-        src={img}
-        alt="Vehicle"
-        onError={imageOnError}
-      />
+    <>
+      <Card className="search-card">
+        <Row>
+          <Col>
+            <Card.Img
+              variant="top"
+              className="vertically-center"
+              src={img}
+              alt={`${make} ${model} ${modelYear}`}
+            />
+          </Col>
+          <Col>
+            <Card.Body>
+              <Card.Title>
+                {make} {model} {modelYear}
+              </Card.Title>
+              <Card.Text>
+                {isForSale ? (
+                  <ListingDetails listing={listing} />
+                ) : (
+                  "Not currently listed for sale"
+                )}
+              </Card.Text>
+              <LinkContainer
+                to={{
+                  pathname: "/safety",
+                  state: {
+                    make,
+                    model,
+                    year: modelYear,
+                  },
+                }}
+              >
+                <Button size="sm" variant="primary" className="mr-2">
+                  Safety Info
+                </Button>
+              </LinkContainer>
+              <LinkContainer to={`/listing/${listing._id}`}>
+                <Button size="sm" variant="primary">
+                  View Listing
+                </Button>
+              </LinkContainer>
+            </Card.Body>
+          </Col>
+        </Row>
+        <SingleVehicleMap listing={listing} zoomLevel={15} />
+      </Card>
+      {/* <div key={key} className="card">
+        <img
+          className="img-responsive mx-2 px-2"
+          src={img}
+          alt="Vehicle"
+          onError={imageOnError}
+        />
 
-      <div className="card-body">
-        <div className="card-title">
-          {make} {model} {modelYear}
-        </div>
-        <div className="card-text">
-          {isForSale ? (
-            <ListingDetails listing={listing} />
-          ) : (
-            "Not currently listed for sale"
-          )}
-          <div>
-            <Link
-              to={{
-                pathname: "/safety",
-                state: {
-                  make,
-                  model,
-                  year: modelYear,
-                },
-              }}
-            >
-              {" "}
-              Safety Info{" "}
-            </Link>
+        <div className="card-body">
+          <div className="card-title">
+            {make} {model} {modelYear}
+          </div>
+          <div className="card-text">
+            {isForSale ? (
+              <ListingDetails listing={listing} />
+            ) : (
+              "Not currently listed for sale"
+            )}
+            <div>
+              <Link
+                to={{
+                  pathname: "/safety",
+                  state: {
+                    make,
+                    model,
+                    year: modelYear,
+                  },
+                }}
+              >
+                {" "}
+                Safety Info{" "}
+              </Link>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
+      </div> */}
+    </>
   );
 };
 
@@ -78,15 +126,13 @@ const ListingDetails = (props) => {
   const key = `listing-${vin}`;
   return (
     <div className="flex flex-col content-around" key={key}>
-      <div>
-        Listed for Sale
-        <Link to={`/listing/${listing._id}`}>View Listing</Link>
-      </div>
+      <Badge bg="danger">For Sale</Badge>
+      
+      <p className="price">Price: {price}</p>
       <div>
         <span>VIN: {vin} </span>
         <span className="flex content-between">
           {" "}
-          <span className="pr8"> Price: {price}</span>{" "}
           <span> Millage {millage}</span>
         </span>
         <span className="flex content-between">
@@ -95,7 +141,6 @@ const ListingDetails = (props) => {
           <span>Interior {interiorColor} </span>
         </span>
       </div>
-      <SingleVehicleMap listing={listing} zoomLevel={15} />
     </div>
   );
 };

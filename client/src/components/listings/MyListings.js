@@ -22,7 +22,7 @@ const MyListings = () => {
         offset
       );
 
-      if (Math.floor(status/100) === 2 && data) {
+      if (Math.floor(status / 100) === 2 && data) {
         setTotalSize(data.pagination.totalCount);
         setListings(data.results);
       }

@@ -72,9 +72,7 @@ const Header = () => {
             )}
             {!showLogin && (
               <LinkContainer to="/account">
-                <Button
-                  variant="outline-primary"
-                >
+                <Button variant="outline-primary">
                   {currentUser.displayName ?? currentUser.email}
                 </Button>
               </LinkContainer>
