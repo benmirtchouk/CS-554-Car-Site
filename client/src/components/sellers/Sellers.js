@@ -4,7 +4,8 @@ import SellerCard from "./SellerCard";
 
 const Sellers = () => {
 
-  const [topListedSellers, setTopListedSellers] = useState([])
+  const [topListedSellers, setTopListedSellers] = useState([]);
+  const [highestRatedSellers, setHighestRatedSellers] = useState([]);
 
   useEffect(() => {
     ( async () => {
@@ -20,8 +21,21 @@ const Sellers = () => {
   }, [])
 
 
-  const sellers = topListedSellers.map(e => <SellerCard key={e._id} seller={e} />  )
+  useEffect(() => {
+    ( async () => {
+      const { data, status} = await seller.getHighestRatedSellers(5);
+      if(status >= 400 || !data) {
+        alert("Failed to get highest rated sellers!")
+        return;
+      }
 
+      setHighestRatedSellers(data.sellers);
+    })()
+  }, [])
+
+
+  const topListedSellersCards = topListedSellers.map(e => <SellerCard key={`topListed-${e._id}`} seller={e} />  )
+  const highestRatedSellerCards = highestRatedSellers.map(e => <SellerCard key={`highestRated${e._id}`} seller={e} />)
 
   return (
   <div className="main_layout">
@@ -35,7 +49,13 @@ const Sellers = () => {
 
     <div>
       Top ten most active Carigslist sellers
-      {sellers}
+      {topListedSellersCards}
+    </div>
+
+
+    <div>
+      The best sellers to buy from!
+      {highestRatedSellerCards}
     </div>
 
     </div>

@@ -11,7 +11,7 @@ const SellerCard = (props) => {
         throw new Error("Seller must be provided!")
     }
 
-    const {firstName, lastName, displayName, city, state, totalListings, _id, like, dislike} = seller;
+    const {firstName, lastName, displayName, city, state, totalListings, _id, like, dislike, ratio} = seller;
     const shouldShowSellerLink = props.showSellerLink !== undefined ? !!props.showSellerLink : true;
     const userCanRateSeller = props.allowRatings !== undefined ? !!props.allowRatings : false;
 
@@ -47,6 +47,10 @@ const SellerCard = (props) => {
         <div>
             <button type="button" disabled={!userCanRateSeller} onClick={(e) => rateSellerOnClick(e, false)}>👎 {dislike || 0}</button>
             <button type="button" disabled={!userCanRateSeller} onClick={(e) => rateSellerOnClick(e, true)}>👍 {like || 0} </button>
+            {ratio !== undefined ?
+                <span> {ratio.toFixed(2)}% positive feedback! </span> :
+                ''
+            }
         </div> 
  
 

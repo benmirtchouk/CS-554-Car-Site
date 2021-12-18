@@ -36,6 +36,15 @@ export async function getMostListedSellers(limit = 20, offset = 0) {
     return { data, status };
 }
 
+export async function getHighestRatedSellers(limit=20, offset = 0) {
+    const header = await createHeader();
+    const { data, status } = await getUrl(
+      `http://localhost:3001/seller/mostLiked?limit=${limit}&offset=${offset}`,
+      header
+    );
+    return { data, status };
+}
+
 export async function rateUser(sellerId, isLike, isAdding) {
     if(typeof sellerId !== 'string' || sellerId.length === 0) {
         throw new Error("Seller id cannot be empty or missing");
