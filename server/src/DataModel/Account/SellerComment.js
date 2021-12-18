@@ -1,9 +1,13 @@
-const { applyValidation, validateNonBlankString } = require("../Validation/ObjectProperties");
+const { applyValidation, validateNonBlankString, ValidationError } = require("../Validation/ObjectProperties");
 
 
 class SellerComment {
     constructor(dictionary) {
         applyValidation(["commentText", "posterId", "displayName"], dictionary, validateNonBlankString, this);
+        if(this.commentText.length >= 500) {
+            throw new ValidationError("500LengthString", "Comments cannot be longer than 500 characters");
+        }
+    
     }
 
     asDictionary() {
