@@ -7,6 +7,7 @@ const client = redis.createClient();
 const { decodeIDToken } = require("../firebase/firebase")
 const carsRoutes = require("./cars")
 const listingRoutes = require('./listings');
+const geocodeRoutes = require('./geocode');
 const searchRoutes = require('./search');
 const imageRoutes = require('./images');
 const accountRoutes = require('./accounts');
@@ -46,6 +47,7 @@ const constructorMethod = (app) => {
   app.use('/search', searchRoutes);
   app.use('/images', imageRoutes);
   app.use('/account', accountRoutes);
+  app.use('/geocode', cacheJSON, geocodeRoutes);
   
   // default (404)
   app.use('*', (req, res) => {

@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-
 import {
   Form,
   Button,
@@ -10,6 +9,8 @@ import {
   DropdownButton,
   FormControl,
 } from "react-bootstrap";
+import { geocode } from "../../data";
+
 
 const parseSearchQuery = (searchText) => {
   const tokens = searchText.split(" ").filter((e) => e !== "");
@@ -54,7 +55,7 @@ const MiniVehicleSearchForm = () => {
   const [searchKey, setSearchKey] = useState(null);
   const history = useHistory();
 
-  const carSearchHandler = (event) => {
+  const carSearchHandler = async (event) => {
     event.preventDefault();
     const form = event.target;
     const searchText = form.elements[0].value;
@@ -67,6 +68,15 @@ const MiniVehicleSearchForm = () => {
     if (typeof searchKey !== "string") {
       query.searchKey = "components";
       query.query = parseSearchQuery(searchText);
+    } else if (searchKey === "location") {
+      const {data, status} = await geocode.geocodeAddress(searchText);
+      if(status > 400 || !data) {
+        return; 
+      }
+
+      query.searchKey = searchKey;
+      query.query = { [searchKey]: data.location };
+
     } else {
       query.searchKey = searchKey;
       query.query =
@@ -109,6 +119,9 @@ const MiniVehicleSearchForm = () => {
           </Dropdown.Item>
           <Dropdown.Item href="#" eventKey="vin">
             VIN
+          </Dropdown.Item>
+          <Dropdown.Item href="#" eventKey="location">
+            Location
           </Dropdown.Item>
           <Dropdown.Item href="#" eventKey="freeform">
             Freeform

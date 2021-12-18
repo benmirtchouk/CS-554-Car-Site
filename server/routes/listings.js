@@ -47,7 +47,7 @@ router.get('/', async (req, res) => {
     });
 });
 
-router.get('/:id', async (req, res) => {
+router.get('byId/:id', async (req, res) => {
     let id;
     try {
         id = validateIsObjectId(req.params.id);
@@ -120,12 +120,24 @@ router.get('/withinRadius', async (req, res) => {
         return res.status(400).json( {message: `${longitude} ${latitude} is not a valid longitude & latitude position`} );
     }
 
-    /// Perform the search with no limit on returned results.
+    let paginationRequest;
     try {
-        const listings = (await listingsWithinMileRadius(centerPoint, radius))
-                         .map(e => e.asDictionary())
-        return res.json(listings);
+        paginationRequest = new PaginationRequest(req.query);
+    } catch (e) {
+        return res.status(400).json({message: e.message});
+    }
 
+    /// Perform the search with no limit on returned results. 
+    try {
+        const {totalCount, results} = (await listingsWithinMileRadius(centerPoint, radius, paginationRequest))
+                         
+        return res.json({
+            pagination: {
+                totalCount
+            },
+            results: results.map(e => e.asDictionary())
+        });
+    
     } catch (e) {
         console.error(e);
         return res.status(500).json({message: "Internal Server Error"})

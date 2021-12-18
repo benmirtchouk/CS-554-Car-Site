@@ -7,7 +7,7 @@ const Pagination = (props) => {
 
   const totalPages = Math.ceil(totalSize / pageSize);
   const shouldShowPrevious = currentPage > 0;
-  const shouldShowNext = currentPage <= totalPages;
+  const shouldShowNext = currentPage < totalPages - 1;
 
   const spreadAmount = 2;
   const pages = Array.from(

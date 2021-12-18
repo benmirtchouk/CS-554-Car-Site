@@ -82,12 +82,12 @@ const AddListing = () => {
     if (status >= 400 || data.length === 0) {
       setErrors(["Failed to geocode address"]);
     } else {
-      const result = data[0];
+      const { location, displayName } = data;
       setErrors([]);
       setGeoCodedData({
-        lat: result.lat,
-        lon: result.lon,
-        displayName: result.display_name,
+        lat: location[1],
+        lon: location[0],
+        displayName,
         searchedTerm: address,
       });
     }

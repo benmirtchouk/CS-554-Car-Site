@@ -7,6 +7,55 @@ import SearchCard from "./SearchCard";
 import Pagination from "../Pagination";
 import Loading from "../Loading";
 
+const mapListing = (listing) => ({
+  data: { metadata: listing.metadata },
+  listing,
+});
+
+const handleLocationSearch = async (
+  inputQuery,
+  resultsPerPage,
+  offset,
+  setTotalSize
+) => {
+  const [lon, lat ] = inputQuery.location;
+  const query = {
+    limit: resultsPerPage,
+    offset,
+    longitude: lon,
+    latitude: lat,
+    radius: 25,
+    units: "miles",
+  };
+
+  const searchData = await Searches.byLocation(query);
+  const { pagination, results } = searchData.data;
+  if(searchData.status >= 400) {
+    return [];
+  }
+  
+  setTotalSize(pagination.totalCount);
+  return results.map(mapListing);
+};
+
+const handleComponentSearch = async (
+  inputQuery,
+  setTotalSize,
+  resultsPerPage,
+  offset,
+) => {
+  const query = {
+    ...inputQuery,
+    limit: resultsPerPage,
+    offset,
+  };
+
+  const { data } = await Searches.byComponents(query);
+  const { pagination, results } = data;
+  setTotalSize(pagination.totalSize);
+  return results.map(mapListing);
+};
+
 const SearchResults = (props) => {
   const [searchResults, setSearchResults] = useState([]);
 
@@ -42,20 +91,26 @@ const SearchResults = (props) => {
         }
       } else if (query === undefined || query === null) {
         return;
+      } else if (searchKey === "location") {
+
+        resultsToSet = await handleLocationSearch(
+          query,
+          resultsPerPage,
+          offset,
+          setTotalSize
+        );
       } else {
-        query.limit = resultsPerPage;
-        query.offset = offset;
-        const { data } = await Searches.byComponents(query);
-        const { pagination, results } = data;
-        setTotalSize(pagination.totalSize);
-        resultsToSet = results.map((e) => ({
-          data: { metadata: e.metadata },
-          listing: e,
-        }));
+        resultsToSet = await handleComponentSearch(
+          query,
+          setTotalSize,
+          resultsPerPage,
+          offset
+        );
       }
 
-      setSearchResults(Array.isArray(resultsToSet) ? resultsToSet : []);
-      setLoading(!Array.isArray(resultsToSet));
+      const resultsAreArray = Array.isArray(resultsToSet)
+      setSearchResults(resultsAreArray ? resultsToSet : []);
+      setLoading(!resultsAreArray);
     })();
   }, [state, offset, resultsPerPage]);
 
