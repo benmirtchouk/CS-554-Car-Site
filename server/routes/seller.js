@@ -105,9 +105,9 @@ router.post("/:id/rate", async (req, res) => {
 
 
 router.put("/:id/comment", async (req, res) => {
-
   const userId = req.currentUser?.user_id
-  if(!userId) {
+  const displayName = req.currentUser?.displayName || "Anon user";
+  if(!userId || !displayName) {
     return res.status(401).json({message: "Must be logged in to comment"});
   }
 
@@ -122,6 +122,7 @@ router.put("/:id/comment", async (req, res) => {
     const { commentText } = req.body;
     addedComment = new SellerComment({
       commentText,
+      displayName,
       posterId: userId
     })
   } catch(e) {
@@ -139,9 +140,6 @@ router.put("/:id/comment", async (req, res) => {
     console.error(e);
     return res.status(500).json({message: "Failed to post comment"});
   }
-  
-
-
 
 });
 
