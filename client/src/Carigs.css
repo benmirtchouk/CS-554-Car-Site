@@ -154,6 +154,10 @@ nav.navbar a.nav-link {
   color: white;
 }
 
+.search-card .row {
+  max-width: 100%;
+}
+
 .sidenav a:hover {
   color: #ffff00;
 }
