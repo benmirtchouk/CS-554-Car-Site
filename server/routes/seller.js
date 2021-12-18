@@ -21,8 +21,10 @@ const PaginationRequest = require('../src/PaginationRequest');
 const getAccountsFromAggregationResult = async (aggregationResults, aggregatedKey) => {
   const ids = Object.keys(aggregationResults);
   const accounts = (await getAccounts(ids)) 
-                   .map(e => { console.log(e); return {...e, [aggregatedKey]: aggregationResults[e._id] } });
+                   .map(e => { return {...e, [aggregatedKey]: aggregationResults[e._id] } });
   
+  /// Sort again, as merging the full account info can shuffle the array
+  accounts.sort( (lhs, rhs) => lhs[aggregatedKey] < rhs[aggregatedKey] ? 1 : -1)
   /// Note: If the accounts collection ever stores sensitive information, this will need to be removed before being sent
   return accounts;
 }
@@ -39,6 +41,7 @@ router.get("/mostListed", async (req, res) => {
 
     const sellers = await getAllSellers(paginationRequest);
     const accounts = await getAccountsFromAggregationResult(sellers, "totalListings");
+
     return res.json({
       sellers: accounts
     })
@@ -56,9 +59,6 @@ router.get("/mostLiked", async(req, res)=> {
 
   const ratingRatios = await getTopRated(paginationRequest);
   const accounts = await getAccountsFromAggregationResult(ratingRatios, "ratio")
-    
-  /// Sort again, as merging the full account info can shuffle the arrray
-  accounts.sort( (lhs, rhs) => lhs.ratio < rhs.ratio ? 1 : -1)
 
   return res.json({
     sellers: accounts

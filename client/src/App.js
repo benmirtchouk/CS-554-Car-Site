@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Row, Col, Container } from "react-bootstrap";
 import {
@@ -35,17 +35,6 @@ import "./App.css";
 import "./Carigs.css";
 
 const App = () => {
-  const [sideItems, setSideItems] = useState([
-    {
-      name: "Recent Sales",
-      link: "/recent_sales",
-    },
-    {
-      name: "Recent Listings",
-      link: "/recent_listings",
-    },
-  ]);
-
   return (
     <AuthProvider>
       <Router>
@@ -54,19 +43,13 @@ const App = () => {
           <Header />
           <Row className="nav-offset">
             <Col xs={12} md={2} className="sidebar">
-              <Sidebar sideItems={sideItems} />
+              <Sidebar />
             </Col>
             <Col xs={12} md={{ span: 10, offset: 2 }}>
               <Container>
                 {/* only act on one route  */}
                 <Switch>
-                  <Route
-                    exact
-                    path="/"
-                    render={(props) => (
-                      <Home setSidebar={setSideItems} {...props} />
-                    )}
-                  />
+                  <Route exact path="/" component={Home} />
                   <PrivateRoute path="/sellers" component={Sellers} />
                   <PrivateRoute
                     path="/seller/:sellerId"

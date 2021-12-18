@@ -626,7 +626,7 @@ const Account = () => {
               <Form.Group className="mb-3">
                 <Form.Label>State</Form.Label>
                 <Form.Select
-                  class="form-control"
+                  className="form-control"
                   type="custom-select"
                   size="sm "
                   name="state"
