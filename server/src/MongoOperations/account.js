@@ -16,7 +16,7 @@ const createAccount = async (account) => {
   const collection = await accounts();
 
   await collection
-    .insertOne(account)
+    .insertOne(account.asDictionary())
     .then((ret) => {
       if (ret.insertedId !== account._id) {
         throw new InternalMongoError("Insertion failed");

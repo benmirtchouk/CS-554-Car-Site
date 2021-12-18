@@ -44,10 +44,9 @@ class Account {
     }, this)
 
 
-    let sellerComments = dictionary.sellerComments === undefined ? null : dictionary.sellerComments
+    let sellerComments = dictionary.sellerComments === null ? undefined: dictionary.sellerComments
 
-    console.log(sellerComments)
-    if(sellerComments !== null) {
+    if(sellerComments !== undefined) {
         if(!Array.isArray(sellerComments)) { throw new ValidationError("NullableArrayOfComments", "must be an array if non null"); }
         sellerComments = sellerComments.map(e => new SellerComment(e));
     }
@@ -61,7 +60,7 @@ class Account {
       _id: this._id,
     };
 
-    for (const key of nullableStringKeys) {
+    for (const key of nullableStringKeys.concat(nullableIntKeys)) {
       if (this[key]) {
         dictionary[key] = this[key];
       }
