@@ -85,3 +85,7 @@ body {
 .line-through {
   text-decoration: line-through;
 }
+
+.full-width {
+  width: 100%;
+}

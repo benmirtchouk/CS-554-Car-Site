@@ -339,3 +339,11 @@ div.listing > dl {
   left: 50%;
   transform: translateX(-50%);
 }
+
+.saftey-car {
+  max-width: 100%;
+}
+
+.subnav {
+  padding: 12px;
+}
