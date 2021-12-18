@@ -6,6 +6,7 @@ import Searches from "../../data/search";
 import SearchCard from "./SearchCard";
 import Pagination from "../Pagination";
 import Loading from "../Loading";
+import VehicleMap from "../MapLogic/VehicleMap";
 
 const mapListing = (listing) => ({
   data: { metadata: listing.metadata },
@@ -109,6 +110,9 @@ const SearchResults = (props) => {
       }
 
       const resultsAreArray = Array.isArray(resultsToSet)
+      if(resultsAreArray) {
+        setSearchResults([])
+      }
       setSearchResults(resultsAreArray ? resultsToSet : []);
       setLoading(!resultsAreArray);
     })();
@@ -133,6 +137,18 @@ const SearchResults = (props) => {
             goToPage={setPage}
             totalSize={totalSize}
           />
+        ) : (
+          ""
+        )}
+
+        { searchResults.length > 1 ? (
+          <VehicleMap 
+          listings={searchResults.map(e => e.listing) }
+          center={[searchResults[0].listing.location[1], searchResults[0].listing.location[0]]}
+          zoomLevel= { "4"  }
+          className="search-map"
+          />
+          
         ) : (
           ""
         )}

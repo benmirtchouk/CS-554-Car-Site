@@ -3,11 +3,11 @@ import { MapContainer, TileLayer } from "react-leaflet";
 import VehicleMarker from "./VehicleMarker";
 
 const VehicleMap = (props) => {
-  const { listings, center, zoomLevel } = props;
+  const { listings, center, zoomLevel, className } = props;
 
   return (
     <MapContainer
-      className="mapcontainer"
+      className={`mapcontainer ${className}`}
       center={center}
       zoom={zoomLevel}
       scrollWheelZoom={false}
