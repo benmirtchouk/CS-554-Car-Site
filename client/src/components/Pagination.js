@@ -32,8 +32,8 @@ const Pagination = (props) => {
   });
 
   return (
-    <Row>
-      <Col xs>
+    <Row className="pag">
+      <Col>
         <Pag>
           {pages.map((i) => (
             <Pag.Item
@@ -50,7 +50,7 @@ const Pagination = (props) => {
           ))}
         </Pag>
       </Col>
-      <Col xs>
+      <Col>
         <Form.Group class="block">
           <Form.Label>Results per page</Form.Label>
           <Form.Control
