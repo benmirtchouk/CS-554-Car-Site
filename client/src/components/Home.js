@@ -1,24 +1,7 @@
-import React, { useEffect } from "react"; // useContext
+import React from "react"; // useContext
 import { Link } from "react-router-dom";
 
-const Home = ({ setSidebar }) => {
-  useEffect(() => {
-    setSidebar([
-      {
-        name: "Recent Sales",
-        link: "/recent_sales",
-      },
-      {
-        name: "Recent Listings",
-        link: "/recent_listings",
-      },
-      {
-        name: "Recent Orders",
-        link: "/recent_orders",
-      },
-    ]);
-  }, [setSidebar]);
-
+const Home = () => {
   return (
     <>
       <h1>Home</h1>

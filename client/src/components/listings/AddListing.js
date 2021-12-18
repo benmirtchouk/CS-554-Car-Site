@@ -145,14 +145,14 @@ const AddListing = () => {
               />
             </label>
             <label>
-              Millage
+              Mileage
               <input
                 id="millage"
                 type="number"
                 name="millage"
                 placeholder="Millage..."
                 className="mx-2"
-                title="The millage on the odometer"
+                title="The mileage on the odometer"
                 required
               />
             </label>

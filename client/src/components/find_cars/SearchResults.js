@@ -69,21 +69,8 @@ const SearchResults = (props) => {
 
   const {
     location: { state },
-    setSidebar,
   } = props;
 
-  useEffect(() => {
-    setSidebar([
-      {
-        name: "All Listings",
-        link: "/listings",
-      },
-      {
-        name: "My Listings",
-        link: "/my_listings",
-      },
-    ]);
-  }, [setSidebar]);
 
   useEffect(() => {
     (async () => {
