@@ -37,6 +37,7 @@ router.get('/', async (req, res) => {
         totalCount = totalSize;
     } else {
         data = await getAllListings(paginationRequest);
+        data = data.map(x => x.asDictionary()) 
         totalCount = await countFromMetadata();
     }
 

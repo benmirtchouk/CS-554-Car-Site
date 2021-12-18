@@ -6,7 +6,7 @@ const VehicleMarker = (props) => {
   const { listing } = props;
 
   /// Convert from mongo ordering to leaflet
-  const [lng, lat] = listing.location.coordinateArray;
+  const [lng, lat] = listing.location;
   const location = { lat, lng };
   return (
     <Marker position={location}>

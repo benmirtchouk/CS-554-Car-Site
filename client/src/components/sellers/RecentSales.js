@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { listing } from "../../data";
-import SearchCard from "../find_cars/SearchCard";
+import CarD from "../CarD";
 import { BarChart, Bar, XAxis, YAxis } from "recharts";
 
 const RecentSales = () => {
@@ -23,7 +23,7 @@ const RecentSales = () => {
   }, []);
 
   console.log(recentSales);
-  const recentlySoldCards = recentSales.map((e) => SearchCard(e));
+  const recentlySoldCards = recentSales.map((e) => CarD(e));
   return (
     <div className="main_layout">
       <div className="mainbody">

@@ -49,7 +49,7 @@ const Login = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto text-left p-4">
+    <div className="form-page">
       <h1 className="-mb-2 mt-2">Login</h1>
       {error && <p className="LoginError">{errorMsg}</p>}
       <div className="space-x-2 pt-4 pb-2">

@@ -28,6 +28,7 @@ body {
   height: calc(100vh - 56px);
   background: #f8f9fa;
   padding: 12px;
+  transform: translateX(12px);
 }
 
 .w-108 {
@@ -70,4 +71,17 @@ body {
 .block label {
   margin: 0;
   line-height: 38px;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.form-page {
+  max-width: 370px;
+  margin: 0 auto;
+}
+
+.line-through {
+  text-decoration: line-through;
 }

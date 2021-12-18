@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { listing, geocode } from "../../data";
-import SearchCard from "../find_cars/SearchCard";
+import CarD from "../CarD";
 import SingleVehicleMap from "../MapLogic/SingleVehicleMap";
 
 const AddListing = () => {
@@ -210,9 +210,7 @@ const AddListing = () => {
             <br />
             <SingleVehicleMap
               listing={{
-                location: {
-                  coordinateArray: [geocodedData.lon, geocodedData.lat],
-                },
+                location: [geocodedData.lon, geocodedData.lat],
               }}
               zoomLevel="15"
             />
@@ -224,7 +222,7 @@ const AddListing = () => {
         {createdListing ? (
           <div>
             Created <br />
-            {SearchCard(createdListing)}
+            {CarD(createdListing)}
           </div>
         ) : (
           ""

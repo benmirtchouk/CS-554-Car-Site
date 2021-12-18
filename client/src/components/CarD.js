@@ -3,9 +3,9 @@
 import React from "react";
 import { Badge, Button, Card, Row, Col } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
-import SingleVehicleMap from "../MapLogic/SingleVehicleMap";
+import SingleVehicleMap from "./MapLogic/SingleVehicleMap";
 
-const SearchCard = (props) => {
+const CarD = (props) => {
   const fallbackImage = "/images/ImgNotAvailable.png";
 
   const { data, listing } = props;
@@ -17,12 +17,12 @@ const SearchCard = (props) => {
   const img = imgName
     ? `http://localhost:3001/images/${imgName}`
     : fallbackImage;
-  const imageOnError = !imgName
-    ? null
-    : (e) => {
-        e.target.src = fallbackImage;
-        e.onerror = null;
-      };
+  // const imageOnError = !imgName
+  //   ? null
+  //   : (e) => {
+  //       e.target.src = fallbackImage;
+  //       e.onerror = null;
+  //     };
 
   const key = `search-${
     vin !== undefined ? vin : `${modelYear}-${make}-${model}`
@@ -46,13 +46,13 @@ const SearchCard = (props) => {
             <Card.Title>
               {make} {model} {modelYear}
             </Card.Title>
-            <Card.Text>
+            <div>
               {isForSale ? (
                 <ListingDetails listing={listing} />
               ) : (
                 "Not currently listed for sale"
               )}
-            </Card.Text>
+            </div>
             <Row>
               <Col>
                 <LinkContainer
@@ -89,7 +89,6 @@ const SearchCard = (props) => {
 const ListingDetails = (props) => {
   const { listing } = props;
   const { exteriorColor, interiorColor, millage, price } = listing;
-  listing.location.coordinateArray = listing.location;
 
   return (
     <>
@@ -114,4 +113,4 @@ const ListingDetails = (props) => {
   );
 };
 
-export default SearchCard;
+export default CarD;

@@ -3,7 +3,7 @@
 
 import React, { useEffect, useState } from "react";
 import Searches from "../../data/search";
-import SearchCard from "./SearchCard";
+import CarD from "../CarD";
 import Pagination from "../Pagination";
 import Loading from "../Loading";
 import VehicleMap from "../MapLogic/VehicleMap";
@@ -19,7 +19,7 @@ const handleLocationSearch = async (
   offset,
   setTotalSize
 ) => {
-  const [lon, lat ] = inputQuery.location;
+  const [lon, lat] = inputQuery.location;
   const query = {
     limit: resultsPerPage,
     offset,
@@ -31,10 +31,10 @@ const handleLocationSearch = async (
 
   const searchData = await Searches.byLocation(query);
   const { pagination, results } = searchData.data;
-  if(searchData.status >= 400) {
+  if (searchData.status >= 400) {
     return [];
   }
-  
+
   setTotalSize(pagination.totalCount);
   return results.map(mapListing);
 };
@@ -43,7 +43,7 @@ const handleComponentSearch = async (
   inputQuery,
   setTotalSize,
   resultsPerPage,
-  offset,
+  offset
 ) => {
   const query = {
     ...inputQuery,
@@ -69,7 +69,21 @@ const SearchResults = (props) => {
 
   const {
     location: { state },
+    setSidebar,
   } = props;
+
+  useEffect(() => {
+    setSidebar([
+      {
+        name: "All Listings",
+        link: "/listings",
+      },
+      {
+        name: "My Listings",
+        link: "/my_listings",
+      },
+    ]);
+  }, [setSidebar]);
 
   useEffect(() => {
     (async () => {
@@ -93,7 +107,6 @@ const SearchResults = (props) => {
       } else if (query === undefined || query === null) {
         return;
       } else if (searchKey === "location") {
-
         resultsToSet = await handleLocationSearch(
           query,
           resultsPerPage,
@@ -109,9 +122,9 @@ const SearchResults = (props) => {
         );
       }
 
-      const resultsAreArray = Array.isArray(resultsToSet)
-      if(resultsAreArray) {
-        setSearchResults([])
+      const resultsAreArray = Array.isArray(resultsToSet);
+      if (resultsAreArray) {
+        setSearchResults([]);
       }
       setSearchResults(resultsAreArray ? resultsToSet : []);
       setLoading(!resultsAreArray);
@@ -125,7 +138,10 @@ const SearchResults = (props) => {
     return <Loading />;
   }
 
-  const searchCards = searchResults.map((e) => SearchCard(e));
+  const searchCards = searchResults.map((e) => {
+    console.log(e)
+    return CarD(e);
+  });
   return (
     <div className="main_layout">
       <div className="mainbody">
@@ -141,14 +157,16 @@ const SearchResults = (props) => {
           ""
         )}
 
-        { searchResults.length > 1 ? (
-          <VehicleMap 
-          listings={searchResults.map(e => e.listing) }
-          center={[searchResults[0].listing.location[1], searchResults[0].listing.location[0]]}
-          zoomLevel= { "4"  }
-          className="search-map"
+        {searchResults.length > 1 ? (
+          <VehicleMap
+            listings={searchResults.map((e) => e.listing)}
+            center={[
+              searchResults[0].listing.location[1],
+              searchResults[0].listing.location[0],
+            ]}
+            zoomLevel={"4"}
+            className="search-map"
           />
-          
         ) : (
           ""
         )}
