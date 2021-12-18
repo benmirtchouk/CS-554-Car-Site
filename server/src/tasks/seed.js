@@ -27,19 +27,31 @@ async function seedDB() {
 
     try {
         console.log("Inserting Listings from SeedFile1....")
+	let i=0;
         for(const listingRawData of listingData1) {
             const listing = new VehicleListing(listingRawData);
+	    if (!(i%10))
+		listing["sold"]=true;
             await listingMongoOperation.insertListing(listing);
+            i=i+1;
         }
         console.log("Inserting Listings from SeedFile2....")
+	i=0;
         for(const listingRawData of listingData2) {
             const listing = new VehicleListing(listingRawData);
+	    if (!(i%10))
+		listing["sold"]=true;
             await listingMongoOperation.insertListing(listing);
+            i=i+1;
         }
         console.log("Inserting Listings from SeedFile3....")
+	i=0;
         for(const listingRawData of listingData3) {
             const listing = new VehicleListing(listingRawData);
+	    if (!(i%10))
+		listing["sold"]=true;
             await listingMongoOperation.insertListing(listing);
+            i=i+1;
         }
 
     } catch (err) {
@@ -51,6 +63,7 @@ async function seedDB() {
         const imageDirectory = "./src/tasks/listingSeedImages"
         const seedImageFiles = fs.readdirSync(imageDirectory)
         for(const fileName of seedImageFiles) {
+	    if (fileName.includes("car_picture")) continue;
             const [vin, fileType] = fileName.split(".");
             const header = `data:image/${fileType};base64,`
             try {
@@ -65,7 +78,6 @@ async function seedDB() {
     } catch(e) {
         console.error(`Failed to seed images. (Seed task should be ran from server root directory) -- ${e}`);
     }
-     
 
     try {
         console.log("Inserting Account Information")
