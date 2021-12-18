@@ -29,7 +29,6 @@ const CarD = (props) => {
   }`;
 
   const isForSale = listing != null && !!Object.keys(listing).length;
-
   return (
     <Card className="search-card" key={key}>
       <Row>
@@ -71,17 +70,21 @@ const CarD = (props) => {
                 </LinkContainer>
               </Col>
               <Col>
-                <LinkContainer to={`/listing/${listing._id}`}>
-                  <Button size="sm" variant="primary" className="w-108 hortizontally-center">
-                    View Listing
-                  </Button>
-                </LinkContainer>
+                {isForSale && (
+                  <LinkContainer to={`/listing/${listing._id}`}>
+                    <Button size="sm" variant="primary" className="w-108 hortizontally-center">
+                      View Listing
+                    </Button>
+                  </LinkContainer>
+                )}
               </Col>
             </Row>
           </Card.Body>
         </Col>
       </Row>
-      <SingleVehicleMap listing={listing} zoomLevel={15} />
+      {isForSale && (
+        <SingleVehicleMap listing={listing} zoomLevel={15} />
+      )}
     </Card>
   );
 };
@@ -89,19 +92,22 @@ const CarD = (props) => {
 const ListingDetails = (props) => {
   const { listing } = props;
   const { exteriorColor, interiorColor, millage, price } = listing;
-
   return (
     <>
       <Row>
         <Col md={4}>
-          <Badge bg="danger">For Sale</Badge>
+          {listing?.sold ? (
+            <Badge bg="danger">Sold</Badge>
+          ) : (
+            <Badge bg="success">For Sale</Badge>
+          )}
         </Col>
         <Col>
           <p className="price">Price: {price}</p>
         </Col>
       </Row>
       <Row>
-        <Col>Millage: {millage}</Col>
+        <Col>Mileage: {millage}</Col>
         <Col>
           Exterior: <p className="ellipsis">{exteriorColor}</p>
         </Col>

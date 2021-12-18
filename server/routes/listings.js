@@ -34,10 +34,11 @@ router.get('/', async (req, res) => {
         return res.status(401).json({ message: 'You must be logged in to view user listings' });
         const { totalSize, results } = await getUserListings(userid, paginationRequest);
         data = results;
+        data = data.map(x => x.asDictionary());
         totalCount = totalSize;
     } else {
         data = await getAllListings(paginationRequest);
-        data = data.map(x => x.asDictionary()) 
+        data = data.map(x => x.asDictionary());
         totalCount = await countFromMetadata();
     }
 
@@ -49,7 +50,7 @@ router.get('/', async (req, res) => {
     });
 });
 
-router.get('byId/:id', async (req, res) => {
+router.get('/byId/:id', async (req, res) => {
     let id;
     try {
         id = validateIsObjectId(req.params.id);
@@ -59,6 +60,7 @@ router.get('byId/:id', async (req, res) => {
 
     try {
         listing = await getListing(id);
+        listing = listing.asDictionary();
         if (listing === null)
             return res.status(404).json({message: "No such listing found"});
         return res.json(listing);

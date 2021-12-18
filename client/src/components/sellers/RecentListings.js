@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { listing } from "../../data";
 import CarD from "../CarD";
-import { BarChart, Bar, XAxis, YAxis } from "recharts";
+import { LineChart, Line, XAxis, YAxis } from "recharts";
 
 const RecentListings = () => {
   const [recentListings, setRecentListings] = useState([]);
-  const [selectedChartStat, setSelectedChartStat] = useState(undefined);
+  const [selectedChartStat, setSelectedChartStat] = useState("price");
 
   useEffect(() => {
     (async () => {
@@ -33,21 +33,21 @@ const RecentListings = () => {
         <br /> <br />
         <select onChange={(e) => setSelectedChartStat(e.target.value)}>
           <option value="price">Price</option>
-          <option value="millage">Millage</option>
+          <option value="millage">Mileage</option>
         </select>
         {selectedChartStat !== undefined && (
-          <BarChart
+          <LineChart
             width={600}
             height={300}
             data={recentListings.map((car) => ({
-              name: car.listing.metadata.make,
+              time: new Date(car.listing.createdOn).getTime(),
               uv: car?.listing[selectedChartStat],
             }))}
           >
-            <XAxis dataKey="name" />
+            <XAxis dataKey="time" tickFormatter = {(unixTime) => new Date(unixTime).toLocaleDateString("en-US", {hour: 'numeric', minute: 'numeric'})} />
             <YAxis />
-            <Bar dataKey="uv" barSize={30} fill="#8884d8" />
-          </BarChart>
+            <Line dataKey="uv" barSize={30} fill="#8884d8" />
+          </LineChart>
         )}
         {recentlyListedCards}
       </div>

@@ -51,7 +51,7 @@ const Pagination = (props) => {
         </Pag>
       </Col>
       <Col>
-        <Form.Group class="block">
+        <Form.Group className="block">
           <Form.Label>Results per page</Form.Label>
           <Form.Control
             type="number"

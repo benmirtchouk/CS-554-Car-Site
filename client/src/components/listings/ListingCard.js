@@ -21,7 +21,7 @@ const ListingCard = (props) => {
           <dd>{listing.metadata}</dd>
         </div> */}
         <div>
-          <dt>millage:</dt>
+          <dt>mileage:</dt>
           <dd>{listing.millage}</dd>
         </div>
         {/* <div>
