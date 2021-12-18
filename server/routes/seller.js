@@ -5,6 +5,7 @@ const router = express.Router();
 const {
 getAccounts,
   modifyRating,
+  getTopRated,
 } = require("../src/MongoOperations/account");
 const {
     getAllSellers
@@ -17,6 +18,18 @@ const {
 const PaginationRequest = require('../src/PaginationRequest');
 
 
+const getAccountsFromAggregationResult = async (aggregationResults, aggregatedKey) => {
+  const ids = Object.keys(aggregationResults);
+  console.log(aggregatedKey)
+  console.log(aggregationResults)
+  const accounts = (await getAccounts(ids)) 
+                   .map(e => { console.log(e); return {...e, [aggregatedKey]: aggregationResults[e._id] } });
+  
+  /// Note: If the accounts collection ever stores sensitive information, this will need to be removed before being sent
+  return accounts;
+}
+
+
 router.get("/mostListed", async (req, res) => {
     let paginationRequest;
     try {
@@ -27,13 +40,33 @@ router.get("/mostListed", async (req, res) => {
     }
 
     const sellers = await getAllSellers(paginationRequest);
-    const sellerIds = Object.keys(sellers)
-    const accounts = (await getAccounts(sellerIds)).map(e => { return {...e, totalListings: sellers[e._id] }});
-    /// Note: If the accounts collection ever stores sensitive information, this will need to be removed before being sent
+    const accounts = await getAccountsFromAggregationResult(sellers, "totalListings");
     return res.json({
       sellers: accounts
     })
 })
+
+
+router.get("/mostLiked", async(req, res)=> {
+  let paginationRequest;
+  try {
+      paginationRequest = new PaginationRequest(req.query);
+  } catch (e) {
+      console.error(e);
+      return res.status(400).json({message: e.message});
+  }
+
+  const ratingRatios = await getTopRated(paginationRequest);
+  const accounts = await getAccountsFromAggregationResult(ratingRatios, "ratio")
+    
+  /// Sort again, as merging the full account info can shuffle the arrray
+  accounts.sort( (lhs, rhs) => lhs.ratio < rhs.ratio ? 1 : -1)
+
+  return res.json({
+    sellers: accounts
+  });
+})
+
 
 
 router.post("/:id/rate", async (req, res) => {

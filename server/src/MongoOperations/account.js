@@ -5,6 +5,7 @@ const { InternalMongoError, KeyAlreadyExists, UserDoesNotExist, InvalidUserInput
 const { ValidationError } = require("../DataModel/Validation/ObjectProperties");
 const e = require("express");
 const ret = require("bluebird/js/release/util");
+const PaginationRequest = require("../PaginationRequest");
 
 const createAccount = async (account) => {
   if (!(account instanceof Account)) {
@@ -149,10 +150,58 @@ const modifyRating = async (id, rating, modifyAmount) => {
   return {like: updatedAccount.like, dislike: updatedAccount.dislike}
 }
 
+
+const getTopRated = async (paginationRequest) => {
+
+  if(!paginationRequest instanceof PaginationRequest) {
+    throw new Error("Pagination request not provided")
+  }
+
+const {offset, limit } = paginationRequest;
+  const pipeline = [
+
+    {
+      $project: {
+        like: { $ifNull: [ '$like', 0 ] },
+        dislike: '$dislike', 
+      }
+    }, {
+      $project: {
+        like: '$like',
+        /// If like is 0, return 1 on dislike to avoid divide by zero, and keep no ratings at 0%
+        dislike: { $ifNull: ['$dislike', { $cond: [ {$gte: ['$like', 1] }, 0, 1 ] }] } 
+      }
+    }, {
+      $project: {
+        totalRatings: { '$add': [ '$like', '$dislike' ] }, 
+        like: '$like'
+      }
+    }, {
+      $project: { 'ratio': { '$divide': [ '$like', '$totalRatings' ] } }
+    }, {
+      $sort: {ratio: -1 }
+    }, {
+       $skip: offset
+    }, {
+      $limit: limit
+    }
+  ]
+
+  const collection = await accounts();
+  const aggCursor = collection.aggregate(pipeline);
+    const data = {}
+    for await (const doc of aggCursor) {
+        data[doc._id] = doc.ratio
+    }
+    console.log(data);
+    return data;
+}
+
 module.exports = {
   createAccount,
   getAccount,
   getAccounts,
   modifyRating ,
   updateAccount,
+  getTopRated,
 };
