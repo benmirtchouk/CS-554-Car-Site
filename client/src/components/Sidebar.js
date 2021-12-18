@@ -26,6 +26,12 @@ const Sidebar = () => {
       name: "Recent Listings",
       link: "/recent_listings",
     },
+    ...(currentUser != null ? [
+      {
+        name: "Message Board",
+        link: "/message_board",
+      }
+    ] : []),
   ];
 
   return (
