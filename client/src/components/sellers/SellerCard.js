@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
+import { LinkContainer } from "react-router-bootstrap";
 import { seller } from "../../data";
-import { Button } from "react-bootstrap";
+import { Button, Card, Row, Col, Nav, Form } from "react-bootstrap";
 import { AuthContext } from "../../firebase/Auth";
 import { useContext } from "react";
 const sellerDataFetching = seller;
@@ -50,59 +50,66 @@ const SellerCard = (props) => {
         if(typeof setSeller !== 'function') { return; }
         setSeller(data.seller)
     }
+    const key = `{ firstName} {lastName} -- {displayName}`;
 
-    return (<div>
-        <span>{firstName} {lastName} -- {displayName} </span>
-        <span> Based in {city}, {state} </span>
-        {totalListings > 0 ?
-        <span> With a total of {totalListings} cars on Carigslist!</span>
-        : ""
-        }
-        
-        { shouldShowSellerLink ? 
-            <Link to={`/seller/${_id}`}> Go to info </Link> :
-            ""
-        }
-        <div>
-            <button type="button" disabled={!userCanRateSeller} onClick={(e) => rateSellerOnClick(e, false)}>👎 {dislike || 0}</button>
-            <button type="button" disabled={!userCanRateSeller} onClick={(e) => rateSellerOnClick(e, true)}>👍 {like || 0} </button>
-            {ratio !== undefined ?
-                <span> {ratio.toFixed(2)}% positive feedback! </span> :
-                ''
-            }
-        </div> 
+    return(
+        <Card key={key}>
+            <Row>
+                <Col>
+                <Card.Body>
+                    <Card.Title>
+                    { firstName} {lastName} -- {displayName}
+                    </Card.Title>
+                    <Row>
+                        <Col>
+                            Based in {city}, {state}
+                            {totalListings > 0 && <span> with a total of {totalListings} cars on Carigslist! </span>}
+                            {shouldShowSellerLink &&  
+                            <LinkContainer to={`/seller/${_id}`}>
+                                <Nav.Link>Go to seller Page</Nav.Link>
+                            </LinkContainer>}
+                        </Col>
+                        <Col className="text-right">
+                            <Button type="button" disabled={!userCanRateSeller} onClick={(e) => rateSellerOnClick(e, false)}>👎 {dislike || 0}</Button>
+                            <Button type="button" disabled={!userCanRateSeller} onClick={(e) => rateSellerOnClick(e, true)}>👍 {like || 0} </Button>
+                            {ratio  && <span> {ratio.toFixed(2)}% positive feedback! </span> }
+                        </Col>
+                    </Row>
+                    <Row>
+                    {userCanComment &&
+                        <Col>
+                            <Form onSubmit={addComment}>
+                                <Form.Group>
+                                    <Form.Label>
+                                        Add Comment: 
+                                        <Form.Control name="comment" type="text" placeholder="How did a sale go?" required />
+                                    </Form.Label>
+                                    <Button type="submit"> Comment </Button>
+                                </Form.Group>
+   
+                            </Form>
 
-        {userCanComment &&
-            <div>
-                <form onSubmit={addComment}>
-                    <label>
-                        Add Comment: 
-                        <input name="comment" type="text" placeholder="How did a sale go?"required />
-                        <Button type="submit"> Comment </Button>
-                    </label>
-                </form>
+                        </Col>
+                        }
+                    </Row>
+                    {Array.isArray(sellerComments) && 
+                     <Row>
+                        <Col>
+                            {sellerComments.map(({displayName, commentText}) =>  
+                            <div>
+                                {displayName}: {commentText}
+                            </div>
+                            )}
+                        </Col>
+                     </Row>
+                    
+                    }                 
+                </Card.Body>
+                </Col>
+            </Row>
+            </Card>
+        )
+};
 
-            </div>
-        }
-
-
-        <div>
-            {Array.isArray(sellerComments) &&
-                <div>
-                    {sellerComments.map(({displayName, commentText}) =>  
-                    <div>
-                        {displayName}: {commentText}
-                    </div>
-                    )}
-                </div>
-
-            }
-        </div>
- 
-
-        
-      </div>
-      ); 
-}
 
 export default SellerCard;
