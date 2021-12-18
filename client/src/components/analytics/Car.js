@@ -2,7 +2,6 @@
 import React from "react";
 // import PropTypes from "prop-types";
 import ReactStars from "react-rating-stars-component";
-import DataPicture from "./DataPicture";
 import { Container, Row, Col, Table } from "react-bootstrap";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
@@ -13,7 +12,6 @@ const Car = ({ info }) => {
   const { item } = info;
   const otherImg = "/images/ImgNotAvailable.png";
   const img = item.VehiclePicture ? item.VehiclePicture : otherImg;
-  const key = `Card${item.Id}`;
 
   return (
     <Container>

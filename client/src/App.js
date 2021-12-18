@@ -72,12 +72,7 @@ const App = () => {
                   <PrivateRoute path="/account" component={Account} />
                   <Route path="/reset_pwd" component={PasswordReset} />
                   <Route path="/signup" component={SignUp} />
-                  <Route
-                    path="/search_results"
-                    render={(props) => (
-                      <SearchResults setSidebar={setSideItems} {...props} />
-                    )}
-                  />
+                  <Route path="/search_results" component={SearchResults} />
                   <Route path="/find_by_model" component={FindByModel} />
                   <Route path="/find_by_make" component={FindByMake} />
                   <Route path="/find_by_vin" component={FindByVin} />
