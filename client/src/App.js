@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Row, Col, Container } from "react-bootstrap";
+import io from "socket.io-client";
 import {
   AuthProvider,
   PrivateRoute,
@@ -29,6 +30,16 @@ import {
 
 import "./App.css";
 import "./Carigs.css";
+
+const socket = io("http://localhost:3001", {
+  transports: ['websocket'],
+  withCredentials: true,
+  extraHeaders: {
+    "cred-header": "abcd"
+  }
+});
+const SocketContext = React.createContext(socket);
+
 
 const App = () => {
   const [sideItems, setSideItems] = useState([
@@ -61,10 +72,13 @@ const App = () => {
                   <PrivateRoute path="/sellers" component={Sellers} />
                   <PrivateRoute path="/sell_car" component={SellCar} />
                   <PrivateRoute path="/my_listings" component={MyListings} />
-                  <PrivateRoute
-                    path="/message_board/:sellerId"
-                    component={MessageBoard}
-                  />
+                  <SocketContext.Provider value={socket}>
+                    <PrivateRoute
+                      path="/message_board"
+                      component={MessageBoard}
+                    />
+                  </SocketContext.Provider>
+
                   <Route path="/recent_sales" component={RecentSales} />
                   <Route path="/safety" component={Safety} />
                   <Route path="/vin" component={Vin} />

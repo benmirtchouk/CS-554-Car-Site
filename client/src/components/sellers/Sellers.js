@@ -23,7 +23,7 @@ const Sellers = () => {
       {/* eslint no-underscore-dangle: 0 */}
       <Seller key={seller._id} name={seller.name} sellerId={seller.sellerId} />
       <p><Link to={{
-        pathname: `/message_board/${seller.sellerId}`,
+        pathname: `/message_board`,
         state: {
           sellerName: seller.name
         }

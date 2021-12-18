@@ -291,3 +291,11 @@ p.detKey {
   overflow-y: scroll;
 }
 
+#message{
+  border: solid;
+  border-color: #333333;
+}
+
+#send-message{
+  color: #0000ff;
+}
