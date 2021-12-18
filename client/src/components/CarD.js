@@ -17,12 +17,12 @@ const CarD = (props) => {
   const img = imgName
     ? `http://localhost:3001/images/${imgName}`
     : fallbackImage;
-  const imageOnError = !imgName
-    ? null
-    : (e) => {
-        e.target.src = fallbackImage;
-        e.onerror = null;
-      };
+  // const imageOnError = !imgName
+  //   ? null
+  //   : (e) => {
+  //       e.target.src = fallbackImage;
+  //       e.onerror = null;
+  //     };
 
   const key = `search-${
     vin !== undefined ? vin : `${modelYear}-${make}-${model}`
@@ -46,13 +46,13 @@ const CarD = (props) => {
             <Card.Title>
               {make} {model} {modelYear}
             </Card.Title>
-            <Card.Text>
+            <div>
               {isForSale ? (
                 <ListingDetails listing={listing} />
               ) : (
                 "Not currently listed for sale"
               )}
-            </Card.Text>
+            </div>
             <Row>
               <Col>
                 <LinkContainer
@@ -89,7 +89,6 @@ const CarD = (props) => {
 const ListingDetails = (props) => {
   const { listing } = props;
   const { exteriorColor, interiorColor, millage, price } = listing;
-  listing.location.coordinateArray = listing.location;
 
   return (
     <>

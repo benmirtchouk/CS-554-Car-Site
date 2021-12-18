@@ -48,7 +48,7 @@ const AllListings = () => {
     return <Loading />;
   }
 
-  console.log(listings)
+  console.log(listings);
 
   return (
     <div className="main_layout">
@@ -65,17 +65,17 @@ const AllListings = () => {
         {listings.length !== 0 && (
           <VehicleMap
             listings={listings}
-            center={getAveragePosition(
-              listings.map((ls) => ls.location.coordinateArray)
-            )}
+            center={getAveragePosition(listings.map((ls) => ls.location))}
             zoomLevel="1"
           />
         )}
       </div>
-      {listings.map((ls) => CarD({
-        data: {metadata: ls.metadata},
-        listing: ls
-      }))}
+      {listings.map((ls) =>
+        CarD({
+          data: { metadata: ls.metadata },
+          listing: ls,
+        })
+      )}
     </div>
   );
 };

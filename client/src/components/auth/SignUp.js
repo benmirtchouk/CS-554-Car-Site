@@ -14,12 +14,12 @@ const SignUp = () => {
   const [pwMatch, setPwMatch] = useState("");
   const history = useHistory();
 
-  const slinks = [
-    {
-      name: "Home",
-      link: "/",
-    },
-  ];
+  // const slinks = [
+  //   {
+  //     name: "Home",
+  //     link: "/",
+  //   },
+  // ];
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();

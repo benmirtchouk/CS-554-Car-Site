@@ -210,9 +210,7 @@ const AddListing = () => {
             <br />
             <SingleVehicleMap
               listing={{
-                location: {
-                  coordinateArray: [geocodedData.lon, geocodedData.lat],
-                },
+                location: [geocodedData.lon, geocodedData.lat],
               }}
               zoomLevel="15"
             />
