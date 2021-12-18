@@ -82,6 +82,23 @@ async function getAllListings(paginationRequest) {
     return listingData.map(e => new VehicleListing(e));
 }
 
+const getRecentlySold = async (paginationRequest) => {
+    if(!paginationRequest instanceof PaginationRequest) {
+        throw new Error("Pagination request not provided")
+    }
+    const {offset, limit} = paginationRequest;
+
+    const collection = await listings();
+    const listingData = await collection
+                        .find({soldOn: {$ne: null}})
+                        .sort({soldOn: -1})
+                        .skip(offset)
+                        .limit(limit)
+                        .toArray();
+    return listingData.map(e => new VehicleListing(e));
+
+}
+
 async function getUserListings(userid, paginationRequest) {
     if (typeof userid !== 'string') throw 'userid must be a string';
     if(!paginationRequest instanceof PaginationRequest) {
@@ -269,6 +286,7 @@ module.exports = {
     getListing,
     getAllListings,
     getUserListings,
+    getRecentlySold,
     searchListings,
     insertListing,
     listingsWithinMileRadius,
