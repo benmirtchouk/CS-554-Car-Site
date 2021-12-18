@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { seller } from "../../data";
-import Seller from "./SellerDetails";
 const sellerDataFetching = seller;
 
 

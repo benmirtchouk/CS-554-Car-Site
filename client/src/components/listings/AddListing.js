@@ -1,4 +1,12 @@
 import React, { useState } from "react";
+import {
+  Button,
+  Form,
+  FormControl,
+  InputGroup,
+  Row,
+  Col,
+} from "react-bootstrap";
 import { listing, geocode } from "../../data";
 import CarD from "../CarD";
 import SingleVehicleMap from "../MapLogic/SingleVehicleMap";
@@ -98,105 +106,127 @@ const AddListing = () => {
 
   return (
     <div className="main_layout">
-      <div className="mainbody">
-        <h1>Add a Listing</h1>
-        <br />
-        <br />
-        <br />
-        <br />
-        <form onSubmit={submitHandler}>
-          <div className="form-group flex-col">
-            <label>
-              Vin
-              <input
-                id="vin"
-                type="text"
-                name="vin"
-                placeholder="Vin..."
-                className="mx-2"
-                title="The full VIN of the vehicle"
-                required
-              />
-            </label>
-
-            <label>
-              Street Address
-              <input
-                id="streetAddress"
-                type="text"
-                name="streetAddress"
-                placeholder="Street address of vehicle"
-                title="Where is the vehicle located?"
-                onBlur={geocodeAddress}
-                disabled={geocodeDataLoading}
-                required
-              />
-            </label>
-            <label>
-              Price
-              <input
-                id="price"
-                type="number"
-                name="price"
-                placeholder="Price..."
-                className="mx-2"
-                title="The list price to show"
-                required
-              />
-            </label>
-            <label>
-              Mileage
-              <input
-                id="millage"
-                type="number"
-                name="millage"
-                placeholder="Millage..."
-                className="mx-2"
-                title="The mileage on the odometer"
-                required
-              />
-            </label>
-            <label>
-              Exterior Color
-              <input
-                id="exteriorColor"
-                type="text"
-                name="exteriorColor"
-                placeholder="Exterior Color..."
-                className="mx-2"
-                title="The primary exterior color"
-                required
-              />
-            </label>
-            <label>
-              Interior Color
-              <input
-                id="interiorColor"
-                type="text"
-                name="interiorColor"
-                placeholder="Interior Color..."
-                className="mx-2"
-                title="The primary interior color"
-                required
-              />
-            </label>
-
-            <label>
-              Photo
-              <input
-                id="photo"
-                type="file"
-                name="photo"
-                accept=".png,.jpg,.jpeg, image/png, image/jpg, image/.jpeg"
-                title="Optional photo of the vehicle"
-              />
-            </label>
-          </div>
-
-          <button className="btn-primary px-10" type="submit" name="submitBtn">
-            Add Listing
-          </button>
-        </form>
+        <Form className="form-page" onSubmit={submitHandler}>
+          <Row>
+            <Col>
+              <h1>Add a Listing</h1>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Form.Group className="mb-3">
+                <Form.Label>VIN</Form.Label>
+                <Form.Control
+                  id="vin"
+                  type="text"
+                  name="vin"
+                  placeholder="Vin..."
+                  title="The full VIN of the vehicle"
+                  required
+                />
+              </Form.Group>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Form.Group className="mb-3">
+                <Form.Label>Street Address</Form.Label>
+                <Form.Control
+                  id="streetAddress"
+                  type="text"
+                  name="streetAddress"
+                  placeholder="Street address of vehicle..."
+                  title="Where is the vehicle located?"
+                  onBlur={geocodeAddress}
+                  disabled={geocodeDataLoading}
+                  required
+                />
+              </Form.Group>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Form.Group className="mb-3">
+                <Form.Label htmlFor="inlineFormInputGroup">Price</Form.Label>
+                <InputGroup className="mb-2">
+                  <InputGroup.Text>$</InputGroup.Text>
+                  <FormControl
+                    type="number"
+                    name="price"
+                    placeholder="Price..."
+                    title="The list price to show"
+                    required
+                    id="inlineFormInputGroup"
+                  />
+                </InputGroup>
+              </Form.Group>
+            </Col>
+            <Col>
+              <Form.Group className="mb-3">
+                <Form.Label htmlFor="inlineFormInputGroup">Mileage</Form.Label>
+                <Form.Control
+                  id="millage"
+                  type="number"
+                  name="millage"
+                  placeholder="Millage..."
+                  title="The mileage on the odometer"
+                  required
+                />
+              </Form.Group>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Form.Group className="mb-3">
+                <Form.Label>Exterior Color</Form.Label>
+                <Form.Control
+                  id="exteriorColor"
+                  type="text"
+                  name="exteriorColor"
+                  placeholder="Exterior Color..."
+                  title="The primary exterior color"
+                  required
+                />
+              </Form.Group>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Form.Group className="mb-3">
+                <Form.Label>Interior Color</Form.Label>
+                <Form.Control
+                  id="interiorColor"
+                  type="text"
+                  name="interiorColor"
+                  placeholder="Interior Color..."
+                  title="The primary interior color"
+                  required
+                />
+              </Form.Group>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Form.Group controlId="formFile" className="mb-3">
+                <Form.Label>Photo</Form.Label>
+                <Form.Control
+                  id="photo"
+                  type="file"
+                  name="photo"
+                  accept=".png,.jpg,.jpeg, image/png, image/jpg, image/.jpeg"
+                  title="Optional photo of the vehicle"
+                />
+              </Form.Group>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Button variant="primary" type="submit">
+                Add Listing
+              </Button>
+            </Col>
+          </Row>
+        </Form>
         <div className="errors">
           {errors.map((error) => (
             <p className="error" key={error}>
@@ -227,7 +257,6 @@ const AddListing = () => {
         ) : (
           ""
         )}
-      </div>
     </div>
   );
 };

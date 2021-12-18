@@ -47,7 +47,7 @@ const MessageBoard = (props) => {
     return () => {
       socket.emit('user_join_leave', { uid, username: current_username, joined: false } );
     }
-  }, [socket, uid]);
+  }, [socket, uid, current_username]);
 
   const onMessageSubmit = (e) => {
     e.preventDefault();
