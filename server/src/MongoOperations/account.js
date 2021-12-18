@@ -1,4 +1,4 @@
-const mongo = require("mongodb");
+const {ObjectId} = require("mongodb");
 const { accounts } = require("../config/mongoCollections");
 const Account = require("../DataModel/Account/Account");
 const { InternalMongoError, KeyAlreadyExists } = require("./OperationErrors");
@@ -41,6 +41,23 @@ const getAccount = async (id) => {
     throw new InternalMongoError("Insertion failed");
   }
 };
+
+
+const getAccounts = async( ids) => {
+  if (!Array.isArray(ids)) {
+    throw new Error("Ids must be an array")
+  }
+
+
+  /// Commented out as collection is currently keyed by strings
+  //let mongoIds = ids.map(e => new ObjectId(e))
+
+  const collection = await accounts();
+
+  const foundAccounts = await collection.find({_id: {$in: ids}}).toArray()
+
+  return foundAccounts;
+}
 
 const updateAccount = async (account) => {
   if (!(account instanceof Account)) {
@@ -100,5 +117,6 @@ const updateAccount = async (account) => {
 module.exports = {
   createAccount,
   getAccount,
+  getAccounts,
   updateAccount,
 };

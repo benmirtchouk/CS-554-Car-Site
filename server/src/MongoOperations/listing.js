@@ -140,6 +140,28 @@ const searchListings = async (query, paginationRequest) => {
             
 }
 
+const getAllSellers = async (paginationRequest) => {
+    if(!paginationRequest instanceof PaginationRequest) {
+        throw new Error("Pagination request not provided")
+    }
+
+    const {offset, limit } = paginationRequest;
+    const collection = await listings();
+
+    const pipeline = [
+        {$group : {_id: "$sellerId", count: { $sum: 1 } }},
+        {$sort: { count: -1}},
+        {$skip: offset},
+        {$limit: limit},
+    ];
+    const aggCursor = collection.aggregate(pipeline);
+    const data = {}
+    for await (const doc of aggCursor) {
+        data[doc._id] = doc.count
+    }
+
+    return data;
+}
 
 
 const uploadPhotoForVin = async (vin, photo) => {
@@ -246,6 +268,7 @@ module.exports = {
     insertListing,
     listingsWithinMileRadius,
     listingsWithinRadianRadius,
+    getAllSellers,
     uploadPhotoForVin,
     buyListing,
 }
