@@ -27,7 +27,7 @@ const Seller = (props) => {
 
     return (
         <div>
-            <SellerCard seller={seller} showSellerLink={false} setSeller={setSeller} allowRatings={true} />
+            <SellerCard seller={seller} showSellerLink={false} setSeller={setSeller} allowRatings={true} allowNewComments={true} />
         </div>
     
     )

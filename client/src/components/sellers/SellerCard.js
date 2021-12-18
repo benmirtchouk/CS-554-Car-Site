@@ -1,11 +1,16 @@
-import { Link } from "react-router-dom";
+import { LinkContainer } from "react-router-bootstrap";
 import { seller } from "../../data";
+import { Button, Card, Row, Col, Nav, Form } from "react-bootstrap";
+import { AuthContext } from "../../firebase/Auth";
+import { useContext } from "react";
+
 const sellerDataFetching = seller;
 
 
 const SellerCard = (props) => {
 
     const { seller, setSeller } = props;
+    const { currentUser } = useContext(AuthContext);
 
     if(!seller) {
         throw new Error("Seller must be provided!")
@@ -14,6 +19,7 @@ const SellerCard = (props) => {
     const {firstName, lastName, displayName, city, state, totalListings, _id, like, dislike, ratio, sellerComments} = seller;
     const shouldShowSellerLink = props.showSellerLink !== undefined ? !!props.showSellerLink : true;
     const userCanRateSeller = props.allowRatings !== undefined ? !!props.allowRatings : false;
+    const userCanComment = currentUser && props.allowNewComments !== undefined ? !!props.allowNewComments : false;
 
     const rateSellerOnClick = async (e, isLike) => {
         e.preventDefault();
@@ -32,58 +38,79 @@ const SellerCard = (props) => {
     const addComment = async(e) => {
         e.preventDefault();
 
-        const { data, status } = await sellerDataFetching.putComment("👋", _id)
+        const comment = e.target.elements.comment.value;
+
+        const { data, status } = await sellerDataFetching.putComment(comment, _id)
         if(status >= 400 || !data) {
             alert(status)
             return
         }
 
+        e.target.reset();
+
         if(typeof setSeller !== 'function') { return; }
         setSeller(data.seller)
     }
+    const key = `{ firstName} {lastName} -- {displayName}`;
 
-    return (<div>
-        <span>{firstName} {lastName} -- {displayName} </span>
-        <span> Based in {city}, {state} </span>
-        {totalListings > 0 ?
-        <span> With a total of {totalListings} cars on Carigslist!</span>
-        : ""
-        }
-        
-        { shouldShowSellerLink ? 
-            <Link to={`/seller/${_id}`}> Go to info </Link> :
-            ""
-        }
-        <div>
-            <button type="button" disabled={!userCanRateSeller} onClick={(e) => rateSellerOnClick(e, false)}>👎 {dislike || 0}</button>
-            <button type="button" disabled={!userCanRateSeller} onClick={(e) => rateSellerOnClick(e, true)}>👍 {like || 0} </button>
-            {ratio !== undefined ?
-                <span> {ratio.toFixed(2)}% positive feedback! </span> :
-                ''
-            }
-        </div> 
+    return(
+        <Card key={key}>
+            <Row>
+                <Col>
+                <Card.Body>
+                    <Card.Title>
+                    { firstName} {lastName} -- {displayName}
+                    </Card.Title>
+                    <Row>
+                        <Col>
+                            Based in {city}, {state}
+                            {totalListings > 0 && <span> with a total of {totalListings} cars on Carigslist! </span>}
+                            {shouldShowSellerLink &&  
+                            <LinkContainer to={`/seller/${_id}`}>
+                                <Nav.Link>Go to seller Page</Nav.Link>
+                            </LinkContainer>}
+                        </Col>
+                        <Col className="text-right">
+                            <Button type="button" disabled={!userCanRateSeller} onClick={(e) => rateSellerOnClick(e, false)}>👎 {dislike || 0}</Button>
+                            <Button type="button" disabled={!userCanRateSeller} onClick={(e) => rateSellerOnClick(e, true)}>👍 {like || 0} </Button>
+                            {ratio  && <span> {ratio.toFixed(2)}% positive feedback! </span> }
+                        </Col>
+                    </Row>
+                    <Row>
+                    {userCanComment &&
+                        <Col>
+                            <Form onSubmit={addComment}>
+                                <Form.Group>
+                                    <Form.Label>
+                                        Add Comment: 
+                                        <Form.Control name="comment" type="text" maxLength="475" placeholder="How did a sale go?" required />
+                                    </Form.Label>
+                                    <Button type="submit"> Comment </Button>
+                                </Form.Group>
+   
+                            </Form>
 
-        <div>
-            <button type="button" onClick={addComment}> Say Hello! </button>
-        </div>
+                        </Col>
+                        }
+                    </Row>
+                    {Array.isArray(sellerComments) && 
+                     <Row>
+                        <Col>
+                            {sellerComments.map(({displayName, commentText}) =>  
+                            <div>
+                                {displayName}: {commentText}
+                            </div>
+                            )}
+                        </Col>
+                     </Row>
+                    
+                    }                 
+                </Card.Body>
+                </Col>
+            </Row>
+            </Card>
+        )
+};
 
-        <div>
-            {Array.isArray(sellerComments) &&
-                <div>
-                    {sellerComments.map(({displayName, commentText}) =>  
-                    <div>
-                        {displayName}: {commentText}
-                    </div>
-                    )}
-                </div>
-
-            }
-        </div>
- 
-
-        
-      </div>
-      ); 
-}
 
 export default SellerCard;
