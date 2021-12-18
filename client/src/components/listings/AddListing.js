@@ -11,6 +11,7 @@ const AddListing = () => {
 
   const uploadListing = async (newListing, e) => {
     const { data, status } = await listing.addListing(newListing);
+    console.log(data);
     if (status >= 200 && status < 300) {
       setCreatedListing({ data: { metadata: data.metadata }, listing: data });
       e.target.reset();

@@ -62,7 +62,7 @@ async function buyListing(userid, id) {
     
     await collection.updateOne(
         { _id: id },
-        { $set: {sold: true}}
+        { $set: {sold: true, dateSold: new Date(Date.now())}}
     );
 
     return true;
@@ -80,6 +80,28 @@ async function getAllListings(paginationRequest) {
     .limit(limit)
     .toArray()
     return listingData.map(e => new VehicleListing(e));
+}
+
+const getRecentlyByDateKey = async (paginationRequest, dateKey) => {
+    if(!paginationRequest instanceof PaginationRequest) {
+        throw new Error("Pagination request not provided")
+    }
+    const {offset, limit} = paginationRequest;
+
+    const validKeys = new Set(["soldOn", "createdOn"]);
+    if(!validKeys.has(dateKey)) {
+        throw new Error("Key does not exist in schema");
+    }
+
+    const collection = await listings();
+    const listingData = await collection
+                        .find({[dateKey]: {$ne: null}})
+                        .sort({[dateKey]: -1})
+                        .skip(offset)
+                        .limit(limit)
+                        .toArray();
+    return listingData.map(e => new VehicleListing(e));
+
 }
 
 async function getUserListings(userid, paginationRequest) {
@@ -140,6 +162,28 @@ const searchListings = async (query, paginationRequest) => {
             
 }
 
+const getAllSellers = async (paginationRequest) => {
+    if(!paginationRequest instanceof PaginationRequest) {
+        throw new Error("Pagination request not provided")
+    }
+
+    const {offset, limit } = paginationRequest;
+    const collection = await listings();
+
+    const pipeline = [
+        {$group : {_id: "$sellerId", count: { $sum: 1 } }},
+        {$sort: { count: -1}},
+        {$skip: offset},
+        {$limit: limit},
+    ];
+    const aggCursor = collection.aggregate(pipeline);
+    const data = {}
+    for await (const doc of aggCursor) {
+        data[doc._id] = doc.count
+    }
+
+    return data;
+}
 
 
 const uploadPhotoForVin = async (vin, photo) => {
@@ -173,6 +217,11 @@ const uploadPhotoForVin = async (vin, photo) => {
 const insertListing = async (listing) => { 
     if (!(listing instanceof VehicleListing)) { throw new Error("Objecting being inserted must be a vehicle listing!") }
 
+    //typically listing shouldn't have a creation date at
+    // first - but there will be one when seeding the data
+    // so skip if there is a date already.
+    if (listing.createdOn===undefined || listing.createdOn===null)
+        listing.createdOn=new Date();
 
     const existing = await listingForVin(listing.vin);
 
@@ -242,10 +291,12 @@ module.exports = {
     getListing,
     getAllListings,
     getUserListings,
+    getRecentlyByDateKey,
     searchListings,
     insertListing,
     listingsWithinMileRadius,
     listingsWithinRadianRadius,
+    getAllSellers,
     uploadPhotoForVin,
     buyListing,
 }

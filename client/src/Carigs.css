@@ -314,6 +314,10 @@ div.listing > dl {
   height: 50vh;
 }
 
+.search-map {
+  max-width: 36rem;
+}
+
 .search-card {
   max-width: 36rem;
   margin: 12px auto;

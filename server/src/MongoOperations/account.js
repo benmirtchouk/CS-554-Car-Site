@@ -1,10 +1,11 @@
-const mongo = require("mongodb");
+const {ObjectId} = require("mongodb");
 const { accounts } = require("../config/mongoCollections");
 const Account = require("../DataModel/Account/Account");
-const { InternalMongoError, KeyAlreadyExists } = require("./OperationErrors");
+const { InternalMongoError, KeyAlreadyExists, UserDoesNotExist, InvalidUserInput, InvalidOperation } = require("./OperationErrors");
 const { ValidationError } = require("../DataModel/Validation/ObjectProperties");
 const e = require("express");
 const ret = require("bluebird/js/release/util");
+const PaginationRequest = require("../PaginationRequest");
 
 const createAccount = async (account) => {
   if (!(account instanceof Account)) {
@@ -41,6 +42,23 @@ const getAccount = async (id) => {
     throw new InternalMongoError("Insertion failed");
   }
 };
+
+
+const getAccounts = async( ids) => {
+  if (!Array.isArray(ids)) {
+    throw new Error("Ids must be an array")
+  }
+
+
+  /// Commented out as collection is currently keyed by strings
+  //let mongoIds = ids.map(e => new ObjectId(e))
+
+  const collection = await accounts();
+
+  const foundAccounts = await collection.find({_id: {$in: ids}}).toArray()
+
+  return foundAccounts;
+}
 
 const updateAccount = async (account) => {
   if (!(account instanceof Account)) {
@@ -97,8 +115,93 @@ const updateAccount = async (account) => {
   }
 };
 
+
+const modifyRating = async (id, rating, modifyAmount) => {
+  const validRatings = new Set(["like", "dislike" ]);
+  if(!validRatings.has(rating)) {
+    throw new Error("Rating is not valid");
+  }
+
+  if(!Number.isInteger(modifyAmount)) {
+    throw new Error("Rating must be an Integer");
+  }
+  
+  const account = await getAccount(id);
+  if(account == null) {
+    throw new UserDoesNotExist(id, "No user found for this id");
+  }
+
+  if(modifyAmount < 0 && account[rating] + modifyAmount < 0) {
+    throw new InvalidOperation("Modification would go negative");
+  }
+
+  const collection = await accounts();
+
+  const updateResult = await collection
+                            .updateOne({_id: id},
+                              {$inc: {[rating]: modifyAmount}}
+                            )
+
+  if(updateResult.modifiedCount !== 1) {
+    throw new InternalMongoError("Update not applied!")
+  }
+
+  const updatedAccount = await getAccount(id);
+  return {like: updatedAccount.like, dislike: updatedAccount.dislike}
+}
+
+
+const getTopRated = async (paginationRequest) => {
+
+  if(!paginationRequest instanceof PaginationRequest) {
+    throw new Error("Pagination request not provided")
+  }
+
+const {offset, limit } = paginationRequest;
+  const pipeline = [
+
+    {
+      $project: {
+        like: { $ifNull: [ '$like', 0 ] },
+        dislike: '$dislike', 
+      }
+    }, {
+      $project: {
+        like: '$like',
+        /// If like is 0, return 1 on dislike to avoid divide by zero, and keep no ratings at 0%
+        dislike: { $ifNull: ['$dislike', { $cond: [ {$gte: ['$like', 1] }, 0, 1 ] }] } 
+      }
+    }, {
+      $project: {
+        totalRatings: { '$add': [ '$like', '$dislike' ] }, 
+        like: '$like'
+      }
+    }, {
+      $project: { 'ratio': { '$divide': [ '$like', '$totalRatings' ] } }
+    }, {
+      $sort: {ratio: -1 }
+    }, {
+       $skip: offset
+    }, {
+      $limit: limit
+    }
+  ]
+
+  const collection = await accounts();
+  const aggCursor = collection.aggregate(pipeline);
+    const data = {}
+    for await (const doc of aggCursor) {
+        data[doc._id] = doc.ratio
+    }
+
+    return data;
+}
+
 module.exports = {
   createAccount,
   getAccount,
+  getAccounts,
+  modifyRating ,
   updateAccount,
+  getTopRated,
 };

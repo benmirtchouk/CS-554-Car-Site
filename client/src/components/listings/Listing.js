@@ -10,7 +10,11 @@ const Listing = (props) => {
   const [listingData, setListingData] = useState(undefined);
   const [errorCode, setErrorCode] = useState(undefined);
   const [errorMessage, setErrorMessage] = useState(undefined);
-  const { match: { params: { id } } } = props;
+  const {
+    match: {
+      params: { id },
+    },
+  } = props;
 
   const fetchData = async () => {
     setLoading(true);
@@ -35,7 +39,7 @@ const Listing = (props) => {
   }, [id]);
 
   const buyCar = async () => {
-    console.log('buy');
+    console.log("buy");
     const { data, status } = await listing.buyListing(id);
     console.log(data, status);
     await fetchData();
@@ -47,7 +51,7 @@ const Listing = (props) => {
   if (errorMessage) {
     return <ListError info={{ errorCode, errorMessage }} />;
   }
-  
+
   console.log(listingData);
   return (
     <div className="single-listing">
@@ -84,7 +88,9 @@ const Listing = (props) => {
           <dt>vin:</dt>
           <dd>{listingData.vin}</dd>
         </div>
-        <Button {...{disabled: listingData.sold}} onClick={buyCar}>{listingData.sold ? 'Already sold' : 'Buy this car'}</Button>
+        <Button {...{ disabled: listingData.sold }} onClick={buyCar}>
+          {listingData.sold ? "Already sold" : "Buy this car"}
+        </Button>
       </dl>
       <SingleVehicleMap listing={listingData} zoomLevel="13" />
     </div>

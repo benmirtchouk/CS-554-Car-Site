@@ -3,6 +3,7 @@ const searchData = require("./search");
 const listingData = require("./listing");
 const accountData = require("./account");
 const geocodeData = require("./geocoding");
+const sellerData = require("./seller");
 
 module.exports = {
   nhtsa: nhtsaData,
@@ -10,4 +11,5 @@ module.exports = {
   listing: listingData,
   account: accountData,
   geocode: geocodeData,
+  seller: sellerData
 };
