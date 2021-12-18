@@ -33,7 +33,7 @@ router.get("/mostListed", async (req, res) => {
 
     const sellers = await getAllSellers(paginationRequest);
     const sellerIds = Object.keys(sellers)
-    const accounts = await getAccounts(sellerIds)
+    const accounts = (await getAccounts(sellerIds)).map(e => { return {...e, totalListings: sellers[e._id] }});
     /// Note: If the accounts collection ever stores sensitive information, this will need to be removed before being sent
     return res.json({
       sellers: accounts
