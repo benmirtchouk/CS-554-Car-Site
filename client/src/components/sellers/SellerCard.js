@@ -1,12 +1,15 @@
 import { Link } from "react-router-dom";
 import { seller } from "../../data";
 import { Button } from "react-bootstrap";
+import { AuthContext } from "../../firebase/Auth";
+import { useContext } from "react";
 const sellerDataFetching = seller;
 
 
 const SellerCard = (props) => {
 
     const { seller, setSeller } = props;
+    const { currentUser } = useContext(AuthContext);
 
     if(!seller) {
         throw new Error("Seller must be provided!")
@@ -15,6 +18,7 @@ const SellerCard = (props) => {
     const {firstName, lastName, displayName, city, state, totalListings, _id, like, dislike, ratio, sellerComments} = seller;
     const shouldShowSellerLink = props.showSellerLink !== undefined ? !!props.showSellerLink : true;
     const userCanRateSeller = props.allowRatings !== undefined ? !!props.allowRatings : false;
+    const userCanComment = currentUser && props.allowNewComments !== undefined ? !!props.allowNewComments : false;
 
     const rateSellerOnClick = async (e, isLike) => {
         e.preventDefault();
@@ -68,16 +72,19 @@ const SellerCard = (props) => {
             }
         </div> 
 
-        <div>
-            <form onSubmit={addComment}>
-                <label>
-                    Add Comment: 
-                    <input name="comment" type="text" placeholder="How did a sale go?"required />
-                    <Button type="submit"> Comment </Button>
-                </label>
-            </form>
-           
-        </div>
+        {userCanComment &&
+            <div>
+                <form onSubmit={addComment}>
+                    <label>
+                        Add Comment: 
+                        <input name="comment" type="text" placeholder="How did a sale go?"required />
+                        <Button type="submit"> Comment </Button>
+                    </label>
+                </form>
+
+            </div>
+        }
+
 
         <div>
             {Array.isArray(sellerComments) &&
