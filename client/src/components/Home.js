@@ -9,8 +9,8 @@ const Home = ({ setSidebar }) => {
         link: "/recent_sales",
       },
       {
-        name: "Recent Purchases",
-        link: "/recent_purchases",
+        name: "Recent Listings",
+        link: "/recent_listings",
       },
       {
         name: "Recent Orders",

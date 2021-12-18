@@ -62,6 +62,16 @@ export async function getRecentSales(limit = 10, offset = 0) {
   );
   return { data, status };
 }
+
+export async function getRecentListings(limit = 10, offset = 0) {
+  const header = await createHeader();
+  const { data, status } = await getUrl(
+    `http://localhost:3001/listing/recentListings?limit=${limit}&offset=${offset}`,
+    header
+  );
+  return { data, status };
+}
+
 export async function buyListing(id) {
   const header = await createHeader();
   const { data, status } = await getUrl(
