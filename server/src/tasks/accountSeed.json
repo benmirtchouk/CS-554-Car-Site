@@ -9,7 +9,9 @@
     "state": "New Jersey",
     "zipCode": "07030",
     "firstName": "George",
-    "lastName": "Clooney"
+    "lastName": "Clooney",
+    "like": 154,
+    "dislike": 22
   },
   {
     "_id": "zzBOX6fDqPYB7SJO4566tljQPQX2",
@@ -21,7 +23,9 @@
     "state": "New Jersey",
     "zipCode": "07030",
     "firstName": "Taylor",
-    "lastName": "Swift"
+    "lastName": "Swift",
+    "like": 354,
+    "dislike": 18
   },
   {
     "_id": "d6NnmHYgRlTZr6WDH7khncandMr2",
@@ -33,7 +37,9 @@
     "state": "New Jersey",
     "zipCode": "07030",
     "firstName": "Brad",
-    "lastName": "Pitt"
+    "lastName": "Pitt",
+    "like": 80,
+    "dislike": 7
   },
   {
     "_id": "gss3MtJM8dbOIPpz4tnmGbfXTuD3",
@@ -45,7 +51,9 @@
     "state": "New Jersey",
     "zipCode": "07310",
     "firstName": "Hilda",
-    "lastName": "Rockland"
+    "lastName": "Rockland",
+    "like": 120,
+    "dislike": 90
   },
   {
     "_id": "ZR46vGA11Lg2gTrpnvVObxxIrX93",
@@ -57,7 +65,9 @@
     "state": "New Jersey",
     "zipCode": "07030",
     "firstName": "Lisa",
-    "lastName": "Fremard"
+    "lastName": "Fremard", 
+    "like": 2,
+    "dislike": 0
   },
   {
     "_id": "eXacRX9x5dfz3Q5ofQPlDnLnBlo2",
@@ -69,7 +79,9 @@
     "state": "New Jersey",
     "zipCode": "07030",
     "firstName": "Bob",
-    "lastName": "Brown"
+    "lastName": "Brown",
+    "like": 0,
+    "dislike": 12
   },
   {
     "_id": "01ynPObM48U56oR5E5uKq8LRNbh2",
@@ -81,7 +93,9 @@
     "state": "New Jersey",
     "zipCode": "07030",
     "firstName": "Joe",
-    "lastName": "Page"
+    "lastName": "Page",
+    "like": 85,
+    "dislike": 15
   },
   {
     "_id": "iaeX0NDgDCVc4uei8ZFHeYYWTAd2",
@@ -93,7 +107,9 @@
     "state": "New Jersey",
     "zipCode": "07310",
     "firstName": "Dan",
-    "lastName": "Paget"
+    "lastName": "Paget",
+    "like": 69,
+    "dislike": 25
   },
   {
     "_id": "z4ZbD5PFJofAXAzprWEHUIxxDhu1",
@@ -105,7 +121,9 @@
     "state": "New Jersey",
     "zipCode": "07030",
     "firstName": "Tim",
-    "lastName": "Smith"
+    "lastName": "Smith",
+    "like": 3,
+    "dislike": 1
   },
   {
     "_id": "1NaTFiLPTSQNq9TnwtsSOSwSGNu1",
@@ -117,7 +135,9 @@
     "state": "New Jersey",
     "zipCode": "07030",
     "firstName": "Susan",
-    "lastName": "Smith"
+    "lastName": "Smith",
+    "like": 8,
+    "dislike": 1
   },
   {
     "_id": "4md8Lk6829XVj0xOUXLT6f8TvV43",
@@ -129,7 +149,9 @@
     "state": "Massachusetts",
     "zipCode": "67812",
     "firstName": "Donna",
-    "lastName": "Smith"
+    "lastName": "Smith",
+    "like": 15,
+    "dislike": 18
   },
   {
     "_id": "WzgT0tveS5XsQkn9cpG222Oo3iD3",
@@ -141,7 +163,9 @@
     "state": "New Jersey",
     "zipCode": "07030",
     "firstName": "Thomas",
-    "lastName": "Smith"
+    "lastName": "Smith",
+    "like": 50,
+    "dislike": 50
   },
   {
     "_id": "rZzFad2jfVUTvZIvOpBfg2YlSg12",
@@ -153,7 +177,9 @@
     "state": "Chicago",
     "zipCode": "60601",
     "firstName": "Sherlock",
-    "lastName": "Holmes"
+    "lastName": "Holmes",
+    "like": 72,
+    "dislike": 15
   },
   {
     "_id": "bs6EfZZzG2USvZl06HjfFNyNBk33",
