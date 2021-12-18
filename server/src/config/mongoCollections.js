@@ -8,6 +8,7 @@ const dbConnection = require("./mongoConnection");
 const getCollectionFn = (collection, indexCreationObject) => {
     let _col = undefined;
 
+<<<<<<< HEAD
     return async () => {
         if (!_col) {
             const db = await dbConnection();
@@ -26,5 +27,6 @@ const getCollectionFn = (collection, indexCreationObject) => {
 module.exports = {
     listings: getCollectionFn("listings", { "location": "2dsphere" }),
     accounts: getCollectionFn("accounts", false),
-    sellers: getCollectionFn("sellers", false)
+    listingImageFiles: getCollectionFn("listingImages.files"),
+    listingImageChunks: getCollectionFn("listingImages.chunks"),
 };

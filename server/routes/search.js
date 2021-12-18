@@ -2,7 +2,7 @@ const express = require('express');
 const { nhtsa } = require('../api');
 const router = express.Router();
 const { listingForVin, searchListings } = require('../src/MongoOperations/listing');
-
+const  PaginationRequest  = require('../src/PaginationRequest');
 
 router.get('/by/vin/:vin', async (req, res) => {
     const vin = req.params.vin
@@ -46,9 +46,22 @@ router.get('/by/components', async (req, res) => {
         return res.status(400).json({message: `One of ${validKeys} must be present`})
     }
 
+    let paginationRequest;
+    try {
+        paginationRequest = new PaginationRequest(req.query);
+    } catch (e) {
+        console.error(e);
+        return res.status(400).json({message: e.message});
+    }
 
-    const data = await searchListings(query);
-    res.json(data.map(e => e.asDictionary()))
+
+    const {totalSize, results} = await searchListings(query, paginationRequest);
+    res.json({
+        pagination: {
+            totalSize
+        },
+        results: results.map(e => e.asDictionary())
+    })
 
 })
 

@@ -8,7 +8,7 @@ const {
   validateNonBlankString,
 } = require("../src/DataModel/Validation/ObjectProperties");
 const {
-  insertAccount,
+  createAccount,
   getAccount,
   updateAccount,
 } = require("../src/MongoOperations/account");
@@ -44,6 +44,33 @@ router.get("/", async (req, res) => {
   }
 });
 
+
+/**
+ * GET /account/byId/:id
+ * Retrieve the specified user account
+ * Params: none
+ *   id: user id
+ * Return codes: 400, 500
+ */
+router.get("/by/:id", async(req, res) => {
+  const id = req.params.id.trim();
+  if(id.length === 0) {
+    return res.status(400).message({message: "Id cannot be blank"});
+  }
+
+
+  try {
+    const account = await getAccount(id);
+    if(account == null) {
+      return res.status(404).json({message: "User not found"})
+    }
+    return res.json(account);
+  } catch (e) {
+    console.error(e);
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+})
+
 /**
  * PUT /account/:id
  * update the user account
@@ -64,8 +91,8 @@ router.get("/", async (req, res) => {
  */
 router.put("/", async (req, res) => {
   const user = req.currentUser;
-  console.log(user);
   let account = req.body;
+  account._id = req.currentUser.uid;
 
   try {
     account._id = validateNonBlankString(account._id);
@@ -117,11 +144,11 @@ router.put("/", async (req, res) => {
  */
 router.post("/", async (req, res) => {
   const user = req.currentUser;
-  console.log(user);
-  let account = req.body;
-  if (account._Id !== user.uid)
-    return res.status(404).json({ message: `user must be authenticated` });
+  if (!user)
+    return res.status(401).json({ message: `user must be authenticated` });
 
+  let account = { ...req.body, _id: user.uid };
+  
   try {
     account = new Account(account);
   } catch (e) {
@@ -137,9 +164,6 @@ router.post("/", async (req, res) => {
     await createAccount(account);
     return res.json(account.asDictionary());
   } catch (e) {
-    if (e instanceof KeyExists) {
-      return res.status(404).json({ message: "Account already exists" });
-    }
     console.error(e);
     return res.status(500).json({ message: "Internal server error" });
   }

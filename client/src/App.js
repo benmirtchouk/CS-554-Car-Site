@@ -8,11 +8,15 @@ import {
   Header,
   Home,
   Sellers,
+  SellerDetails,
   SellCar,
   Sidebar,
   RecentSales,
+  RecentListings,
+  AllListings,
   MyListings,
-  //  AddListing,
+  AddListing,
+  Listing,
   MessageBoard,
   Vin,
   Safety,
@@ -47,18 +51,23 @@ const App = () => {
       name: "Recent Sales",
       link: "/recent_sales",
     },
+    {
+      name: "Recent Listings",
+      link: "/recent_listings",
+    },
   ]);
 
   return (
     <AuthProvider>
       <Router>
         <div className="App">
+          <div id="top" />
           <Header />
-          <Row>
-            <Col xs={6} md={2} className="bg-gray-50 h-sidebar">
+          <Row className="nav-offset">
+            <Col xs={12} md={2} className="sidebar">
               <Sidebar sideItems={sideItems} />
             </Col>
-            <Col xs={12} md={10}>
+            <Col xs={12} md={{ span: 10, offset: 2 }}>
               <Container>
                 {/* only act on one route  */}
                 <Switch>
@@ -70,7 +79,13 @@ const App = () => {
                     )}
                   />
                   <PrivateRoute path="/sellers" component={Sellers} />
+                  <PrivateRoute
+                    path="/seller/:sellerId"
+                    component={SellerDetails}
+                  />
                   <PrivateRoute path="/sell_car" component={SellCar} />
+                  <Route path="/listings" component={AllListings} />
+                  <Route path="/listing/:id" component={Listing} />
                   <PrivateRoute path="/my_listings" component={MyListings} />
                   <SocketContext.Provider value={socket}>
                     <PrivateRoute
@@ -79,14 +94,25 @@ const App = () => {
                     />
                   </SocketContext.Provider>
 
+                  <PrivateRoute path="/add_listing" component={AddListing} />
+                  <PrivateRoute
+                    path="/message_board"
+                    component={MessageBoard}
+                  />
                   <Route path="/recent_sales" component={RecentSales} />
+                  <Route path="/recent_listings" component={RecentListings} />
                   <Route path="/safety" component={Safety} />
                   <Route path="/vin" component={Vin} />
                   <Route path="/login" component={Login} />
                   <PrivateRoute path="/account" component={Account} />
                   <Route path="/reset_pwd" component={PasswordReset} />
                   <Route path="/signup" component={SignUp} />
-                  <Route path="/search_results" component={SearchResults} />
+                  <Route
+                    path="/search_results"
+                    render={(props) => (
+                      <SearchResults setSidebar={setSideItems} {...props} />
+                    )}
+                  />
                   <Route path="/find_by_model" component={FindByModel} />
                   <Route path="/find_by_make" component={FindByMake} />
                   <Route path="/find_by_vin" component={FindByVin} />

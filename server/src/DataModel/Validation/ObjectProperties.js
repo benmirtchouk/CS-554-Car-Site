@@ -1,3 +1,5 @@
+const { ObjectId } = require("mongodb");
+
 
 class ValidationError extends Error {
     constructor(expectedType, message) {
@@ -14,6 +16,30 @@ const validateNonBlankString = (string) => {
     return string;
 }
 
+const validateDateString = (dateStr) => { 
+    if (dateStr == null) { return null; }
+    // convert string date to an integer timestamp
+    const timeStamp = Date.parse(dateStr);
+    if (!isNaN(timeStamp))  { throw new ValidationError("date", "must be a valide date format") }
+    //return Date(dateStr);
+    return dateStr;
+}
+
+const validateDate = (date) => { 
+    if (date == null) { return null; }
+    // convert string date to an integer timestamp
+    if (Date.parse(date)) {return date}
+    else { throw new ValidationError("date", "must be a valide date format") }
+}
+
+const validateIsObjectId = (id) => {
+    if(id instanceof ObjectId) {
+        return id;
+    }
+    if(!ObjectId.isValid(id)) { throw new ValidationError("ObjectId", "Must be an object id") }
+    return new ObjectId(id);
+}
+
 const validateNullOrNonBlankString = (string) => {
     if (string == null) { return null; }
     if (typeof string !== 'string') { throw new ValidationError("string", "is not the correct type") }
@@ -26,9 +52,19 @@ const validateNonNegativeInteger = (int) => {
     return int - 0;
 }
 
+const validatePositiveInteger = (int) => {
+    if(!Number.isInteger(int - 0 ) || int <= 0) { throw new ValidationError("integer", "must be non-negative")}
+    return int - 0;
+}
+
 const validatePositiveFloat = (float) => {
     if(!isFinite(float) || float <= 0) { throw new ValidationError("float", "must be positive") }
     return float - 0;
+}
+
+const validateBoolean = (bool) => {
+    if(typeof bool != 'boolean') { throw new ValidationError("bool", "must be a boolean") }
+    return !!bool;
 }
 
 const applyValidation = (keys, inputDictionary, validationFunction, onObject) => {
@@ -52,7 +88,12 @@ module.exports = {
     ValidationError,
     validateNonBlankString,
     validateNullOrNonBlankString,
+    validatePositiveInteger,
     validateNonNegativeInteger,
     validatePositiveFloat,
+    validateIsObjectId,
     applyValidation,
+    validateDateString,
+    validateDate,
+    validateBoolean
 }

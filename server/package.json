@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon app.js",
-    "seed": "node src/tasks/seed.js"
+    "seed": "cd src/tasks/seed_files;tar -xzvf seed_data.tar.gz;cd ../listingSeedImages;tar -xzvf car_pictures.tar.gz;cd ../../../;node src/tasks/seed.js",
+    "create_listings": "node src/tasks/raw_car_data/create_seed_files.js"
   },
   "repository": {
     "type": "git",

@@ -7,22 +7,28 @@ const {
 } = require("../Validation/ObjectProperties");
 
 /// Representation of Account data for a given user
+const nullableStringKeys = [
+  "displayName",
+  "phoneNumber",
+  "address1",
+  "address2",
+  "city",
+  "state",
+  "zipCode",
+  "firstName",
+  "lastName",
+];
+
+const nullableIntKeys = [
+  "like",
+  "dislike"
+]
+
 class Account {
   constructor(dictionary) {
     const nonBlankKeys = ["_id"];
     applyValidation(nonBlankKeys, dictionary, validateNonBlankString, this);
 
-    const nullableStringKeys = [
-      "displayName",
-      "phoneNumber",
-      "address1",
-      "address2",
-      "city",
-      "state",
-      "zipCode",
-      "firstName",
-      "lastName",
-    ];
     applyValidation(
       nullableStringKeys,
       dictionary,
@@ -30,8 +36,10 @@ class Account {
       this
     );
 
-    // const intKeys = ["_id"]
-    // applyValidation(intKeys, dictionary, validateNonNegativeInteger, this);
+    applyValidation(nullableIntKeys, dictionary, (int) => {
+      if(int === undefined) { return null }
+      return validateNonNegativeInteger(int);
+    }, this)
   }
 
   asDictionary() {
@@ -39,7 +47,7 @@ class Account {
       _id: this._id,
     };
 
-    for (const key of this.nullableStringKeys) {
+    for (const key of nullableStringKeys) {
       if (this[key]) {
         dictionary[key] = this[key];
       }

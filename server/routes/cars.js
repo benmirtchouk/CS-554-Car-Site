@@ -273,6 +273,10 @@ router.get(
         model,
         year
       );
+
+      if (data===null || data.Results==undefined || data.Results==null)
+          return res.status(404).json({ error: `Data Not Found` });
+
       for (let i = 0; i < data.Results.length; i++) {
         let vehicles = await nhtsa.getSafetyData(data.Results[i].VehicleId);
         vehicles.data.Results.map((vehicle) => {
@@ -281,7 +285,7 @@ router.get(
           all_data.push(vehicle);
         });
       }
-      res.status(status).json(all_data);
+      res.status(200).json(all_data);
     } catch (e) {
       console.log(e);
       return res.status(500).json({ error: `${e}` });
@@ -304,11 +308,15 @@ router.get("/picture/:make/:model/:year", async function (req, res, next) {
 
     // get picture for a given make/model/year
     const { data, status } = await nhtsa.getSafetyVehicleIds(make, model, year);
+    if (data===null || data.Results==undefined || data.Results==null)
+          return res.status(404).json({ error: `Data Not Found` });
+
     if (data.Results.length > 0) {
       let vehicles = await nhtsa.getSafetyData(data.Results[0].VehicleId);
       picture = vehicles.data.Results[0].VehiclePicture;
     }
-    res.status(status).json(picture);
+
+    res.status(200).json(picture);
   } catch (e) {
     console.log(e);
     return res.status(500).json({ error: `${e}` });
