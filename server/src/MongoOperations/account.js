@@ -6,6 +6,7 @@ const { ValidationError } = require("../DataModel/Validation/ObjectProperties");
 const e = require("express");
 const ret = require("bluebird/js/release/util");
 const PaginationRequest = require("../PaginationRequest");
+const SellerComment = require("../DataModel/Account/SellerComment");
 
 const createAccount = async (account) => {
   if (!(account instanceof Account)) {
@@ -151,6 +152,29 @@ const modifyRating = async (id, rating, modifyAmount) => {
 }
 
 
+const addComment = async ( comment, toSellerId ) => {
+  if(!(comment instanceof SellerComment)) {
+    throw new Error("Comment is not a data object")
+  }
+
+  
+  const collection = await accounts();
+  const updateResult = await collection
+                      .updateOne({_id: toSellerId},
+                      {$push: {sellerComments: {...comment.asDictionary()} }}
+    
+  )
+
+  console.log(updateResult);
+  if(updateResult.modifiedCount === 0) {
+    throw new UserDoesNotExist(toSellerId, "Target user does not exist!");
+  }
+
+  const updatedAccount = await getAccount(toSellerId);
+  return new Account(updatedAccount);
+}
+
+
 const getTopRated = async (paginationRequest) => {
 
   if(!paginationRequest instanceof PaginationRequest) {
@@ -204,4 +228,5 @@ module.exports = {
   modifyRating ,
   updateAccount,
   getTopRated,
+  addComment,
 };
