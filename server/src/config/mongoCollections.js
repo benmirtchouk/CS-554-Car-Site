@@ -8,7 +8,6 @@ const dbConnection = require("./mongoConnection");
 const getCollectionFn = (collection, indexCreationObject) => {
     let _col = undefined;
 
-<<<<<<< HEAD
     return async () => {
         if (!_col) {
             const db = await dbConnection();
