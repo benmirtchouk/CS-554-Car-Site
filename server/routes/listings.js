@@ -47,7 +47,7 @@ router.get('/', async (req, res) => {
     });
 });
 
-router.get('/:id', async (req, res) => {
+router.get('byId/:id', async (req, res) => {
     let id;
     try {
         id = validateIsObjectId(req.params.id);

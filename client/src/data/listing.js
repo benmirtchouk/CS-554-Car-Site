@@ -48,7 +48,7 @@ export async function getAllListings(limit = 20, offset = 10) {
 export async function getListing(id) {
   const header = await createHeader();
   const { data, status } = await getUrl(
-    `http://localhost:3001/listing/${id}`,
+    `http://localhost:3001/listing/byId/${id}`,
     header
   );
   return { data, status };

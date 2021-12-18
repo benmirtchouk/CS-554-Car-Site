@@ -30,6 +30,10 @@ const handleLocationSearch = async (
 
   const searchData = await Searches.byLocation(query);
   const { pagination, results } = searchData.data;
+  if(searchData.status >= 400) {
+    return [];
+  }
+  
   setTotalSize(pagination.totalCount);
   return results.map(mapListing);
 };
