@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { listing } from "../../data";
 import Loading from "../Loading";
-import ListingCard from "./ListingCard";
+import VehicleMap from "../MapLogic/VehicleMap";
 import Pagination from "../Pagination";
+import CarD from "../CarD";
 
 const MyListings = () => {
   const [loading, setLoading] = useState(true);
@@ -16,29 +17,43 @@ const MyListings = () => {
   useEffect(() => {
     async function fetchData() {
       setLoading(true);
+      setListings(null);
 
       const { data, status } = await listing.getUserListings(
         listingsPerPage,
         offset
       );
 
+      setTotalSize(data.pagination.totalCount);
+
       if (Math.floor(status / 100) === 2 && data) {
-        setTotalSize(data.pagination.totalCount);
         setListings(data.results);
       }
 
       setLoading(false);
     }
     fetchData();
-  }, [listingsPerPage, offset]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [offset, listingsPerPage]);
+
+  const getAveragePosition = (positions) => {
+    const sm = positions.reduce(
+      (cur, pos) => [cur[1] + pos[1], cur[0] + pos[0]],
+      [0, 0]
+    );
+    return [sm[0] / positions.length, sm[1] / positions.length];
+  };
 
   if (loading) {
     return <Loading />;
   }
 
+  console.log(listings);
+
   return (
     <div className="main_layout">
       <h1>Listings</h1>
+      <br />
       <Pagination
         currentPage={page}
         pageSize={listingsPerPage}
@@ -46,12 +61,21 @@ const MyListings = () => {
         goToPage={setPage}
         totalSize={totalSize}
       />
-      <br />
-      {
-        listings.map(ls => (
-          <ListingCard listing={ls} key={ls._id} />
-        ))
-      }
+      <div className="all_listings_map">
+        {listings.length !== 0 && (
+          <VehicleMap
+            listings={listings}
+            center={getAveragePosition(listings.map((ls) => ls.location))}
+            zoomLevel="1"
+          />
+        )}
+      </div>
+      {listings.map((ls) =>
+        CarD({
+          data: { metadata: ls.metadata },
+          listing: ls,
+        })
+      )}
     </div>
   );
 };
