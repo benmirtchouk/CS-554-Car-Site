@@ -82,16 +82,21 @@ async function getAllListings(paginationRequest) {
     return listingData.map(e => new VehicleListing(e));
 }
 
-const getRecentlySold = async (paginationRequest) => {
+const getRecentlyByDateKey = async (paginationRequest, dateKey) => {
     if(!paginationRequest instanceof PaginationRequest) {
         throw new Error("Pagination request not provided")
     }
     const {offset, limit} = paginationRequest;
 
+    const validKeys = new Set(["soldOn", "createdOn"]);
+    if(!validKeys.has(dateKey)) {
+        throw new Error("Key does not exist in schema");
+    }
+
     const collection = await listings();
     const listingData = await collection
-                        .find({soldOn: {$ne: null}})
-                        .sort({soldOn: -1})
+                        .find({[dateKey]: {$ne: null}})
+                        .sort({[dateKey]: -1})
                         .skip(offset)
                         .limit(limit)
                         .toArray();
@@ -286,7 +291,7 @@ module.exports = {
     getListing,
     getAllListings,
     getUserListings,
-    getRecentlySold,
+    getRecentlyByDateKey,
     searchListings,
     insertListing,
     listingsWithinMileRadius,

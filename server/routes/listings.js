@@ -8,7 +8,7 @@ const { insertListing,
     listingsWithinMileRadius,
     uploadPhotoForVin,
     listingForVin,
-    getRecentlySold,
+    getRecentlyByDateKey,
     getListing,
     getAllListings,
     getUserListings,
@@ -99,12 +99,29 @@ router.get("/recentSales", async (req, res) => {
     }
 
 
-    const soldListings = await getRecentlySold(paginationRequest);
+    const soldListings = await getRecentlyByDateKey(paginationRequest, "soldOn");
 
     return res.json({
         listings: soldListings.map(e => e.asDictionary())
     })
 })
+
+router.get("/recentListings", async (req, res) => {
+    let paginationRequest;
+    try {
+        paginationRequest = new PaginationRequest(req.query);
+    } catch (e) {
+        return res.status(400).json({message: e.message});
+    }
+
+
+    const newListings = await getRecentlyByDateKey(paginationRequest, "createdOn");
+
+    return res.json({
+        listings: newListings.map(e => e.asDictionary())
+    });
+
+});
 
 /**
  * Route to get all listings within a specified radius
