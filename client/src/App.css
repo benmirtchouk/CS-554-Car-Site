@@ -58,14 +58,26 @@ body {
   padding-right: 0.5rem !important;
 }
 
+.pb-4 {
+  padding-bottom: 1rem !important;
+}
+
+.red-text {
+  color: #e3342f;
+}
+
+.inline-block {
+  display: inline-block;
+}
+
 .price {
   float: right;
 }
 
 .block {
-  display:grid;
+  display: grid;
   grid-template-columns: max-content max-content;
-  grid-gap:5px;
+  grid-gap: 5px;
 }
 
 .block label {
@@ -84,4 +96,8 @@ body {
 
 .line-through {
   text-decoration: line-through;
+}
+
+.full-width {
+  width: 100%;
 }

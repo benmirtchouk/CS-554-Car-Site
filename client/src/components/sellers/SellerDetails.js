@@ -25,7 +25,12 @@ const Seller = (props) => {
     }
 
 
-    return <SellerCard seller={seller} showSellerLink={false} setSeller={setSeller} allowRatings={true} />
+    return (
+        <div>
+            <SellerCard seller={seller} showSellerLink={false} setSeller={setSeller} allowRatings={true} />
+        </div>
+    
+    )
 }
 
 export default Seller

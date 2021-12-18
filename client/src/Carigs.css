@@ -386,3 +386,10 @@ div.listing > dl {
   flex-grow: 1;
   margin: 10px 10px 0 10px;
 }
+.saftey-car {
+  max-width: 100%;
+}
+
+.subnav {
+  padding: 12px;
+}

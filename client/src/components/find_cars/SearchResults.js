@@ -71,7 +71,6 @@ const SearchResults = (props) => {
     location: { state },
   } = props;
 
-
   useEffect(() => {
     (async () => {
       if (state === undefined) {
