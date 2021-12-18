@@ -36,7 +36,7 @@ export async function addListing(listing) {
   return { data, status };
 }
 
-export async function getAllListings(limit = 20, offset = 10) {
+export async function getAllListings(limit = 20, offset = 0) {
   const header = await createHeader();
   const { data, status } = await getUrl(
     `http://localhost:3001/listing?limit=${limit}&offset=${offset}`,
@@ -54,6 +54,14 @@ export async function getListing(id) {
   return { data, status };
 }
 
+export async function getRecentSales(limit = 10, offset = 0) {
+  const header = await createHeader();
+  const { data, status } = await getUrl(
+    `http://localhost:3001/listing/recentSales?limit=${limit}&offset=${offset}`,
+    header
+  );
+  return { data, status };
+}
 export async function buyListing(id) {
   const header = await createHeader();
   const { data, status } = await getUrl(
