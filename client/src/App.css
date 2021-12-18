@@ -17,3 +17,22 @@
 .h-sidebar {
   height: calc(100vh - 56px);
 }
+
+.mr-2 {
+  padding-right: 0.5rem !important;
+}
+
+.price {
+  float: right;
+}
+
+.block {
+  display:grid;
+  grid-template-columns: max-content max-content;
+  grid-gap:5px;
+}
+
+.block label {
+  margin: 0;
+  line-height: 38px;
+}
