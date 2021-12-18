@@ -82,7 +82,7 @@ const SellerCard = (props) => {
                                 <Form.Group>
                                     <Form.Label>
                                         Add Comment: 
-                                        <Form.Control name="comment" type="text" placeholder="How did a sale go?" required />
+                                        <Form.Control name="comment" type="text" maxLength="475" placeholder="How did a sale go?" required />
                                     </Form.Label>
                                     <Button type="submit"> Comment </Button>
                                 </Form.Group>
