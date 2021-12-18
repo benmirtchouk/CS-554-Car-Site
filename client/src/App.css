@@ -1,5 +1,14 @@
+html,
+body {
+  overflow-x: hidden;
+}
+
 ::placeholder {
   color: rgba(107, 114, 128, 0.5) !important;
+}
+
+.nav-offset {
+  margin-top: 56px !important;
 }
 
 .signup-or {
@@ -14,25 +23,32 @@
   margin-bottom: 3px;
 }
 
-.h-sidebar {
+.sidebar {
+  position: fixed;
   height: calc(100vh - 56px);
+  background: #f8f9fa;
+  padding: 12px;
 }
 
-.mr-2 {
-  padding-right: 0.5rem !important;
-}
-
-.price {
-  float: right;
+.w-108 {
+  width: 108px;
 }
 
 .block {
-  display:grid;
+  display: grid;
   grid-template-columns: max-content max-content;
-  grid-gap:5px;
+  grid-gap: 5px;
 }
 
 .block label {
   margin: 0;
   line-height: 38px;
+}
+
+.center {
+  margin: 0 auto;
+}
+
+.btn + .btn {
+  margin-left: 8px;
 }

@@ -3,7 +3,8 @@ html {
   background: white;
   font-family: Georgia, Cambria, "Times New Roman", Times, serif;
   margin-left: 0px;
-  padding-left: 0px; }
+  padding-left: 0px;
+}
 
 a {
   color: #0000ff;
@@ -14,35 +15,31 @@ hr {
 }
 
 div.mainbody {
-float:left;
-margin-left:125px;
-margin-right:20px;
+  float: left;
+  margin-left: 125px;
+  margin-right: 20px;
 }
 
-div.mainbody h1{
- margin-top:20px;
- margin-left:0px;
- float:left;
+div.mainbody h1 {
+  margin-top: 20px;
+  margin-left: 0px;
+  float: left;
 }
 
-div.mainbody h1{
- margin-top:20px;
- margin-left:0px;
- float:left;
-}
-
-div.mainbody p{
- float:left;
+div.mainbody h1 {
+  margin-top: 20px;
+  margin-left: 0px;
+  float: left;
 }
 
 div.sidenav a {
-   color: white;
+  color: white;
 }
 
 div.account_info span {
-   color: white;
-   margin-left:3px;
-   margin-right:10px;
+  color: white;
+  margin-left: 3px;
+  margin-right: 10px;
 }
 
 div.sidenav {
@@ -59,74 +56,55 @@ div.sidenav {
 
 .sidenav a {
   padding: 2px 3px 5px 10px;
-  text-align:left;
+  text-align: left;
   font-size: 90%;
   color: white;
   display: block;
 }
 
-div.searchbox input{
- border-radius:15px;
- max-width:95px;
- margin:25px 0px 0px 2px;
- font-size:90%;
- }
+div.searchbox input {
+  border-radius: 15px;
+  max-width: 95px;
+  margin: 25px 0px 0px 2px;
+  font-size: 90%;
+}
 
-div.searchbox ::placeholder{
- padding:5px 5px 5px 5px;
- font-size:90%;
- }
+div.searchbox ::placeholder {
+  padding: 5px 5px 5px 5px;
+  font-size: 90%;
+}
 
 div {
-   margin-left:0px;
+  margin-left: 0px;
+}
+
+.pagination {
+  padding: 3px 0;
+}
+
+.pag {
+  padding: 12px !important;
 }
 
 .navbar-brand {
   color: white;
-  font-size:150%;
-  margin-right:30px;
-  margin-left:5px;
-  padding-right:40px;
+  font-size: 150%;
+  margin-right: 30px;
+  margin-left: 5px;
+  padding-right: 40px;
 }
 
-nav.navbar {
-  width: inherit;
-  top: 0%;
-  background-color: black;
+.main_layout .row {
+  padding: 0px;
+  margin-left: 0px;
 }
-
-div.row {
-  margin-left:0px;
-  padding:0px;
-  max-width:100%;
-}
-
-nav#top-navbar {
-  background-color: black;
-}
-
-nav#top-navbar a {
-  color:white;
-  padding-left:15px;
-  padding-right:20px;
-}
-
-nav#top-navbar a:hover {
-  color: #ffff00;
-}
-
-nav#top-navbar button {
-  background-color:white;
-  color:black;
-}
-
 
 h2.sum-header {
-  margin-top:0px;
-  display:inline;
+  margin-top: 0px;
+  display: inline;
   float: left;
-  margin-left:0px;
-  text-align:left;
+  margin-left: 0px;
+  text-align: left;
 }
 
 p.error {
@@ -134,16 +112,15 @@ p.error {
   color: #ee0000;
   font-weight: bold;
   font-size: 90%;
-  margin-bottom:20px
+  margin-bottom: 20px;
 }
 
 span.error {
   margin-top: 20px;
   color: #ee0000;
   font-weight: bold;
-  font-size: 90%
+  font-size: 90%;
 }
-
 
 .no-img {
   border: solid #0000ff 2px;
@@ -166,57 +143,57 @@ nav#top-navbar .dropdown-menu .nav-link1 {
 }
 
 nav.navbar a.nav-link {
-  text-align:left;
-  padding-bottom:0px;
-  padding-right:10px;
-  padding-top:0px;
-  margin-bottom:0px;
-  margin-top:0px;
-  margin-right:10px;
-  margin-left:5px;
-  color:white;
+  text-align: left;
+  padding-bottom: 0px;
+  padding-right: 10px;
+  padding-top: 0px;
+  margin-bottom: 0px;
+  margin-top: 0px;
+  margin-right: 10px;
+  margin-left: 5px;
+  color: white;
 }
 
 .sidenav a:hover {
   color: #ffff00;
 }
 
-div.mainbody form{
-/*  margin-top:100px;*/
-  margin-bottom:10px;
+div.mainbody form {
+  /*  margin-top:100px;*/
+  margin-bottom: 10px;
 }
 
-button.login-btn{
+button.login-btn {
   background-color: black;
   color: white;
 }
 
 label.reglabel {
-  font-weight:bold;
-  font-size:110%;
-  vertical-align:center;
+  font-weight: bold;
+  font-size: 110%;
+  vertical-align: center;
   color: black;
-  padding-right:5px;
-  }
+  padding-right: 5px;
+}
 
 label.loginlabel {
-  font-weight:bold;
-  font-size:110%;
-  vertical-align:center;
+  font-weight: bold;
+  font-size: 110%;
+  vertical-align: center;
   color: black;
-  padding-right:5px;
+  padding-right: 5px;
 }
 
 div.input-group ::placeholder {
-   color: black;
-   font-style: italic;
-   text-align: center;
-   margin-bottom:15px;
+  color: black;
+  font-style: italic;
+  text-align: center;
+  margin-bottom: 15px;
 }
 
 form.RegisterForm {
-  padding-top:10px;
-  margin-bottom:10px;
+  padding-top: 10px;
+  margin-bottom: 10px;
 }
 
 p.LoginError {
@@ -224,7 +201,7 @@ p.LoginError {
   margin-top: 5px;
   color: #ee0000;
   font-weight: bold;
-  font-size: 75%
+  font-size: 75%;
 }
 
 /* div.card img {
@@ -264,11 +241,18 @@ div.card-text {
   margin-bottom: 10px;
 } */
 
+.ellipsis {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 64px;
+}
+
 span.detKey {
   text-align: left;
   font-weight: bold;
-  margin:0px;
-  padding:0px;
+  margin: 0px;
+  padding: 0px;
 }
 
 span.detSum {
@@ -279,11 +263,11 @@ span.detSum {
 
 p.detKey {
   text-align: left;
-  padding:0px;
-  margin:2px;
+  padding: 0px;
+  margin: 2px;
   font-weight: normal;
   color: #333333;
-  font-style: italic; 
+  font-style: italic;
 }
 
 .dropdown-menu {
@@ -300,7 +284,7 @@ div.listing {
 }
 
 div.listing > dl {
-  flex: 1
+  flex: 1;
 }
 
 .mapcontainer {
@@ -327,8 +311,13 @@ div.listing > dl {
 }
 
 .search-card {
-  max-width: 34rem;
+  max-width: 36rem;
   margin: 12px auto;
+}
+
+.search-card .col-md-4,
+.search-card .col {
+  padding: 0;
 }
 
 .vertically-center {
@@ -337,9 +326,8 @@ div.listing > dl {
   transform: translateY(-50%);
 }
 
-.sale {
-  padding: 2px 6px;
-  border-radius: 5px;
-  background-color: #990000;
-  color: white;
+.hortizontally-center {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
 }
