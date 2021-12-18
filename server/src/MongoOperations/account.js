@@ -1,7 +1,7 @@
 const {ObjectId} = require("mongodb");
 const { accounts } = require("../config/mongoCollections");
 const Account = require("../DataModel/Account/Account");
-const { InternalMongoError, KeyAlreadyExists } = require("./OperationErrors");
+const { InternalMongoError, KeyAlreadyExists, UserDoesNotExist, InvalidUserInput, InvalidOperation } = require("./OperationErrors");
 const { ValidationError } = require("../DataModel/Validation/ObjectProperties");
 const e = require("express");
 const ret = require("bluebird/js/release/util");
@@ -115,9 +115,45 @@ const updateAccount = async (account) => {
   }
 };
 
+
+const modifyRating = async (id, rating, modifyAmount) => {
+  const validRatings = new Set(["like", "dislike" ]);
+  if(!validRatings.has(rating)) {
+    throw new Error("Rating is not valid");
+  }
+
+  if(!Number.isInteger(modifyAmount)) {
+    throw new Error("Rating must be an Integer");
+  }
+  
+  const account = await getAccount(id);
+  if(account == null) {
+    throw new UserDoesNotExist(id, "No user found for this id");
+  }
+
+  if(modifyAmount < 0 && account[rating] + modifyAmount < 0) {
+    throw new InvalidOperation("Modification would go negative");
+  }
+
+  const collection = await accounts();
+
+  const updateResult = await collection
+                            .updateOne({_id: id},
+                              {$inc: {[rating]: modifyAmount}}
+                            )
+
+  if(updateResult.modifiedCount !== 1) {
+    throw new InternalMongoError("Update not applied!")
+  }
+
+  const updatedAccount = await getAccount(id);
+  return {like: updatedAccount.like, dislike: updatedAccount.dislike}
+}
+
 module.exports = {
   createAccount,
   getAccount,
   getAccounts,
+  modifyRating ,
   updateAccount,
 };

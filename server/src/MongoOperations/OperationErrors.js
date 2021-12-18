@@ -16,8 +16,23 @@ class KeyDoesNotExist extends Error {
     }
 }
 
+class UserDoesNotExist extends Error {
+    constructor(id, message) {
+        super(message)
+        this.id = id
+    }
+}
+
+class InvalidOperation extends Error {
+    constructor(message) {
+        super(message)
+    }
+}
+
 module.exports = {
     InternalMongoError,
     KeyAlreadyExists,
     KeyDoesNotExist,
+    UserDoesNotExist,
+    InvalidOperation,
 }
