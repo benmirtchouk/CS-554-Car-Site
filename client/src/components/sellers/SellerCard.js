@@ -21,7 +21,6 @@ const SellerCard = (props) => {
         const {data, status} = await sellerDataFetching.rateUser(_id, isLike, true);
         if(status >= 400 || !data) {
             alert("Failed to apply rating");
-            alert(JSON.stringify(data))
             return
         }
 

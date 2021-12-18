@@ -193,7 +193,7 @@ const {offset, limit } = paginationRequest;
     for await (const doc of aggCursor) {
         data[doc._id] = doc.ratio
     }
-    console.log(data);
+
     return data;
 }
 
