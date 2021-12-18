@@ -5,7 +5,7 @@ import { BarChart, Bar, XAxis, YAxis } from "recharts";
 
 const RecentSales = () => {
   const [recentSales, setRecentSales] = useState([]);
-  const [selectedChartStat, setSelectedChartStat] = useState(undefined);
+  const [selectedChartStat, setSelectedChartStat] = useState("price");
 
   useEffect(() => {
     (async () => {
@@ -33,7 +33,7 @@ const RecentSales = () => {
         <br /> <br />
         <select onChange={(e) => setSelectedChartStat(e.target.value)}>
           <option value="price">Price</option>
-          <option value="millage">Millage</option>
+          <option value="millage">Mileage</option>
         </select>
         {selectedChartStat !== undefined && (
           <BarChart

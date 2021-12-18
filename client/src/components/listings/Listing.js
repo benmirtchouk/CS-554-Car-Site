@@ -17,9 +17,11 @@ const Listing = (props) => {
   } = props;
 
   const fetchData = async () => {
+    console.log("fetchData");
     setLoading(true);
 
     const { data, status } = await listing.getListing(id);
+    console.log(data, status);
 
     if (Math.floor(status / 100) === 2 && data) {
       setListingData(data);
@@ -27,7 +29,7 @@ const Listing = (props) => {
       setErrorMessage(undefined);
     } else {
       setErrorCode(status);
-      setErrorMessage(data?.message);
+      setErrorMessage(data?.message ?? 'No message returned');
     }
 
     setLoading(false);
@@ -52,7 +54,6 @@ const Listing = (props) => {
     return <ListError info={{ errorCode, errorMessage }} />;
   }
 
-  console.log(listingData);
   return (
     <div className="single-listing">
       <dl>
@@ -69,7 +70,7 @@ const Listing = (props) => {
           <dd>{listingData.metadata}</dd>
         </div> */}
         <div>
-          <dt>millage:</dt>
+          <dt>mileage:</dt>
           <dd>{listingData.millage}</dd>
         </div>
         {/* <div>

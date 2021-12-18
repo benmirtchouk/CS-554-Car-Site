@@ -42,4 +42,3 @@ export { default as Header } from "./Header";
 export { default as Home } from "./Home";
 export { default as ListBody } from "./ListBody";
 export { default as ListError } from "./ListError";
-export { default as NavBar } from "./NavBar";
