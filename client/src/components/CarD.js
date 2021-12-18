@@ -1,7 +1,15 @@
 /* eslint-disable react/prop-types */
 
 import React from "react";
-import { Badge, Button, Card, Row, Col } from "react-bootstrap";
+import {
+  Badge,
+  Button,
+  Card,
+  Row,
+  Col,
+  OverlayTrigger,
+  Tooltip,
+} from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import SingleVehicleMap from "./MapLogic/SingleVehicleMap";
 
@@ -64,7 +72,11 @@ const CarD = (props) => {
                     },
                   }}
                 >
-                  <Button size="sm" variant="primary" className="w-108 hortizontally-center">
+                  <Button
+                    size="sm"
+                    variant="primary"
+                    className="w-108 hortizontally-center"
+                  >
                     Safety Info
                   </Button>
                 </LinkContainer>
@@ -72,7 +84,11 @@ const CarD = (props) => {
               <Col>
                 {isForSale && (
                   <LinkContainer to={`/listing/${listing._id}`}>
-                    <Button size="sm" variant="primary" className="w-108 hortizontally-center">
+                    <Button
+                      size="sm"
+                      variant="primary"
+                      className="w-108 hortizontally-center"
+                    >
                       View Listing
                     </Button>
                   </LinkContainer>
@@ -82,9 +98,7 @@ const CarD = (props) => {
           </Card.Body>
         </Col>
       </Row>
-      {isForSale && (
-        <SingleVehicleMap listing={listing} zoomLevel={15} />
-      )}
+      {isForSale && <SingleVehicleMap listing={listing} zoomLevel={15} />}
     </Card>
   );
 };
@@ -109,10 +123,26 @@ const ListingDetails = (props) => {
       <Row>
         <Col>Mileage: {millage}</Col>
         <Col>
-          Exterior: <p className="ellipsis">{exteriorColor}</p>
+          Exterior:
+          <OverlayTrigger
+            key="exterior"
+            placement="bottom"
+            // show={exteriorColor.length > 5 ? true : undefined}
+            overlay={<Tooltip id={`tooltip-exterior`}>{exteriorColor}</Tooltip>}
+          >
+            <p className="ellipsis">{exteriorColor}</p>
+          </OverlayTrigger>
         </Col>
         <Col>
-          Interior: <p className="ellipsis">{interiorColor}</p>
+          Interior:
+          <OverlayTrigger
+            key="exterior"
+            placement="bottom"
+            // show={exteriorColor.length > 5 ? true : undefined}
+            overlay={<Tooltip id={`tooltip-exterior`}>{interiorColor}</Tooltip>}
+          >
+            <p className="ellipsis">{interiorColor}</p>
+          </OverlayTrigger>
         </Col>
       </Row>
     </>

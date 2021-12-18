@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
+import ReactStars from "react-rating-stars-component";
 import SingleVehicleMap from "../MapLogic/SingleVehicleMap";
+import { Container, Row, Col, Table } from "react-bootstrap";
 import { listing } from "../../data";
 import Loading from "../Loading";
 import ListError from "../ListError";
@@ -29,7 +31,7 @@ const Listing = (props) => {
       setErrorMessage(undefined);
     } else {
       setErrorCode(status);
-      setErrorMessage(data?.message ?? 'No message returned');
+      setErrorMessage(data?.message ?? "No message returned");
     }
 
     setLoading(false);
@@ -47,6 +49,13 @@ const Listing = (props) => {
     await fetchData();
   };
 
+  const fallbackImage = "/images/ImgNotAvailable.png";
+  const imgName = listingData?.photo?.filename ?? null;
+  console.log(imgName);
+  const img = imgName
+    ? `http://localhost:3001/images/${imgName}`
+    : fallbackImage;
+
   if (loading) {
     return <Loading />;
   }
@@ -54,47 +63,65 @@ const Listing = (props) => {
     return <ListError info={{ errorCode, errorMessage }} />;
   }
 
+  const { make, model, modelYear } = listingData.metadata;
+
   return (
-    <div className="single-listing">
-      <dl>
-        <div>
-          <dt>exteriorColor:</dt>
-          <dd>{listingData.exteriorColor}</dd>
-        </div>
-        <div>
-          <dt>interiorColor:</dt>
-          <dd>{listingData.interiorColor}</dd>
-        </div>
-        {/* <div>
-          <dt>metadata:</dt>
-          <dd>{listingData.metadata}</dd>
-        </div> */}
-        <div>
-          <dt>mileage:</dt>
-          <dd>{listingData.millage}</dd>
-        </div>
-        {/* <div>
-          <dt>photos:</dt>
-          <dd>{listingData.photos}</dd>
-        </div> */}
-        <div>
-          <dt>price:</dt>
-          <dd>{listingData.price}</dd>
-        </div>
-        <div>
-          <dt>sellerId:</dt>
-          <dd>{listingData.sellerId}</dd>
-        </div>
-        <div>
-          <dt>vin:</dt>
-          <dd>{listingData.vin}</dd>
-        </div>
-        <Button {...{ disabled: listingData.sold }} onClick={buyCar}>
-          {listingData.sold ? "Already sold" : "Buy this car"}
-        </Button>
-      </dl>
-      <SingleVehicleMap listing={listingData} zoomLevel="13" />
-    </div>
+    <Container>
+      <Row>
+        <Col>
+          <img
+            className="hortizontally-center full-width pb-4"
+            src={img}
+            alt={`${make} ${model} ${modelYear}`}
+          />
+        </Col>
+        <Col>
+          <h1>
+            {make} {model} {modelYear}
+          </h1>
+          <h2 className="red-text">${listingData.price}</h2>
+          <ReactStars
+            edit={false}
+            count={5}
+            size={24}
+          />
+          <Button {...{ disabled: listingData.sold }} onClick={buyCar}>
+            {listingData.sold ? "Sold" : "Buy"}
+          </Button>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <Table>
+            <tbody>
+              <tr>
+                <td>Exterior Color</td>
+                <td>{listingData.exteriorColor}</td>
+              </tr>
+              <tr>
+                <td>Interior Color</td>
+                <td>{listingData.interiorColor}</td>
+              </tr>
+              <tr>
+                <td>Mileage</td>
+                <td>{listingData.millage}</td>
+              </tr>
+              <tr>
+                <td>Seller ID</td>
+                <td>{listingData.sellerId}</td>
+              </tr>
+              <tr>
+                <td>VIN</td>
+                <td>{listingData.vin}</td>
+              </tr>
+            </tbody>
+          </Table>
+        </Col>
+        <Col>
+          <SingleVehicleMap listing={listingData} zoomLevel="13" />
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
