@@ -204,7 +204,7 @@ const Safety = (props) => {
                 title={year ? year : "Model Year"}
                 id="years-dropdown"
                 variant="secondary"
-                disabled={year.length <= 1}
+                disabled={year && year.length <= 1}
                 onSelect={handleYearSelect}
               >
                 {years.map((yr) => (
@@ -218,7 +218,7 @@ const Safety = (props) => {
                 variant="secondary"
                 title={make ? make : "Make"}
                 id="make-dropdown"
-                disabled={make.length <= 1}
+                disabled={make && make.length <= 1}
                 onSelect={handleMakeSelect}
               >
                 {makes.map((val) => (
@@ -233,7 +233,7 @@ const Safety = (props) => {
                 title={model ? model : "Models"}
                 id="models-dropdown"
                 onSelect={handleModelSelect}
-                disabled={models.length <= 1}
+                disabled={models && models.length <= 1}
               >
                 {models.map((val1) => (
                   <Dropdown.Item key={val1} eventKey={val1}>
@@ -257,7 +257,7 @@ const Safety = (props) => {
                   )}
                 </div>
               );
-            })[0]
+            })
           }
         </Container>
         <select onChange={(e) => setSelectedChartStat(e.target.value)}>
