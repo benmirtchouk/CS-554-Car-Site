@@ -108,10 +108,6 @@ async function seedDB() {
             const account = new Account(accountRawData);
             await accountMongoOperation.createAccount(account);
         }
-        console.log("Inserting Sellers");
-        for (const seller of sellerData) {
-            await sellerMongoOperation.insertNewSeller(seller);
-        }
 
     } catch (err) {
         console.error(err);
