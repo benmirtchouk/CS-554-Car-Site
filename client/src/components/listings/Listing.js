@@ -15,7 +15,6 @@ const Listing = (props) => {
   const fetchData = async () => {
     setLoading(true);
 
-    alert("Called!")
     const { data, status } = await listing.getListing(id);
 
     if (Math.floor(status / 100) === 2 && data) {
