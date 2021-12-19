@@ -32,8 +32,7 @@ const getChat = async (id) => {
 const insertChat = async (message) => {
 
     if (!message || typeof message !== 'object' || Array.isArray(message)) {
-        res.status(400).json({ error: 'invalid format of chat message' });
-        console.log("Invalid chatMessage format received");
+        throw 'invalid format of chat message';
     }
 
     const gChatsCollection = await globalChats();

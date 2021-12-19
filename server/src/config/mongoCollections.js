@@ -27,6 +27,7 @@ module.exports = {
     listings: getCollectionFn("listings", { "location": "2dsphere" }),
     accounts: getCollectionFn("accounts", false),
     globalChats: getCollectionFn("globalChats", false),
+    privateChats: getCollectionFn("privateChats", false),
     listingImageFiles: getCollectionFn("listingImages.files"),
     listingImageChunks: getCollectionFn("listingImages.chunks"),
 };

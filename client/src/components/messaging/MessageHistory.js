@@ -19,7 +19,7 @@ const MessageHistory = () => {
         async function getChatHistory() {
             const { data, status } = await gChat.getAllGlobalChats();
             if (status >= 400 || !data) {
-                console.log("getAllGlobalChats call failed");
+                alert("getAllGlobalChats call failed");
                 return;
             }
             const allChats = data.map(chatObj => chatObj.chat);
