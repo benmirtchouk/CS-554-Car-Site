@@ -25,11 +25,17 @@ body {
 }
 
 .sidebar {
-  position: fixed;
-  height: calc(100vh - 56px);
   background: #f8f9fa;
   padding: 12px;
-  transform: translateX(12px);
+  height: 100%;
+}
+
+@media only screen and (min-width: 780px) {
+  .sidebar {
+    position: fixed;
+    height: calc(100vh - 56px);
+    transform: translateX(12px);
+  }
 }
 
 .w-108 {
