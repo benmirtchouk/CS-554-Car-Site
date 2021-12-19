@@ -123,7 +123,7 @@ const SignUp = () => {
               id="displayName"
               name="displayName"
               className="form-control"
-              type="input"
+              type="text"
               title="Display Name"
             />
 	</Form.Group>

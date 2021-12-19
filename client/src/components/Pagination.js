@@ -37,7 +37,7 @@ const Pagination = (props) => {
         <Pag>
           {pages.map((i) => (
             <Pag.Item
-              type="button"
+              href="/"
               key={`pagination-${i.text}-${i.to}`}
               className={`${i.class} px-10`.trim()}
               onClick={(e) => {

@@ -82,8 +82,6 @@ const MessageBoard = (props) => {
             <input
               name="message"
               id="message"
-              variant="outlined"
-              label="Message"
             />
             <button type="submit" id="send-message">Send Message</button>
           </form>
