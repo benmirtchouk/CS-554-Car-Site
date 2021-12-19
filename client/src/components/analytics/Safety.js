@@ -190,6 +190,15 @@ const Safety = (props) => {
   let extendedCarHeader = false;
   if (year && model && make) extendedCarHeader = true;
 
+  const stat_options = [
+    'ComplaintsCount', 'RecallsCount', 'InvestigationCount', 'OverallRating',
+    'OverallFrontCrashRating', 'CrashPassengersideRating', 'OverallSideCrashRating',
+    'SideCrashDriversideRating', 'SideCrashPassengersideRating', 'RolloverRating',
+    'RolloverPossiblity', 'SidePoleCrashRating', 'RolloverPossibility', 'RolloverPossibility2'
+  ].filter(stat =>
+    cdata.every(car => !isNaN(car[stat]))
+  );
+
   return (
     <div key="safety" className="main_layout">
       <div className="mainbody">
@@ -261,33 +270,9 @@ const Safety = (props) => {
           }
         </Container>
         <select onChange={(e) => setSelectedChartStat(e.target.value)}>
-          <option value="ModelYear">ModelYear</option>
-          <option value="ComplaintsCount">ComplaintsCount</option>
-          <option value="RecallsCount">RecallsCount</option>
-          <option value="InvestigationCount">InvestigationCount</option>
-          <option value="OverallRating">OverallRating</option>
-          <option value="OverallFrontCrashRating">
-            OverallFrontCrashRating
-          </option>
-          <option value="CrashPassengersideRating">
-            CrashPassengersideRating
-          </option>
-          <option value="OverallSideCrashRating">OverallSideCrashRating</option>
-          <option value="OverallSideCrashRating">OverallSideCrashRating</option>
-          <option value="SideCrashDriversideRating">
-            SideCrashDriversideRating
-          </option>
-          <option value="SideCrashPassengersideRating">
-            SideCrashPassengersideRating
-          </option>
-          <option value="SideCrashPassengersideRating">
-            SideCrashPassengersideRating
-          </option>
-          <option value="RolloverRating">RolloverRating</option>
-          <option value="RolloverRating2">RolloverRating2</option>
-          <option value="RolloverPossiblity">RolloverPossiblity</option>
-          <option value="RolloverPossiblity2">RolloverPossiblity2</option>
-          <option value="SidePoleCrashRating">SidePoleCrashRating</option>
+          { stat_options.map(option => (
+            <option key={option} value={option}>{option}</option>
+          )) }
         </select>
         {selectedChartStat !== undefined && (
           <BarChart
