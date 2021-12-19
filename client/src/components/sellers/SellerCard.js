@@ -12,11 +12,11 @@ const SellerCard = (props) => {
     const { seller, setSeller } = props;
     const { currentUser } = useContext(AuthContext);
 
-    if(!seller) {
+    if (!seller) {
         throw new Error("Seller must be provided!")
     }
 
-    const {firstName, lastName, displayName, city, state, totalListings, _id, like, dislike, ratio, sellerComments} = seller;
+    const { firstName, lastName, displayName, city, state, totalListings, _id, like, dislike, ratio, sellerComments } = seller;
     const shouldShowSellerLink = props.showSellerLink !== undefined ? !!props.showSellerLink : true;
     const userCanRateSeller = props.allowRatings !== undefined ? !!props.allowRatings : false;
     const userCanComment = currentUser && props.allowNewComments !== undefined ? !!props.allowNewComments : false;
@@ -24,36 +24,36 @@ const SellerCard = (props) => {
     const rateSellerOnClick = async (e, isLike) => {
         e.preventDefault();
 
-        const {data, status} = await sellerDataFetching.rateUser(_id, isLike, true);
-        if(status >= 400 || !data) {
+        const { data, status } = await sellerDataFetching.rateUser(_id, isLike, true);
+        if (status >= 400 || !data) {
             alert("Failed to apply rating");
             return
         }
 
-        if(typeof setSeller !== 'function') { return; }
-        const {like, dislike} = data.ratings;
-        setSeller({...seller, like, dislike})
+        if (typeof setSeller !== 'function') { return; }
+        const { like, dislike } = data.ratings;
+        setSeller({ ...seller, like, dislike })
     }
 
-    const addComment = async(e) => {
+    const addComment = async (e) => {
         e.preventDefault();
 
         const comment = e.target.elements.comment.value;
 
         const { data, status } = await sellerDataFetching.putComment(comment, _id)
-        if(status >= 400 || !data) {
+        if (status >= 400 || !data) {
             alert(status)
             return
         }
 
         e.target.reset();
 
-        if(typeof setSeller !== 'function') { return; }
+        if (typeof setSeller !== 'function') { return; }
         setSeller(data.seller)
     }
     const key = `${firstName}${lastName} -- ${displayName}`;
 
-    return(
+    return (
         <Card key={key}>
             <Row>
                 <Col>
@@ -108,8 +108,8 @@ const SellerCard = (props) => {
                 </Card.Body>
                 </Col>
             </Row>
-            </Card>
-        )
+        </Card>
+    )
 };
 
 

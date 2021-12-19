@@ -21,10 +21,10 @@ async function getUrl(url, config) {
 }
 
 async function postUrl(url, body, config) {
-    return axios.post(url, body, {
-      ...config,
-      validateStatus: (status) => status < 500,
-    });
+  return axios.post(url, body, {
+    ...config,
+    validateStatus: (status) => status < 500,
+  });
 }
 
 async function putUrl(url, body, config) {
@@ -36,47 +36,48 @@ async function putUrl(url, body, config) {
 
 
 export async function getMostListedSellers(limit = 20, offset = 0) {
-    const header = await createHeader();
-    const { data, status } = await getUrl(
-      `http://localhost:3001/seller/mostListed?limit=${limit}&offset=${offset}`,
-      header
-    );
-    return { data, status };
+  const header = await createHeader();
+  const { data, status } = await getUrl(
+    `http://localhost:3001/seller/mostListed?limit=${limit}&offset=${offset}`,
+    header
+  );
+  console.log(data);
+  return { data, status };
 }
 
-export async function getHighestRatedSellers(limit=20, offset = 0) {
-    const header = await createHeader();
-    const { data, status } = await getUrl(
-      `http://localhost:3001/seller/mostLiked?limit=${limit}&offset=${offset}`,
-      header
-    );
-    return { data, status };
+export async function getHighestRatedSellers(limit = 20, offset = 0) {
+  const header = await createHeader();
+  const { data, status } = await getUrl(
+    `http://localhost:3001/seller/mostLiked?limit=${limit}&offset=${offset}`,
+    header
+  );
+  return { data, status };
 }
 
 export async function putComment(commentText, toSellerId) {
   const header = await createHeader();
   const { data, status } = await putUrl(
     `http://localhost:3001/seller/${toSellerId}/comment`, {
-      commentText
+    commentText
+  },
+    header
+  );
+  return { data, status };
+}
+
+export async function rateUser(sellerId, isLike, isAdding) {
+  if (typeof sellerId !== 'string' || sellerId.length === 0) {
+    throw new Error("Seller id cannot be empty or missing");
+  }
+
+  const header = await createHeader();
+  const { data, status } = await postUrl(
+    `http://localhost:3001/seller/${sellerId}/rate`,
+    {
+      rating: isLike ? "like" : "dislike",
+      action: isAdding ? "add" : "remove"
     },
     header
   );
   return { data, status };
-} 
-
-export async function rateUser(sellerId, isLike, isAdding) {
-    if(typeof sellerId !== 'string' || sellerId.length === 0) {
-        throw new Error("Seller id cannot be empty or missing");
-    }
-
-    const header = await createHeader();
-    const { data, status } = await postUrl(
-      `http://localhost:3001/seller/${sellerId}/rate`,
-      {
-          rating: isLike ? "like" : "dislike",
-          action: isAdding ? "add" : "remove"
-      },
-      header
-    );
-    return { data, status };
 }

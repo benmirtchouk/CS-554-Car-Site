@@ -12,6 +12,8 @@ const searchRoutes = require('./search');
 const imageRoutes = require('./images');
 const accountRoutes = require('./accounts');
 const sellerRoutes = require('./seller')
+const chatsRoutes = require('./chats');
+const privateChatRoutes = require('./pChats');
 
 bluebird.promisifyAll(redis.RedisClient.prototype);
 bluebird.promisifyAll(redis.Multi.prototype);
@@ -50,7 +52,9 @@ const constructorMethod = (app) => {
   app.use('/account', accountRoutes);
   app.use('/geocode', cacheJSON, geocodeRoutes);
   app.use('/seller', sellerRoutes);
-  
+  app.use('/chats', chatsRoutes);
+  app.use('/privateChats', privateChatRoutes)
+
   // default (404)
   app.use('*', (req, res) => {
     res.status(404).send();

@@ -21,6 +21,7 @@ export { AuthProvider, AuthContext } from "../firebase/Auth";
 
 // Messaging
 export { default as MessageBoard } from "./messaging/MessageBoard";
+export { default as MessageHistory } from "./messaging/MessageHistory";
 
 // Listings
 export { default as AllListings } from "./listings/AllListings";
@@ -34,6 +35,7 @@ export { default as RecentListings } from "./sellers/RecentListings";
 export { default as SellCar } from "./sellers/SellCar";
 export { default as SellerDetails } from "./sellers/SellerDetails";
 export { default as Sellers } from "./sellers/Sellers";
+export { default as Chat } from "./sellers/Chat";
 
 // Main Components
 export { default as Sidebar } from "./Sidebar";
