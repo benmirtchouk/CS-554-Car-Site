@@ -96,7 +96,7 @@ const Vin = () => {
     <div key="safety" className="main_layout pt-4">
       <div className="form-group input-group">
         <Form onSubmit={submitHandler}>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Group className="mb-3">
             <InputGroup>
               <Form.Control
                 id="vin"

@@ -207,7 +207,7 @@ const AddListing = () => {
           </Row>
           <Row>
             <Col>
-              <Form.Group controlId="formFile" className="mb-3">
+              <Form.Group className="mb-3">
                 <Form.Label>Photo</Form.Label>
                 <Form.Control
                   id="photo"
