@@ -18,6 +18,7 @@ import {
   AddListing,
   Listing,
   MessageBoard,
+  MessageHistory,
   Vin,
   Safety,
   Account,
@@ -82,6 +83,11 @@ const App = () => {
                     path="/message_board"
                     socket={socket}
                     component={MessageBoard}
+                  />
+
+                  <PrivateRoute
+                    path="/all_chat_history"
+                    component={MessageHistory}
                   />
 
                   <PrivateRoute path="/add_listing" component={AddListing} />
