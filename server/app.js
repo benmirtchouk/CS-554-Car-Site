@@ -39,6 +39,9 @@ io.on('connection', (socket) => {
 
   socket.on('message', ({ uid, username, message }) => {
     socket.broadcast.emit("message", { username, message });
+    const time = new Date().toLocaleTimeString();
+    const messageString = `${time}: <${username}> ${message}`;
+    // store this on db
   });
 
   // socket.on('message_to', ({ from_uid, to_uid, message }) => {

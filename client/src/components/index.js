@@ -21,6 +21,7 @@ export { AuthProvider, AuthContext } from "../firebase/Auth";
 
 // Messaging
 export { default as MessageBoard } from "./messaging/MessageBoard";
+export { default as MessageHistory } from "./messaging/MessageHistory";
 
 // Listings
 export { default as AllListings } from "./listings/AllListings";
