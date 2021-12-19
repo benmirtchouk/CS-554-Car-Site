@@ -103,6 +103,7 @@ const Vin = () => {
                 type="text"
                 name="vin"
                 placeholder="Vin..."
+                title="Enter a vin to search"
                 required
               />
               <Button type="submit" variant="primary" id="search">

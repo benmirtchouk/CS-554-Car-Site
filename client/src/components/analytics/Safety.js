@@ -222,7 +222,7 @@ const Safety = (props) => {
                 as={ButtonGroup}
                 title={year ? year : "Model Year"}
                 id="years-dropdown"
-                variant="secondary"
+                variant="dark"
                 disabled={year && year.length <= 1}
                 onSelect={handleYearSelect}
               >
@@ -234,7 +234,7 @@ const Safety = (props) => {
               </DropdownButton>
               <DropdownButton
                 as={ButtonGroup}
-                variant="secondary"
+                variant="dark"
                 title={make ? make : "Make"}
                 id="make-dropdown"
                 disabled={make && make.length <= 1}
@@ -247,7 +247,7 @@ const Safety = (props) => {
                 ))}
               </DropdownButton>
               <DropdownButton
-                variant="secondary"
+                variant="dark"
                 as={ButtonGroup}
                 title={model ? model : "Models"}
                 id="models-dropdown"

@@ -71,8 +71,8 @@ const SellerCard = (props) => {
                             </LinkContainer>}
                         </Col>
                         <Col className="text-right">
-                            <Button type="button" disabled={!userCanRateSeller} onClick={(e) => rateSellerOnClick(e, false)}>👎 {dislike || 0}</Button>
-                            <Button type="button" disabled={!userCanRateSeller} onClick={(e) => rateSellerOnClick(e, true)}>👍 {like || 0} </Button>
+                            <Button type="button" disabled={!userCanRateSeller} className={userCanRateSeller ? 'btn btn-primary' :'btn btn-dark'} onClick={(e) => rateSellerOnClick(e, false)}>👎 {dislike || 0}</Button>
+                            <Button type="button" disabled={!userCanRateSeller} className={userCanRateSeller ? 'btn btn-primary' :'btn btn-dark'} onClick={(e) => rateSellerOnClick(e, true)}>👍 {like || 0} </Button>
                             {ratio  && <span> {ratio.toFixed(2)}% positive feedback! </span> }
                         </Col>
                     </Row>

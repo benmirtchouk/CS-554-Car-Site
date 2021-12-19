@@ -44,7 +44,7 @@ Installation steps are below, tested on Linux (Ubuntu) and Windows
    -  Example accounts: 
    -  tsmith@yahoo.com 
    -  gclooney@gmail.com 
-
+https://randomvin.com/ can aid in valid vin generation. 
 
 
 ## APIs and Frameworks integrated with 

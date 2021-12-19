@@ -63,8 +63,8 @@ const Header = () => {
               <LinkContainer to="/">
                 <Button
                   onClick={handleLogOut}
-                  variant="outline-secondary"
                   id="logout"
+                  className="btn btn-secondary"
                 >
                   LogOut
                 </Button>
@@ -72,7 +72,7 @@ const Header = () => {
             )}
             {!showLogin && (
               <LinkContainer to="/account">
-                <Button variant="outline-primary">
+                <Button>
                   {currentUser.displayName ?? currentUser.email}
                 </Button>
               </LinkContainer>

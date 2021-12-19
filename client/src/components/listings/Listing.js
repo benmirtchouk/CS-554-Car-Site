@@ -83,7 +83,7 @@ const Listing = (props) => {
             count={5}
             size={24}
           />
-          <Button {...{ disabled: listingData.sold }} onClick={buyCar}>
+          <Button {...{ disabled: listingData.sold }} variant="dark" onClick={buyCar}>
             {listingData.sold ? "Sold" : "Buy"}
           </Button>
         </Col>
