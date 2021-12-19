@@ -199,6 +199,16 @@ const Safety = (props) => {
     cdata.every(car => !isNaN(car[stat]))
   );
 
+  if (stat_options.length > 0 && cdata.length > 1) {
+    if (selectedChartStat === undefined) {
+      setSelectedChartStat(stat_options[0]);
+    }
+  } else {
+    if (selectedChartStat !== undefined) {
+      setSelectedChartStat(undefined);
+    }
+  }
+
   return (
     <div key="safety" className="main_layout">
       <div className="mainbody">
@@ -269,11 +279,13 @@ const Safety = (props) => {
             })
           }
         </Container>
-        <select onChange={(e) => setSelectedChartStat(e.target.value)}>
-          { stat_options.map(option => (
-            <option key={option} value={option}>{option}</option>
-          )) }
-        </select>
+        {selectedChartStat !== undefined && (
+          <select onChange={(e) => setSelectedChartStat(e.target.value)}>
+            { stat_options.map(option => (
+              <option key={option} value={option}>{option}</option>
+            )) }
+          </select>
+        )}
         {selectedChartStat !== undefined && (
           <BarChart
             width={600}

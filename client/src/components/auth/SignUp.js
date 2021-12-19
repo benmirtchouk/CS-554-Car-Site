@@ -106,6 +106,7 @@ const SignUp = () => {
             name="email"
             className="form-control"
             type="email"
+            title="Email address"
           />
           <Form.Text className="text-muted">
             We'll{" "}
@@ -123,6 +124,7 @@ const SignUp = () => {
               name="displayName"
               className="form-control"
               type="input"
+              title="Display Name"
             />
 	</Form.Group>
         <Form.Group className="mb-3">
@@ -133,6 +135,7 @@ const SignUp = () => {
             id="password"
             name="firstPwd"
             className="form-control"
+            title="Password"
           />
         </Form.Group>
         <Form.Group className="mb-3">
@@ -143,6 +146,7 @@ const SignUp = () => {
             id="passwordCnfrm"
             name="secondPwd"
             className="form-control"
+            title="Confirm Password"
           />
         </Form.Group>
         <Button variant="primary" type="submit">

@@ -83,6 +83,7 @@ const Login = () => {
             name="email"
             className="form-control"
             type="email"
+            title="Email address"
           />
           <Form.Text className="text-muted">
             We'll{" "}
@@ -101,6 +102,7 @@ const Login = () => {
             id="password"
             name="password"
             className="form-control"
+            title="Password"
           />
         </Form.Group>
         <Button variant="primary" type="submit">
