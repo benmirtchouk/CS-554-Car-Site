@@ -60,10 +60,10 @@ router.get('/byId/:id', async (req, res) => {
 
     try {
         listing = await getListing(id);
-        listing = listing.asDictionary();
-        if (listing === null)
+        if (listing === null) {
             return res.status(404).json({message: "No such listing found"});
-        return res.json(listing);
+        }
+        return res.json(listing.asDictionary());
     } catch (e) {
         console.error(e);
         return res.status(500).json({message: "Internal Server Error"})

@@ -73,7 +73,7 @@ const SellerCard = (props) => {
                         <Col className="text-right">
                             <Button type="button" disabled={!userCanRateSeller} className={userCanRateSeller ? 'btn btn-primary' :'btn btn-dark'} onClick={(e) => rateSellerOnClick(e, false)}>👎 {dislike || 0}</Button>
                             <Button type="button" disabled={!userCanRateSeller} className={userCanRateSeller ? 'btn btn-primary' :'btn btn-dark'} onClick={(e) => rateSellerOnClick(e, true)}>👍 {like || 0} </Button>
-                            {ratio  && <span> {ratio.toFixed(2)}% positive feedback! </span> }
+                            {ratio  && <span> {Math.round(ratio * 100)}% positive feedback! </span> }
                         </Col>
                     </Row>
                     <Row>
