@@ -278,9 +278,9 @@ const Account = () => {
           </Button>
           <Button
             onClick={changePassword}
-            className="ml-4"
-            variant="danger"
-            type="btn"
+            className="ml-4 btn-danger"
+            variant="button"
+            type="button"
           >
             Change Password
           </Button>
@@ -605,7 +605,6 @@ const Account = () => {
                 <Form.Label>State</Form.Label>
                 <Form.Select
                   className="form-control"
-                  type="custom-select"
                   size="sm "
                   name="state"
                   id="state"
