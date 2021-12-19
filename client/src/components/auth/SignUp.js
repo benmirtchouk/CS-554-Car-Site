@@ -73,7 +73,7 @@ const SignUp = () => {
 
   return (
     <div className="max-w-md mx-auto text-left p-4">
-      <h1 className="-mb-2 mt-2">Signup</h1>
+      <h1 className="-mb-2 mt-2">Sign Up</h1>
       {pwMatch && <h4 className="error">{pwMatch}</h4>}
       <div className="space-x-1 pt-4 pb-2">
         <Button

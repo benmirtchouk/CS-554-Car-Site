@@ -49,7 +49,7 @@ const Login = () => {
   };
 
   return (
-    <div className="form-page">
+    <div className="max-w-md mx-auto text-left p4">
       <h1 className="-mb-2 mt-2">Login</h1>
       {error && <p className="LoginError">{errorMsg}</p>}
       <div className="space-x-2 pt-4 pb-2">
@@ -117,42 +117,6 @@ const Login = () => {
           Reset My Password
         </Button>
       </Form>
-      {/* <form className="LoginForm" onSubmit={handleFormSubmit}>
-        <div className="form-group input-group">
-          <label className="loginlabel" htmlFor="email">
-            Email:
-          </label>
-          <input
-            id="email"
-            name="email"
-            className="form-control"
-            placeholder="enter email address"
-            type="email"
-          />
-        </div>
-        <div className="form-group input-group">
-          <label className="loginlabel" htmlFor="password">
-            Password:
-          </label>
-          <input
-            id="password"
-            name="password"
-            className="form-control"
-            placeholder="password"
-            type="password"
-          />
-        </div>
-        <div className="form-group">
-          <button
-            className="login-btn btn-block"
-            type="submit"
-            name="submitBtn"
-          >
-            {" "}
-            Log In{" "}
-          </button>
-        </div>
-      </form> */}
       <Link to="/signup" className="pt-2">
         New here? Register!
       </Link>
