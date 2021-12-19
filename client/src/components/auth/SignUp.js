@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { Redirect, useHistory } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { IoLogoGoogle, IoLogoFacebook } from "react-icons/io";
 import { Button, Form } from "react-bootstrap";
 import {
@@ -12,7 +12,7 @@ import { createAccount } from "../../data/account";
 const SignUp = () => {
   const { currentUser } = useContext(AuthContext);
   const [pwMatch, setPwMatch] = useState("");
-  const history = useHistory();
+  const [formDisplayName, setFormDisplayName] = useState(undefined);
 
   // const slinks = [
   //   {
@@ -25,6 +25,8 @@ const SignUp = () => {
     e.preventDefault();
     setPwMatch("");
     const { email, firstPwd, secondPwd, displayName } = e.target.elements;
+    setFormDisplayName(displayName.value);
+
     if (firstPwd.value !== secondPwd.value) {
       setPwMatch("Passwords do not match");
       return false;
@@ -38,8 +40,6 @@ const SignUp = () => {
       return false;
     }
 
-    history.push("/account");
-    //history.push("/login");
     return true;
   };
 
@@ -53,24 +53,18 @@ const SignUp = () => {
 
   useEffect(() => {
     if (currentUser) {
-      console.log(Object.keys(currentUser));
-      console.log("currentUser", currentUser, currentUser.email, currentUser.displayName);
-      doCreateAccount(currentUser.displayName);
+      const currDisplayName = currentUser.displayName ?? formDisplayName;
+      doCreateAccount(currDisplayName);
     }
   }, [currentUser]);
 
   if (currentUser) {
-    return <Redirect to="/" />;
+    return <Redirect to="/account" />;
   }
 
   const handleButtonClick = async (provider) => {
     console.log(`about to call logInSocialMedia`);
     await doSocialSignIn(provider)
-      .then(async () => {
-	console.log(`got back from async call`);
-        history.push("/account");
-        //history.goBack();
-      })
       .catch((e) => {
         console.log(`${e}`);
         alert(e.message);
