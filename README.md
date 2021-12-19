@@ -27,6 +27,7 @@ Installation steps are below, tested on Linux (Ubuntu) and Windows
 - cd into `server` directory
 - run `npm i`
 - run `npm run seed`
+  - Note: If a `.json` file is missing, that means the script was unable to automatically unpack the `.zip` files. This can be resolved by extracting the files into the same directory where the `.zip` is, with no nested folders. 
 - Ensure a firebase config is populated in `firebase/serviceAccount.json`
 - run `npm start`
 
