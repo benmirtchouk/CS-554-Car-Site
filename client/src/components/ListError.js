@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 
 const ListError = ({ info }) => (
   <div>
@@ -11,13 +10,5 @@ const ListError = ({ info }) => (
     </div>
   </div>
 );
-
-ListError.propTypes = {
-  info: Object.isRequired,
-};
-
-ListError.propTypes = {
-  info: PropTypes.node.isRequired,
-};
 
 export default ListError;

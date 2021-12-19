@@ -190,6 +190,25 @@ const Safety = (props) => {
   let extendedCarHeader = false;
   if (year && model && make) extendedCarHeader = true;
 
+  const stat_options = [
+    'ComplaintsCount', 'RecallsCount', 'InvestigationCount', 'OverallRating',
+    'OverallFrontCrashRating', 'CrashPassengersideRating', 'OverallSideCrashRating',
+    'SideCrashDriversideRating', 'SideCrashPassengersideRating', 'RolloverRating',
+    'RolloverPossiblity', 'SidePoleCrashRating', 'RolloverPossibility', 'RolloverPossibility2'
+  ].filter(stat =>
+    cdata.every(car => !isNaN(car[stat]))
+  );
+
+  if (stat_options.length > 0 && cdata.length > 1) {
+    if (selectedChartStat === undefined) {
+      setSelectedChartStat(stat_options[0]);
+    }
+  } else {
+    if (selectedChartStat !== undefined) {
+      setSelectedChartStat(undefined);
+    }
+  }
+
   return (
     <div key="safety" className="main_layout">
       <div className="mainbody">
@@ -203,7 +222,7 @@ const Safety = (props) => {
                 as={ButtonGroup}
                 title={year ? year : "Model Year"}
                 id="years-dropdown"
-                variant="secondary"
+                variant="dark"
                 disabled={year && year.length <= 1}
                 onSelect={handleYearSelect}
               >
@@ -215,7 +234,7 @@ const Safety = (props) => {
               </DropdownButton>
               <DropdownButton
                 as={ButtonGroup}
-                variant="secondary"
+                variant="dark"
                 title={make ? make : "Make"}
                 id="make-dropdown"
                 disabled={make && make.length <= 1}
@@ -228,7 +247,7 @@ const Safety = (props) => {
                 ))}
               </DropdownButton>
               <DropdownButton
-                variant="secondary"
+                variant="dark"
                 as={ButtonGroup}
                 title={model ? model : "Models"}
                 id="models-dropdown"
@@ -260,35 +279,13 @@ const Safety = (props) => {
             })
           }
         </Container>
-        <select onChange={(e) => setSelectedChartStat(e.target.value)}>
-          <option value="ModelYear">ModelYear</option>
-          <option value="ComplaintsCount">ComplaintsCount</option>
-          <option value="RecallsCount">RecallsCount</option>
-          <option value="InvestigationCount">InvestigationCount</option>
-          <option value="OverallRating">OverallRating</option>
-          <option value="OverallFrontCrashRating">
-            OverallFrontCrashRating
-          </option>
-          <option value="CrashPassengersideRating">
-            CrashPassengersideRating
-          </option>
-          <option value="OverallSideCrashRating">OverallSideCrashRating</option>
-          <option value="OverallSideCrashRating">OverallSideCrashRating</option>
-          <option value="SideCrashDriversideRating">
-            SideCrashDriversideRating
-          </option>
-          <option value="SideCrashPassengersideRating">
-            SideCrashPassengersideRating
-          </option>
-          <option value="SideCrashPassengersideRating">
-            SideCrashPassengersideRating
-          </option>
-          <option value="RolloverRating">RolloverRating</option>
-          <option value="RolloverRating2">RolloverRating2</option>
-          <option value="RolloverPossiblity">RolloverPossiblity</option>
-          <option value="RolloverPossiblity2">RolloverPossiblity2</option>
-          <option value="SidePoleCrashRating">SidePoleCrashRating</option>
-        </select>
+        {selectedChartStat !== undefined && (
+          <select onChange={(e) => setSelectedChartStat(e.target.value)}>
+            { stat_options.map(option => (
+              <option key={option} value={option}>{option}</option>
+            )) }
+          </select>
+        )}
         {selectedChartStat !== undefined && (
           <BarChart
             width={600}

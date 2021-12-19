@@ -28,8 +28,14 @@ const Sidebar = () => {
     },
     ...(currentUser != null ? [
       {
-        name: "Message Board",
+        name: "Discussion Board",
         link: "/message_board",
+      }
+    ] : []),
+    ...(currentUser != null ? [
+      {
+        name: "Discussions History",
+        link: "/all_chat_history",
       }
     ] : []),
   ];

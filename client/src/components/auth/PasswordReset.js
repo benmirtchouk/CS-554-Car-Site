@@ -42,6 +42,7 @@ const PasswordReset = () => {
             <Form.Label className="mb-0">Email address</Form.Label>
             <Form.Control
               placeholder="Enter email"
+              title="Enter Email"
               id="email"
               size="sm"
               name="email"

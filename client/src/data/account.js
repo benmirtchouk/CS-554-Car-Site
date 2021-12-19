@@ -34,12 +34,13 @@ async function putUrl(url, body, config) {
   });
 }
 
-export async function createAccount() {
+export async function createAccount(displayName) {
   // console.log(`calling http://localhost:3001/account to get an account using postUrl`);
+  console.log("displayName:", displayName);
   const account = {
     firstName: null,
     lastName: null,
-    displayName: null,
+    displayName: displayName,
     phoneNumber: null,
     address1: null,
     address2: null,
