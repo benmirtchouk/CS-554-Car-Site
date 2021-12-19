@@ -6,6 +6,7 @@ import { Container, Row, Col, Table } from "react-bootstrap";
 import { listing } from "../../data";
 import Loading from "../Loading";
 import ListError from "../ListError";
+import { Link } from "react-router-dom";
 
 const Listing = (props) => {
   const [loading, setLoading] = useState(true);
@@ -23,7 +24,6 @@ const Listing = (props) => {
     setLoading(true);
 
     const { data, status } = await listing.getListing(id);
-    console.log(data, status);
 
     if (Math.floor(status / 100) === 2 && data) {
       setListingData(data);
@@ -43,15 +43,12 @@ const Listing = (props) => {
   }, [id]);
 
   const buyCar = async () => {
-    console.log("buy");
     const { data, status } = await listing.buyListing(id);
-    console.log(data, status);
     await fetchData();
   };
 
   const fallbackImage = "/images/ImgNotAvailable.png";
   const imgName = listingData?.photo?.filename ?? null;
-  console.log(imgName);
   const img = imgName
     ? `http://localhost:3001/images/${imgName}`
     : fallbackImage;
@@ -64,6 +61,7 @@ const Listing = (props) => {
   }
 
   const { make, model, modelYear } = listingData.metadata;
+  console.log(listingData);
 
   return (
     <Container>
@@ -95,6 +93,10 @@ const Listing = (props) => {
           <Table>
             <tbody>
               <tr>
+                <td>VIN</td>
+                <td>{listingData.vin}</td>
+              </tr>
+              <tr>
                 <td>Exterior Color</td>
                 <td>{listingData.exteriorColor}</td>
               </tr>
@@ -107,12 +109,32 @@ const Listing = (props) => {
                 <td>{listingData.millage}</td>
               </tr>
               <tr>
-                <td>Seller ID</td>
-                <td>{listingData.sellerId}</td>
+                <td>Seller</td>
+                <td><Link to={`/seller/${listingData.sellerId}`}>View Seller</Link></td>
               </tr>
               <tr>
-                <td>VIN</td>
-                <td>{listingData.vin}</td>
+                <td>Body Class</td>
+                <td>{listingData.metadata.bodyClass}</td>
+              </tr>
+              <tr>
+                <td>Drive Type</td>
+                <td>{listingData.metadata.driveType}</td>
+              </tr>
+              <tr>
+                <td>Make</td>
+                <td>{listingData.metadata.make}</td>
+              </tr>
+              <tr>
+                <td>Manufacturer</td>
+                <td>{listingData.metadata.manufacturer}</td>
+              </tr>
+              <tr>
+                <td>Model</td>
+                <td>{listingData.metadata.model}</td>
+              </tr>
+              <tr>
+                <td>Model Year</td>
+                <td>{listingData.metadata.modelYear}</td>
               </tr>
             </tbody>
           </Table>
