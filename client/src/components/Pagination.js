@@ -44,6 +44,7 @@ const Pagination = (props) => {
                 e.preventDefault();
                 goToPage(i.to);
               }}
+              aria-label={`go to page ${i.to}`}
             >
               {i.text}
             </Pag.Item>
@@ -58,6 +59,7 @@ const Pagination = (props) => {
             step="5"
             min="5"
             max="20"
+            title="Results per page"
             value={pageSize}
             onChange={(e) => {
               e.preventDefault();
