@@ -23,7 +23,7 @@ Installation steps are below, tested on Linux (Ubuntu) and Windows
 
 
 ### Server
-- Prerequisites: Mongo db demon running on local host, Redis demon running on local host, port 3001 is free
+- Prerequisites: Mongo db daemon running on local host, Redis daemon  running on local host, port 3001 is free
 - cd into `server` directory
 - run `npm i`
 - run `npm run seed`
