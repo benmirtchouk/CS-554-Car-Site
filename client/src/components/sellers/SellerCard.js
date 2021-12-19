@@ -96,8 +96,8 @@ const SellerCard = (props) => {
                     {Array.isArray(sellerComments) && 
                      <Row>
                         <Col>
-                            {sellerComments.map(({displayName, commentText}) =>  
-                            <div key={`${displayName}-${commentText}`}>
+                            {sellerComments.map(({displayName, commentText}, i) =>  
+                            <div key={`${_id}-${displayName}-${commentText}-${i}`}>
                                 {displayName}: {commentText}
                             </div>
                             )}
