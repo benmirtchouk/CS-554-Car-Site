@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { Redirect, useHistory } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { IoLogoGoogle, IoLogoFacebook } from "react-icons/io";
 import { Button, Form } from "react-bootstrap";
 import {
@@ -12,7 +12,7 @@ import { createAccount } from "../../data/account";
 const SignUp = () => {
   const { currentUser } = useContext(AuthContext);
   const [pwMatch, setPwMatch] = useState("");
-  const history = useHistory();
+  const [formDisplayName, setFormDisplayName] = useState(undefined);
 
   // const slinks = [
   //   {
@@ -24,28 +24,28 @@ const SignUp = () => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     setPwMatch("");
-    const { email, firstPwd, secondPwd } = e.target.elements;
+    const { email, firstPwd, secondPwd, displayName } = e.target.elements;
+    setFormDisplayName(displayName.value);
+
     if (firstPwd.value !== secondPwd.value) {
       setPwMatch("Passwords do not match");
       return false;
     }
 
     try {
-      await doCreateUserWithEmailAndPassword(email.value, firstPwd.value);
+      await doCreateUserWithEmailAndPassword(email.value, firstPwd.value, displayName.value);
     } catch (e) {
       console.log(`${e}`);
       alert(e);
       return false;
     }
 
-    history.push("/account");
-    //history.push("/login");
     return true;
   };
 
-  const doCreateAccount = async () => {
+  const doCreateAccount = async (displayName) => {
     try {
-      await createAccount();
+      await createAccount(displayName);
     } catch (e) {
       console.log('unexpected error', e);
     }
@@ -53,22 +53,18 @@ const SignUp = () => {
 
   useEffect(() => {
     if (currentUser) {
-      doCreateAccount();
+      const currDisplayName = currentUser.displayName ?? formDisplayName;
+      doCreateAccount(currDisplayName);
     }
   }, [currentUser]);
 
   if (currentUser) {
-    return <Redirect to="/" />;
+    return <Redirect to="/account" />;
   }
 
   const handleButtonClick = async (provider) => {
     console.log(`about to call logInSocialMedia`);
     await doSocialSignIn(provider)
-      .then(async () => {
-	console.log(`got back from async call`);
-        history.push("/account");
-        //history.goBack();
-      })
       .catch((e) => {
         console.log(`${e}`);
         alert(e.message);
@@ -119,6 +115,16 @@ const SignUp = () => {
             directly share everything you give us with Mark Zuckerberg.
           </Form.Text>
         </Form.Group>
+	<Form.Group className="mb-3">
+	  <Form.Label>Display Name</Form.Label>
+	    <Form.Control
+              placeholder="Enter Display Name"
+              id="displayName"
+              name="displayName"
+              className="form-control"
+              type="input"
+            />
+	</Form.Group>
         <Form.Group className="mb-3">
           <Form.Label>Password</Form.Label>
           <Form.Control

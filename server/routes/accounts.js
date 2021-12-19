@@ -148,7 +148,7 @@ router.post("/", async (req, res) => {
     return res.status(401).json({ message: `user must be authenticated` });
 
   let account = { ...req.body, _id: user.uid };
-  
+
   try {
     account = new Account(account);
   } catch (e) {
