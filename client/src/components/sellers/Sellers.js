@@ -8,23 +8,24 @@ const Sellers = () => {
   const [highestRatedSellers, setHighestRatedSellers] = useState([]);
 
   useEffect(() => {
-    ( async () => {
+    (async () => {
       /// No pagination as this is a scoreboard esc system
-      const {data, status} = await seller.getMostListedSellers(10)
-      if(status >= 400 || !data) {
+      const { data, status } = await seller.getMostListedSellers(10)
+      if (status >= 400 || !data) {
         alert("Failed to get top sellers!")
         return;
       }
 
       setTopListedSellers(data.sellers);
+      // console.log(data.sellers);
     })()
   }, [])
 
 
   useEffect(() => {
-    ( async () => {
-      const { data, status} = await seller.getHighestRatedSellers(5);
-      if(status >= 400 || !data) {
+    (async () => {
+      const { data, status } = await seller.getHighestRatedSellers(5);
+      if (status >= 400 || !data) {
         alert("Failed to get highest rated sellers!")
         return;
       }
@@ -34,32 +35,33 @@ const Sellers = () => {
   }, [])
 
 
-  const topListedSellersCards = topListedSellers.map(e => <SellerCard key={`topListed-${e._id}`} seller={e} />  )
+  const topListedSellersCards = topListedSellers.map(e => <SellerCard key={`topListed-${e._id}`} seller={e} />)
   const highestRatedSellerCards = highestRatedSellers.map(e => <SellerCard key={`highestRated${e._id}`} seller={e} />)
 
+  console.log(topListedSellers);
   return (
-  <div className="main_layout">
-    <div className="mainbody">
-      <h1>Sellers</h1>
-      <br />
-      <br />
-      <br />
-      <br />
-      <p>This is the Sellers page.</p>
+    <div className="main_layout">
+      <div className="mainbody">
+        <h1>Sellers</h1>
+        <br />
+        <br />
+        <br />
+        <br />
+        <p>This is the Sellers page.</p>
 
-    <div>
-      Top ten most active Carigslist sellers
-      {topListedSellersCards}
+        <div>
+          Top ten most active Carigslist sellers
+          {topListedSellersCards}
+        </div>
+
+
+        <div>
+          The best sellers to buy from!
+          {highestRatedSellerCards}
+        </div>
+
+      </div>
     </div>
-
-
-    <div>
-      The best sellers to buy from!
-      {highestRatedSellerCards}
-    </div>
-
-    </div>
-  </div>
   )
 };
 

@@ -19,9 +19,9 @@ router.get('/getGlobalChats', async (req, res) => {
 // insert in the list of global chats
 router.post('/insertGlobalChat', async (req, res) => {
 
-    console.log("route hit line 22");
+    // console.log("route hit line 22");
     const chatMessage = req.body;
-    console.log(chatMessage);
+    // console.log(chatMessage);
 
     if (!chatMessage || typeof chatMessage !== 'object' || Array.isArray(chatMessage)) {
         res.status(400).json({ error: 'invalid format of chat message' });

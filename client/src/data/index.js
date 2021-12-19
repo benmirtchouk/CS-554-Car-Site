@@ -5,6 +5,7 @@ const accountData = require("./account");
 const geocodeData = require("./geocoding");
 const sellerData = require("./seller");
 const gChat = require('./gChat');
+const pChat = require('./pChat');
 
 module.exports = {
   nhtsa: nhtsaData,
@@ -13,5 +14,6 @@ module.exports = {
   account: accountData,
   geocode: geocodeData,
   seller: sellerData,
-  gChat: gChat
+  gChat: gChat,
+  pChat: pChat
 };
