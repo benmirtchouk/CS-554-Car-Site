@@ -23,7 +23,7 @@ Installation steps are below, tested on Linux (Ubuntu) and Windows
 
 
 ### Server
-- Prerequisites: Mongo db daemon running on local host, Redis daemon  running on local host, port 3001 is free
+- Prerequisites: Mongo db daemon running on local host, Redis daemon running on local host, port 3001 is free
 - cd into `server` directory
 - run `npm i`
 - run `npm run seed`
@@ -41,6 +41,11 @@ Installation steps are below, tested on Linux (Ubuntu) and Windows
 ## Seed data
 - Seed data populates ~15,000 listings, with ~4000 images and 15 accounts
 - Default accounts in seed data have standard test credentials, `username@email.com` have passwords `username123!`. If using a seperate firebase config, the UUIDs in the seed file should be updated.
+   -  Example accounts: 
+   -  tsmith@yahoo.com 
+   -  gclooney@gmail.com 
+
+
 
 ## APIs and Frameworks integrated with 
 
