@@ -51,7 +51,7 @@ const Car = ({ info }) => {
         )}
       </Row>
       <Row>
-        <Col>
+        <Col md={6}>
           <h2>Overall:</h2>
           <Table>
             <tbody>
@@ -92,7 +92,7 @@ const Car = ({ info }) => {
             </tbody>
           </Table>
         </Col>
-        <Col>
+        <Col md={6}>
           <h2>Crash Ratings:</h2>
           <Table>
             <tbody>

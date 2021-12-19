@@ -89,7 +89,7 @@ const Listing = (props) => {
         </Col>
       </Row>
       <Row>
-        <Col>
+        <Col md={6}>
           <Table>
             <tbody>
               <tr>
@@ -139,7 +139,7 @@ const Listing = (props) => {
             </tbody>
           </Table>
         </Col>
-        <Col>
+        <Col md={6}>
           <SingleVehicleMap listing={listingData} zoomLevel="13" />
         </Col>
       </Row>
