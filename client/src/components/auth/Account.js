@@ -225,17 +225,6 @@ const Account = () => {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    // check that the password is correct for this email.
-    try {
-      await doReAuthenticate(e.target.password.value);
-      setError(false);
-      setErrorMessage("");
-    } catch (e2) {
-      console.log(`password is not correct for the given user`);
-      setError(true);
-      setErrorMessage(`${e2}`);
-      return false;
-    }
 
     const account = {
       firstName: firstName,
@@ -384,7 +373,7 @@ const Account = () => {
 
       {!editForm && passwdUpdate && (
         <div className="max-w-md mx-auto text-left p-4">
-          <h2 className="mb-0 mt-2">Password Update</h2>
+          <h2 className="mb-0 mt-2">Password Update (for non social logins only)</h2>
           <hr className="mt-0" />
           <Form onSubmit={handlePwdChgSubmit} className="mb-2">
             <Form.Group className="mb-3">
@@ -432,27 +421,7 @@ const Account = () => {
 
       {editForm && !passwdUpdate && (
         <Form onSubmit={handleFormSubmit} className="mb-2">
-          <Form.Group>
-            <Form.Text className="ml-3 italic text-muted">
-              Password must be entered to make updates
-            </Form.Text>
-          </Form.Group>
           <div className="row mt-3">
-            <div className="col">
-              <Form.Group className="mb-0">
-                <Form.Control
-                  type="password"
-                  placeholder="enter to submit"
-                  id="password"
-                  name="firstPwd"
-                  className="form-control"
-                  title="Password"
-                  required
-                />
-                <Form.Label className="ml-4">Password</Form.Label>
-              </Form.Group>
-              <br />
-            </div>
             <div className="col">
               <Button className="ml-0" variant="primary" type="submit">
                 Submit
@@ -514,6 +483,7 @@ const Account = () => {
               <Form.Group className="mb-3">
                 <Form.Label>Display Name</Form.Label>
                 <Form.Control
+                  disabled
                   placeholder="Enter name"
                   id="displayName"
                   size="sm"
@@ -522,10 +492,6 @@ const Account = () => {
                   className="form-control"
                   type="text"
                   title="Display Name"
-                  onChange={(e) => {
-                    if (e.target.value === null) setDisplayName("");
-                    else setDisplayName(e.target.value);
-                  }}
                 />
               </Form.Group>
             </div>
@@ -649,7 +615,7 @@ const Account = () => {
                     else setState(e.target.value);
                   }}
                 >
-                  <option selected>Open this select menu</option>
+                  <option disabled>Open this select menu</option>
                   <option value="">Blank</option>
                   {states.map((state) => (
                     <option key={state} value={state}>
