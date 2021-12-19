@@ -51,7 +51,7 @@ const SellerCard = (props) => {
         if (typeof setSeller !== 'function') { return; }
         setSeller(data.seller)
     }
-    const key = `{ firstName} {lastName} -- {displayName}`;
+    const key = `${firstName}${lastName} -- ${displayName}`;
 
     return (
         <Card key={key}>
@@ -71,9 +71,9 @@ const SellerCard = (props) => {
                                     </LinkContainer>}
                             </Col>
                             <Col className="text-right">
-                                <Button type="button" disabled={!userCanRateSeller} onClick={(e) => rateSellerOnClick(e, false)}>👎 {dislike || 0}</Button>
-                                <Button type="button" disabled={!userCanRateSeller} onClick={(e) => rateSellerOnClick(e, true)}>👍 {like || 0} </Button>
-                                {ratio && <span> {ratio.toFixed(2) * 100}% positive feedback! </span>}
+                                <Button type="button" disabled={!userCanRateSeller} className={userCanRateSeller ? 'btn btn-primary' : 'btn btn-dark'} onClick={(e) => rateSellerOnClick(e, false)}>👎 {dislike || 0}</Button>
+                                <Button type="button" disabled={!userCanRateSeller} className={userCanRateSeller ? 'btn btn-primary' : 'btn btn-dark'} onClick={(e) => rateSellerOnClick(e, true)}>👍 {like || 0} </Button>
+                                {ratio && <span> {Math.round(ratio * 100)}% positive feedback! </span>}
                             </Col>
                         </Row>
                         <Row>
@@ -96,8 +96,8 @@ const SellerCard = (props) => {
                         {Array.isArray(sellerComments) &&
                             <Row>
                                 <Col>
-                                    {sellerComments.map(({ displayName, commentText }) =>
-                                        <div>
+                                    {sellerComments.map(({ displayName, commentText }, i) =>
+                                        <div key={`${_id}-${displayName}-${commentText}-${i}`}>
                                             {displayName}: {commentText}
                                         </div>
                                     )}

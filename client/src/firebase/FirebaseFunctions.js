@@ -1,8 +1,11 @@
 import firebase from "firebase/app";
 
 async function doCreateUserWithEmailAndPassword(email, password, displayName) {
-  await firebase.auth().createUserWithEmailAndPassword(email, password);
-  firebase.auth().currentUser.updateProfile({ displayName: displayName });
+  await firebase.auth().createUserWithEmailAndPassword(email, password).then((result) => {
+    return result.user.updateProfile({
+      displayName: displayName
+    });
+  });
 }
 
 async function getAuthToken() {

@@ -87,6 +87,9 @@ const MessageBoard = (props) => {
             ))}
           </div>
           <form onSubmit={onMessageSubmit}>
+            <label htmlFor="message" className="screen-reader-only-label">
+              Message
+            </label>
             <input
               name="message"
               id="message"

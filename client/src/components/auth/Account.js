@@ -395,6 +395,7 @@ const Account = () => {
                 id="currentPwd"
                 name="currentPwd"
                 className="form-control"
+                title="Current Password"
                 required
               />
             </Form.Group>
@@ -406,6 +407,7 @@ const Account = () => {
                 id="firstPwd"
                 name="firstPwd"
                 className="form-control"
+                title="New Password"
                 required
               />
             </Form.Group>
@@ -417,6 +419,7 @@ const Account = () => {
                 id="secondPwd"
                 name="secondPwd"
                 className="form-control"
+                title="Confirm New Password"
                 required
               />
             </Form.Group>
@@ -443,6 +446,7 @@ const Account = () => {
                   id="password"
                   name="firstPwd"
                   className="form-control"
+                  title="Password"
                   required
                 />
                 <Form.Label className="ml-4">Password</Form.Label>
@@ -477,6 +481,7 @@ const Account = () => {
                   className="form-control"
                   type="text"
                   value={firstName}
+                  title="First Name"
                   onChange={(e) => {
                     if (e.target.value === null) setFirstName("");
                     else setFirstName(e.target.value);
@@ -495,6 +500,7 @@ const Account = () => {
                   className="form-control"
                   type="text"
                   value={lastName}
+                  title="Last Name"
                   onChange={(e) => {
                     if (e.target.value === null) setLastName("");
                     else setLastName(e.target.value);
@@ -515,6 +521,7 @@ const Account = () => {
                   value={displayName}
                   className="form-control"
                   type="text"
+                  title="Display Name"
                   onChange={(e) => {
                     if (e.target.value === null) setDisplayName("");
                     else setDisplayName(e.target.value);
@@ -537,6 +544,7 @@ const Account = () => {
                   value={email}
                   className="form-control"
                   type="email"
+                  title="Email address"
                 />
               </Form.Group>
             </div>
@@ -554,6 +562,7 @@ const Account = () => {
                   value={phoneNumber}
                   pattern="[0-9]{0,1}-{0,1}[0-9]{3}-{0,1}[0-9]{3}-{0,1}[0-9]{4}"
                   type="tel"
+                  title="Phone number"
                   onChange={(e) => {
                     if (e.target.value === null) setPhoneNumber("");
                     else setPhoneNumber(e.target.value);
@@ -575,6 +584,7 @@ const Account = () => {
                   size="sm"
                   type="text"
                   value={address1}
+                  title="Street Address"
                   onChange={(e) => {
                     if (e.target.value === null) setAddress1("");
                     else setAddress1(e.target.value);
@@ -595,6 +605,7 @@ const Account = () => {
                   size="sm"
                   type="text"
                   value={address2}
+                  title="Street Address 2"
                   onChange={(e) => {
                     if (e.target.value === null) setAddress2("");
                     else setAddress2(e.target.value);
@@ -615,6 +626,7 @@ const Account = () => {
                   size="sm"
                   type="text"
                   value={city}
+                  title="City"
                   onChange={(e) => {
                     if (e.target.value === null) setCity("");
                     else setCity(e.target.value);
@@ -631,6 +643,7 @@ const Account = () => {
                   size="sm "
                   name="state"
                   id="state"
+                  title="State"
                   onChange={(e) => {
                     if (e.target.value === null) setState("");
                     else setState(e.target.value);
@@ -660,6 +673,7 @@ const Account = () => {
                   type="text"
                   pattern="[0-9]{5}"
                   value={zipCode}
+                  title="Zip Code"
                   onChange={(e) => {
                     if (e.target.value === null) setZipCode("");
                     else setZipCode(e.target.value);

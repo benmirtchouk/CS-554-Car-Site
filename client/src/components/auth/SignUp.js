@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { Redirect, useHistory } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { IoLogoGoogle, IoLogoFacebook } from "react-icons/io";
 import { Button, Form } from "react-bootstrap";
 import {
@@ -12,7 +12,7 @@ import { createAccount } from "../../data/account";
 const SignUp = () => {
   const { currentUser } = useContext(AuthContext);
   const [pwMatch, setPwMatch] = useState("");
-  const history = useHistory();
+  const [formDisplayName, setFormDisplayName] = useState(undefined);
 
   // const slinks = [
   //   {
@@ -24,28 +24,28 @@ const SignUp = () => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     setPwMatch("");
-    const { email, firstPwd, secondPwd } = e.target.elements;
+    const { email, firstPwd, secondPwd, displayName } = e.target.elements;
+    setFormDisplayName(displayName.value);
+
     if (firstPwd.value !== secondPwd.value) {
       setPwMatch("Passwords do not match");
       return false;
     }
 
     try {
-      await doCreateUserWithEmailAndPassword(email.value, firstPwd.value);
+      await doCreateUserWithEmailAndPassword(email.value, firstPwd.value, displayName.value);
     } catch (e) {
       console.log(`${e}`);
       alert(e);
       return false;
     }
 
-    history.push("/account");
-    //history.push("/login");
     return true;
   };
 
-  const doCreateAccount = async () => {
+  const doCreateAccount = async (displayName) => {
     try {
-      await createAccount();
+      await createAccount(displayName);
     } catch (e) {
       console.log('unexpected error', e);
     }
@@ -53,22 +53,18 @@ const SignUp = () => {
 
   useEffect(() => {
     if (currentUser) {
-      doCreateAccount();
+      const currDisplayName = currentUser.displayName ?? formDisplayName;
+      doCreateAccount(currDisplayName);
     }
   }, [currentUser]);
 
   if (currentUser) {
-    return <Redirect to="/" />;
+    return <Redirect to="/account" />;
   }
 
   const handleButtonClick = async (provider) => {
     console.log(`about to call logInSocialMedia`);
     await doSocialSignIn(provider)
-      .then(async () => {
-	console.log(`got back from async call`);
-        history.push("/account");
-        //history.goBack();
-      })
       .catch((e) => {
         console.log(`${e}`);
         alert(e.message);
@@ -77,7 +73,7 @@ const SignUp = () => {
 
   return (
     <div className="max-w-md mx-auto text-left p-4">
-      <h1 className="-mb-2 mt-2">Signup</h1>
+      <h1 className="-mb-2 mt-2">Sign Up</h1>
       {pwMatch && <h4 className="error">{pwMatch}</h4>}
       <div className="space-x-1 pt-4 pb-2">
         <Button
@@ -110,6 +106,7 @@ const SignUp = () => {
             name="email"
             className="form-control"
             type="email"
+            title="Email address"
           />
           <Form.Text className="text-muted">
             We'll{" "}
@@ -119,6 +116,17 @@ const SignUp = () => {
             directly share everything you give us with Mark Zuckerberg.
           </Form.Text>
         </Form.Group>
+	<Form.Group className="mb-3">
+	  <Form.Label>Display Name</Form.Label>
+	    <Form.Control
+              placeholder="Enter Display Name"
+              id="displayName"
+              name="displayName"
+              className="form-control"
+              type="input"
+              title="Display Name"
+            />
+	</Form.Group>
         <Form.Group className="mb-3">
           <Form.Label>Password</Form.Label>
           <Form.Control
@@ -127,6 +135,7 @@ const SignUp = () => {
             id="password"
             name="firstPwd"
             className="form-control"
+            title="Password"
           />
         </Form.Group>
         <Form.Group className="mb-3">
@@ -137,6 +146,7 @@ const SignUp = () => {
             id="passwordCnfrm"
             name="secondPwd"
             className="form-control"
+            title="Confirm Password"
           />
         </Form.Group>
         <Button variant="primary" type="submit">

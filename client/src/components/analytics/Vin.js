@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Badge, Button, InputGroup, Form } from "react-bootstrap";
 import { getShortVin, getPicture } from "../../data/nhtsa";
 import "../../App.css";
 import "../../Carigs.css";
@@ -92,42 +93,35 @@ const Vin = () => {
   }
 
   return (
-    <div key="safety" className="main_layout">
-      <div className="mainbody">
-        <div className="form-group input-group">
-          <form onSubmit={submitHandler} className="addVin">
-            <div className="form-group input-group mt-10">
-              <label className="trainer_label ml-10 mr-2" htmlFor="vin">
-                Vin:
-              </label>
-              <input
-                className="form-control ml-0 mr-5"
+    <div key="safety" className="main_layout pt-4">
+      <div className="form-group input-group">
+        <Form onSubmit={submitHandler}>
+          <Form.Group className="mb-3">
+            <InputGroup>
+              <Form.Control
                 id="vin"
                 type="text"
                 name="vin"
                 placeholder="Vin..."
+                title="Enter a vin to search"
                 required
               />
-              <button
-                className="btn-primary px-10"
-                type="submit"
-                name="submitBtn"
-              >
-                Query Vin
-              </button>
-            </div>
-          </form>
-        </div>
-        <div key="cars" className="container">
-          <div className="row justify-content-start">
-            <div className="content col-12 align-items-left px-1">
-              <h1 className="sum-header">Car Vin({vin})</h1>
-            </div>
+              <Button type="submit" variant="primary" id="search">
+                Search
+              </Button>
+            </InputGroup>
+          </Form.Group>
+        </Form>
+      </div>
+      <div key="cars" className="container">
+        <div className="row justify-content-start">
+          <div className="content col-12 align-items-left px-1">
+            <h1 className="sum-header">
+              <Badge>Car VIN</Badge> {vin}
+            </h1>
           </div>
-          {showCard && vin && (
-            <VinCard key={vinData.VehicleId} info={vinData} />
-          )}
         </div>
+        {showCard && vin && <VinCard key={vinData.VehicleId} info={vinData} />}
       </div>
     </div>
   );

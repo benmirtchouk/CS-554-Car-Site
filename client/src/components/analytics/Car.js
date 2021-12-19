@@ -51,7 +51,7 @@ const Car = ({ info }) => {
         )}
       </Row>
       <Row>
-        <Col>
+        <Col md={6}>
           <h2>Overall:</h2>
           <Table>
             <tbody>
@@ -74,7 +74,8 @@ const Car = ({ info }) => {
                     edit={false}
                     count={parseInt(item.OverallRating)}
                     size={15}
-                    activeColor="#ffd700"
+                    color="#767676"
+                    activeColor="#767676"
                   />
                 </td>
               </tr>
@@ -85,14 +86,15 @@ const Car = ({ info }) => {
                     edit={false}
                     count={parseInt(item.OverallFrontCrashRating)}
                     size={15}
-                    activeColor="#ffd700"
+                    color="#767676"
+                    activeColor="#767676"
                   />
                 </td>
               </tr>
             </tbody>
           </Table>
         </Col>
-        <Col>
+        <Col md={6}>
           <h2>Crash Ratings:</h2>
           <Table>
             <tbody>
@@ -103,7 +105,8 @@ const Car = ({ info }) => {
                     edit={false}
                     count={parseInt(item.OverallSideCrashRating)}
                     size={15}
-                    activeColor="#ffd700"
+                    color="#767676"
+                    activeColor="#767676"
                   />
                 </td>
               </tr>
@@ -114,7 +117,8 @@ const Car = ({ info }) => {
                     edit={false}
                     count={parseInt(item.SideCrashDriversideRating)}
                     size={15}
-                    activeColor="#ffd700"
+                    color="#767676"
+                    activeColor="#767676"
                   />
                 </td>
               </tr>
@@ -125,7 +129,8 @@ const Car = ({ info }) => {
                     edit={false}
                     count={parseInt(item.SideCrashPassengersideRating)}
                     size={15}
-                    activeColor="#ffd700"
+                    color="#767676"
+                    activeColor="#767676"
                   />
                 </td>
               </tr>
@@ -136,7 +141,8 @@ const Car = ({ info }) => {
                     edit={false}
                     count={parseInt(item.RolloverRating)}
                     size={15}
-                    activeColor="#ffd700"
+                    color="#767676"
+                    activeColor="#767676"
                   />
                 </td>
               </tr>
@@ -147,7 +153,8 @@ const Car = ({ info }) => {
                     edit={false}
                     count={parseInt(item.SidePoleCrashRating)}
                     size={15}
-                    activeColor="#ffd700"
+                    color="#767676"
+                    activeColor="#767676"
                   />
                 </td>
               </tr>
