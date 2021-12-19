@@ -151,7 +151,7 @@ const SearchResults = (props) => {
               searchResults[0].listing.location[0],
             ]}
             zoomLevel={"4"}
-            className="search-map"
+            className="search-map search-card"
           />
         ) : (
           ""
